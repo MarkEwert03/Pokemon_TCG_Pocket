@@ -2,8 +2,8 @@ import csv
 import bs4
 
 # Input and output file paths
-input_file = "data/raw/single.html"
-output_file = "data/processed/single.csv"
+input_file = "data/raw/small.html"
+output_file = "data/processed/small.csv"
 
 
 def clean_str(string: str) -> str:
@@ -30,22 +30,23 @@ def clean_str(string: str) -> str:
     return " ".join(string.strip().split())
 
 
-def extract_card(cells: list[bs4.element.Tag]) -> dict[str, str]:
+def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     """
-    Extract card data from a list of `<td>` elements in a table row.
+    Extract card data `<tr>` element into a dict.
 
     This function parses specific columns from the row of HTML table data,
     extracting structured information such as the card number, name, type, HP,
     and image link. Cell indices correspond to known table structure.
 
     Args:
-        cells (list): List of `<td>` tags representing one table row.
+        card_html (Tag): Tag containing list of `<td>` tags representing one table row.
 
     Returns:
-        outpit (dict): Dictionary containing structured card data, with whitespace cleaned.
+        output (dict): Dictionary containing structured card data, with whitespace cleaned.
         The columns of the outputted dict are `{number, name, image, rarity, pack_name,
         type, HP, stage, pack_points, how_to_get}`
     """
+    cells = card_html.find_all("td")
     # cell_0 is checkmark (ignored)
 
     # Extract card data from each cell
@@ -82,21 +83,25 @@ def extract_card(cells: list[bs4.element.Tag]) -> dict[str, str]:
     return card
 
 
-def write_to_csv(card: dict[str, str]):
+def write_to_csv(cards_data: list[dict[str, str]]):
     """
-    Write a dictionary of card data to a CSV file.
+    Writed list of dictionary of card data to a CSV file.
 
     Creates a CSV file at the output path, writes headers based on dictionary keys,
-    and inserts one row of card data.
+    and writes elements of `cards_data` as rows.
 
     Args:
-        card (dict): A dictionary containing cleaned card attributes.
+        cards_data (list): A list full of dictionaries containing cleaned card attributes.
     """
-    fieldnames = card.keys()
+    # Use the first entry to get the column names
+    column_names = cards_data[0].keys()
+    
+    # Iterate through list and write each dict as a new row
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer = csv.DictWriter(file, fieldnames=column_names)
         writer.writeheader()
-        writer.writerow(card)
+        for card in cards_data:
+            writer.writerow(card)
 
 
 def main():
@@ -114,15 +119,20 @@ def main():
     with open(input_file, "r", encoding="utf-8") as file:
         soup = bs4.BeautifulSoup(file, "lxml")
 
-    # Extract the first table row
-    table = soup.find("tr")
-    cells = table.find_all("td")
+    # Create list to store dict of cleaned card data
+    cards_data = []
 
-    # Parse the table row into a structured dictionary
-    card = extract_card(cells)
+    # Extract the first table row
+    table = soup.find("table", class_="a-table")
+    cards_html = table.find("tbody").find_all("tr")
+    
+    # Iterate over each `tr` element representing all metadata for one card
+    for card_html in cards_html:
+        row = extract_card(card_html)
+        cards_data.append(row)
 
     # Export the parsed data to CSV
-    write_to_csv(card)
+    write_to_csv(cards_data)
 
     print(f"CSV file '{output_file}' created successfully!")
 

@@ -69,10 +69,10 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     image = cells[2].find("img").get("data-src")
     rarity = cells[3].text
     pack = cells[4].text
-    type = cells[5].find("img")["alt"].split("-")[-1]
+    type = cells[5].find("img")["alt"].split("-")[-1] # last word is the type
     HP = cells[6].text
     stage = cells[7].text
-    pack_points = cells[8].text
+    pack_points = cells[8].text.replace(",", "")[:-4] # remove comma and "Pts"
     # cell 9 contains retreat cost, effect, and moves data
     # TODO parse and extract cell_9
 

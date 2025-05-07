@@ -5,6 +5,10 @@ input_file = "data/raw/single.html"
 output_file = "data/processed/single.csv"
 
 
+def clean_str(s):
+    return " ".join(s.strip().split())
+
+
 def main():
     """Run the main function."""
     with open(input_file, "r", encoding="utf-8") as file:
@@ -59,10 +63,15 @@ def main():
         "how_to_get": how_to_get,
     }
 
+    # Clean up whitespaces and new lines
+    card = {k: clean_str(v) for k, v in card.items()}
+
     fieldnames = card.keys()
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
         writer.writerow(card)
+    print(f"CSV file '{output_file}' created successfully!")
 
 
 if __name__ == "__main__":

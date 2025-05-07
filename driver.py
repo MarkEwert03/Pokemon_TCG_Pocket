@@ -1,6 +1,8 @@
+import csv
 from bs4 import BeautifulSoup
 
 input_file = "data/raw/single.html"
+output_file = "data/processed/single.csv"
 
 
 def main():
@@ -57,7 +59,10 @@ def main():
         "how_to_get": how_to_get,
     }
 
-    print(card)
+    fieldnames = card.keys()
+    with open(output_file, mode="w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writerow(card)
 
 
 if __name__ == "__main__":

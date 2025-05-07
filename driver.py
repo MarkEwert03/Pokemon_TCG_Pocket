@@ -3,8 +3,8 @@ import os
 import bs4
 
 # Input and output file paths
-input_file = "data/raw/small.html"
-output_file = "data/processed/small.csv"
+input_file = "data/raw/medium.html"
+output_file = "data/processed/medium.csv"
 
 
 def clean_str(string: str) -> str:

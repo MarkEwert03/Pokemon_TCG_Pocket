@@ -85,7 +85,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
 
 def write_to_csv(cards_data: list[dict[str, str]]):
     """
-    Writed list of dictionary of card data to a CSV file.
+    Writes a list of dictionaries containing card data to a CSV file.
 
     Creates a CSV file at the output path, writes headers based on dictionary keys,
     and writes elements of `cards_data` as rows.
@@ -122,11 +122,17 @@ def main():
     # Create list to store dict of cleaned card data
     cards_data = []
 
-    # Extract the first table row
+    # Extract the main table from the HTML file
     table = soup.find("table", class_="a-table")
-    cards_html = table.find("tbody").find_all("tr")
+    if table is None:
+        raise ValueError(f"Table with class 'a-table' not found in {input_file}")
     
-    # Iterate over each `tr` element representing all metadata for one card
+    # Extract all <tr> elements of the <tbody>
+    cards_html = table.find("tbody").find_all("tr")
+    if not card_html:
+        raise ValueError(f"No <tr> elements found int <tbody> {input_file}")
+    
+    # Iterate over each <tr> element representing all metadata for one card
     for card_html in cards_html:
         row = extract_card(card_html)
         cards_data.append(row)

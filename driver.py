@@ -45,7 +45,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     Returns:
         output (dict): Dictionary containing structured card data, with whitespace cleaned.
         The columns of the outputted dict are `{number, name, image, rarity, pack_name,
-        type, HP, stage, pack_points, how_to_get}`
+        type, HP, stage, pack_points}`
     """
     cells = card_html.find_all("td")
     # cell_0 is checkmark (ignored)
@@ -62,7 +62,6 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     pack_points = cells[8].text
     # cell 9 contains retreat cost, effect, and moves data
     # TODO parse and extract cell_9
-    how_to_get = cells[10].text
 
     # Create dictionary with raw data
     card = {
@@ -74,8 +73,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "type": type,
         "HP": HP,
         "stage": stage,
-        "pack_points": pack_points,
-        "how_to_get": how_to_get,
+        "pack_points": pack_points
     }
 
     # Normalize spacing in all fields

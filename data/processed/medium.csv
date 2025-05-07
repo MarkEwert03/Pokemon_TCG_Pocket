@@ -1,287 +1,287 @@
-number,name,image,rarity,pack_name,type,HP,stage,pack_points,how_to_get
-A1 001,Bulbasaur,https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 002,Ivysaur,https://img.game8.co/4006820/34e0ae3e3a08bf4586263f804fd42d06.png/show,◇◇,Genetic Apex (A1) Mewtwo,Grass,90,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 003,Venusaur,https://img.game8.co/4003548/e62b9303f29d5360acfef5c9a1d8c6d3.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Grass,160,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 004,Venusaur ex,https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Grass,190,Stage 2,500 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 005,Caterpie,https://img.game8.co/4004054/ac3d9d05b0255de5e3e1d2e6f5609407.png/show,◇,Genetic Apex (A1) Pikachu,Grass,50,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 006,Metapod,https://img.game8.co/3998380/4ce586957c9259bc8efb497a18d39279.png/show,◇,Genetic Apex (A1) Pikachu,Grass,80,Stage 1,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 007,Butterfree,https://img.game8.co/4004057/6ba461fb08292cbabe715b6ead54dfb9.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Grass,120,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 008,Weedle,https://img.game8.co/3998345/90945e1d343b71b9b81367632fc6419d.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,50,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 009,Kakuna,https://img.game8.co/3998379/6580ab259f93a510e399d0cd4c6c82d1.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,80,Stage 1,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 010,Beedrill,https://img.game8.co/4006294/0ee9cea4b4d3ce61396be4dd82cd9421.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Grass,120,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 011,Oddish,https://img.game8.co/3998375/428ea8dcd492a0df8d480a41bb5bc4d0.png/show,◇,Genetic Apex (A1) Charizard,Grass,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 012,Gloom,https://img.game8.co/3998364/e57c97310b27c6efac8506d7dd48921b.png/show,◇◇,Genetic Apex (A1) Charizard,Grass,80,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 013,Vileplume,https://img.game8.co/4004049/8f7c224f4dde3d6d6012b428d57a748c.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,140,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 014,Paras,https://img.game8.co/4006689/109616011b848f2a6858f7f34eafa06a.png/show,◇,Genetic Apex (A1) Pikachu,Grass,70,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 015,Parasect,https://img.game8.co/4004050/ddfd3df6e04bf4b005bd856ced03be18.png/show,◇◇,Genetic Apex (A1) Pikachu,Grass,120,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 016,Venonat,https://img.game8.co/4003547/5e326a850486a8ee124abdbc89d4e4b0.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 017,Venomoth,https://img.game8.co/4004056/277ad272b4379fa0fb3a423da11b729d.png/show,◇◇,Genetic Apex (A1) Mewtwo,Grass,80,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 018,Bellsprout,https://img.game8.co/3998361/0bb8f6247718d51699261c3b317fe1e2.png/show,◇,Genetic Apex (A1) Charizard,Grass,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 019,Weepinbell,https://img.game8.co/4003551/f3c89b9b13f35dd7a9f7826673294337.png/show,◇◇,Genetic Apex (A1) Charizard,Grass,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 020,Victreebel,https://img.game8.co/3998369/33445897d312b1f7e399bcd686aff8d8.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,140,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 021,Exeggcute,https://img.game8.co/3998366/d833f142d39f949cb107c5ebde8d2cc8.png/show,◇,Genetic Apex (A1) Charizard,Grass,50,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 022,Exeggutor,https://img.game8.co/4006628/4e6a5342b585a516bc44f5b09eac3346.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,130,Stage 1,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 023,Exeggutor ex,https://img.game8.co/4003424/51e6ed4a578f4c675ff5a1244baaf3d4.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Grass,160,Stage 1,500 Pts,Open Genetic Apex (A1) Charizard packs
-A1 024,Tangela,https://img.game8.co/3998378/c8049287f4ba1febaef374a272089479.png/show,◇,Genetic Apex (A1) Charizard,Grass,80,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 025,Scyther,https://img.game8.co/4003541/14fb34453ef5a5c42d9d1eb6757eefe3.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 026,Pinsir,https://img.game8.co/3998396/85716016d8d17502c3856d4d2c2276aa.png/show,◇◇,Genetic Apex (A1) Any,Grass,90,Basic,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 027,Cottonee,https://img.game8.co/3998397/fb4a5971f55742782dc4f27c0ff15fa6.png/show,◇,Genetic Apex (A1) Any,Grass,50,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 028,Whimsicott,https://img.game8.co/3998398/8e97268b460993362631b70832e21c9d.png/show,◇◇,Genetic Apex (A1) Any,Grass,80,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 029,Petilil,https://img.game8.co/3998419/b455ac123c02f6c732de99735eaa7252.png/show,◇,Genetic Apex (A1) Any,Grass,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 030,Lilligant,https://img.game8.co/3998418/e81820ee6cc447493f392500522e5ee2.png/show,◇◇,Genetic Apex (A1) Any,Grass,100,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 031,Skiddo,https://img.game8.co/4006629/41624508d971975a45d85a2aacf96ce2.png/show,◇,Genetic Apex (A1) Charizard,Grass,70,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 032,Gogoat,https://img.game8.co/3998368/7f43ea90627358975107d9a4c8d10f35.png/show,◇,Genetic Apex (A1) Charizard,Grass,120,Stage 1,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 033,Charmander,https://img.game8.co/3998416/7111224e0f37fe89ebb846f71819eede.png/show,◇,Genetic Apex (A1) Charizard,Fire,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 034,Charmeleon,https://img.game8.co/3998417/4d026dbc3730454880ff65ce607f3a11.png/show,◇◇,Genetic Apex (A1) Charizard,Fire,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 035,Charizard,https://img.game8.co/3995527/abacc583cb2b4f639c07d9642045695b.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,150,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 036,Charizard ex,https://img.game8.co/3995526/ac9d9361799eb484958ffd4873a7c091.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fire,180,Stage 2,500 Pts,Open Genetic Apex (A1) Charizard packs
-A1 037,Vulpix,https://img.game8.co/4003549/d9d1247e0b2a309b5090972bcde080bd.png/show,◇,Genetic Apex (A1) Charizard,Fire,50,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 038,Ninetales,https://img.game8.co/4004066/5355e3320f79bd5ddbac28f0938d55a0.png/show,◇◇,Genetic Apex (A1) Charizard,Fire,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 039,Growlithe,https://img.game8.co/4003508/3be46036163a4e381ae76d28fc5e0d22.png/show,◇,Genetic Apex (A1) Pikachu,Fire,70,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 040,Arcanine,https://img.game8.co/4003400/2f9c7d5d4ac15b6f3bc1cf7dd3a0573a.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Fire,130,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 041,Arcanine ex,https://img.game8.co/4003399/4c2f076ef192173f119eb22a26b79c2b.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Fire,150,Stage 1,500 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 042,Ponyta,https://img.game8.co/3998340/042513122da40bdb24bbb4d9aa94ac8c.png/show,◇,Genetic Apex (A1) Any,Fire,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 043,Rapidash,https://img.game8.co/3998414/32d4d0de5496b62ebb673635adb0a6d3.png/show,◇◇,Genetic Apex (A1) Any,Fire,100,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 044,Magmar,https://img.game8.co/3995548/76e7e3892ac03f7fed96427ae3471227.png/show,◇,Genetic Apex (A1) Charizard,Fire,80,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 045,Flareon,https://img.game8.co/3998420/23b100d03bec98c9c196c2f1aa8ec53f.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,120,Stage 1,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 046,Moltres,https://img.game8.co/3998415/7172694cc4c05519129ba7d82daed78a.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,100,Basic,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 047,Moltres ex,https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fire,140,Basic,500 Pts,Open Genetic Apex (A1) Charizard packs
-A1 048,Heatmor,https://img.game8.co/3998429/5d2064be73c52dc19b28b55e63194dfc.png/show,◇,Genetic Apex (A1) Any,Fire,80,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 049,Salandit,https://img.game8.co/3998430/3ae9351100ff3a974da5daddbb884f0e.png/show,◇,Genetic Apex (A1) Mewtwo,Fire,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 050,Salazzle,https://img.game8.co/3998343/7bf6c55d29bbc68aeebcee10439ac8ff.png/show,◇,Genetic Apex (A1) Mewtwo,Fire,90,Stage 1,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 051,Sizzlipede,https://img.game8.co/4009562/7ebb7e264e76b0147c832713a586d0da.png/show,◇,Genetic Apex (A1) Any,Fire,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 052,Centiskorch,https://img.game8.co/3998428/eb959a838599765d74ba341ce551e350.png/show,◇◇,Genetic Apex (A1) Any,Fire,130,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 053,Squirtle,https://img.game8.co/4009613/ec28a480cd492b00e08358f1ab8825f1.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 054,Wartortle,https://img.game8.co/4003550/72e8caf9f66e3572d2b55a9f1e057b9c.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,80,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 055,Blastoise,https://img.game8.co/4003409/7285ece5bb82599b1a1d55caebc554d5.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,150,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 056,Blastoise ex,https://img.game8.co/4003405/fc6b1543ab68abd28e0d0b93666aa88e.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Water,180,Stage 2,500 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 057,Psyduck,https://img.game8.co/3995566/cb61632690b48259222114d7a09df5b7.png/show,◇,Genetic Apex (A1) Any,Water,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 058,Golduck,https://img.game8.co/3998459/a1e017b103081f39e8de3fdb8e9f8c69.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 059,Poliwag,https://img.game8.co/3998457/12c23d6f600b8e3347c0c832d5006f0b.png/show,◇,Genetic Apex (A1) Charizard,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 060,Poliwhirl,https://img.game8.co/4006826/de67ff4ff13cc5b0e22faadbeac6c7ef.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 061,Poliwrath,https://img.game8.co/4006828/1bdf9ef3c3b5bf7609cf20f50e19e2d1.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,150,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 062,Tentacool,https://img.game8.co/4006829/91eec5ba87f6078bd567471730f55656.png/show,◇,Genetic Apex (A1) Mewtwo,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 063,Tentacruel,https://img.game8.co/3998458/64cd10178f355800afc1b565915ee36c.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,110,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 064,Seel,https://img.game8.co/3998460/76266868e10d2922b75a48765dfe62ba.png/show,◇,Genetic Apex (A1) Pikachu,Water,80,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 065,Dewgong,https://img.game8.co/4009512/71527afe3e34a581f59655b6a377be1a.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,120,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 066,Shellder,https://img.game8.co/3998339/fc01d6b7ff02466837ea9b1e5412aede.png/show,◇,Genetic Apex (A1) Mewtwo,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 067,Cloyster,https://img.game8.co/4004053/96b7d3754c42fe6602afa381d78d24d3.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,120,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 068,Krabby,https://img.game8.co/3998350/ada9543996209297185fa2c341f937ee.png/show,◇,Genetic Apex (A1) Mewtwo,Water,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 069,Kingler,https://img.game8.co/3998493/abf4e60f00e858bba141b09abad9d098.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,120,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 070,Horsea,https://img.game8.co/4004065/56b520f0a72cb4fc66af441ad836940c.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 071,Seadra,https://img.game8.co/4009510/380b6d5a2b0d812eefedb05276069db3.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,70,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 072,Goldeen,https://img.game8.co/4003507/e5b2bbebbc5581d528e4f1a04e769370.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 073,Seaking,https://img.game8.co/4003542/b6a9d04f2690db002130a8bb221eab89.png/show,◇,Genetic Apex (A1) Pikachu,Water,100,Stage 1,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 074,Staryu,https://img.game8.co/3998492/54446b2a9146a6b8de5e58bebe938486.png/show,◇,Genetic Apex (A1) Charizard,Water,50,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 075,Starmie,https://img.game8.co/3998357/a0b9d92ae5fe5492c19eef25f9c16bda.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 076,Starmie ex,https://img.game8.co/4003544/74f3705c0d05d68b6eafd78d909d6f7a.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Water,130,Stage 1,500 Pts,Open Genetic Apex (A1) Charizard packs
-A1 077,Magikarp,https://img.game8.co/3995547/e0ed4a55a686a207fb3615b019eaeabc.png/show,◇,Genetic Apex (A1) Pikachu,Water,30,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 078,Gyarados,https://img.game8.co/4003511/dfc29f4deb4bfd57aeeb421bebd7963e.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,150,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 079,Lapras,https://img.game8.co/4004052/90ae53c4b2578c10e5fa54fc35d894f7.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,100,Basic,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 080,Vaporeon,https://img.game8.co/3995579/edc2fc6a3a756ca04c64309406df20fb.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Water,130,Stage 1,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 081,Omanyte,https://img.game8.co/3998490/2b471b4bb21496fa600bef6fd6e0a004.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,90,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 082,Omastar,https://img.game8.co/4003532/1207d27ea9377b4e478a05fbafe1104b.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,140,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 083,Articuno,https://img.game8.co/4003401/85f08a35d3ec58bc3df44f6380963b3b.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Water,100,Basic,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 084,Articuno ex,https://img.game8.co/4006293/5f81841bf27137231b254d4a5652f07f.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Water,140,Basic,500 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 085,Ducklett,https://img.game8.co/3998491/fc5844476c9169af97d64aafb4e6b02d.png/show,◇,Genetic Apex (A1) Charizard,Water,50,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 086,Swanna,https://img.game8.co/3998363/a0f26ca95898427319f71be7725fe221.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 087,Froakie,https://img.game8.co/3998356/3253d8301d0aa7580b60a42102b04671.png/show,◇,Genetic Apex (A1) Charizard,Water,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 088,Frogadier,https://img.game8.co/3998543/d70b39b79ed0b84fa5f80f821d912267.png/show,◇◇,Genetic Apex (A1) Charizard,Water,80,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 089,Greninja,https://img.game8.co/3995539/9195cfe2483b2f1213439fac00fc008c.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,120,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 090,Pyukumuku,https://img.game8.co/3998373/c3da27b1f8379fbeb1f7b0919dd39a98.png/show,◇,Genetic Apex (A1) Charizard,Water,70,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 091,Bruxish,https://img.game8.co/4003410/0a8ddfe9ea24fe467034d436821424b4.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Basic,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 092,Snom,https://img.game8.co/3998545/f3f9f31036b3689b13e7178938a95511.png/show,◇,Genetic Apex (A1) Any,Water,50,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 093,Frosmoth,https://img.game8.co/3998546/3c05f23cab5b100c71d9822565f832cd.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 094,Pikachu,https://img.game8.co/3995562/df4942ff2ae721eeebcd9a18aed6086d.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 095,Raichu,https://img.game8.co/4004063/afcbe335840deda435dba5d2ab2c8428.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,100,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 096,Pikachu ex,https://img.game8.co/3995561/9ab8b09b4013f8a5eafb5cd08f8faf11.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Lightning,120,Basic,500 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 097,Magnemite,https://img.game8.co/3998544/35e5ade3f5571739f7354394e96c997f.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 098,Magneton,https://img.game8.co/4006934/965f0329be2eab24d7476c9f91ddde38.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 099,Voltorb,https://img.game8.co/4004039/f9929457cd2eba7f509a4098421bd577.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 100,Electrode,https://img.game8.co/4004040/bf02e265efb4d9af8a1ed87d316d03d6.png/show,◇◇,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 101,Electabuzz,https://img.game8.co/3995534/2a00fe7be840d52441121ae1072a30e4.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,70,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 102,Jolteon,https://img.game8.co/4006822/ed62f5a9def93af10a971be762d7c72f.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,90,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 103,Zapdos,https://img.game8.co/4006832/42cbfcf6fa53511aa6383c0743577107.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,100,Basic,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 104,Zapdos ex,https://img.game8.co/4003554/f068b46b953ea963da1c8139cfb2c13f.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Lightning,130,Basic,500 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 105,Blitzle,https://img.game8.co/3998587/15228aeea697296839a27955d00f0923.png/show,◇,Genetic Apex (A1) Any,Lightning,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 106,Zebstrika,https://img.game8.co/3998338/51a7c6f568cf9f76dd82b06bbdb0f225.png/show,◇◇,Genetic Apex (A1) Any,Lightning,90,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 107,Tynamo,https://img.game8.co/4003545/1d1ce66d61a50dc2030e96dd152d1f14.png/show,◇,Genetic Apex (A1) Mewtwo,Lightning,30,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 108,Eelektrik,https://img.game8.co/4004061/5f845c24c20efc13a0074e5e71958472.png/show,◇◇,Genetic Apex (A1) Mewtwo,Lightning,80,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 109,Eelektross,https://img.game8.co/4003422/efc24d07c4a4cd932ae71bfd6845877f.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Lightning,140,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 110,Helioptile,https://img.game8.co/3998588/0b4ddf3650dca6877055a40d082d63ef.png/show,◇,Genetic Apex (A1) Any,Lightning,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 111,Heliolisk,https://img.game8.co/3998589/9ee41cdaf51a7e7711e47857024d2f2d.png/show,◇,Genetic Apex (A1) Any,Lightning,90,Stage 1,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 112,Pincurchin,https://img.game8.co/4009612/66b07b414ccc648238bc60ac3d579c6f.png/show,◇◇,Genetic Apex (A1) Any,Lightning,70,Basic,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 113,Clefairy,https://img.game8.co/4003414/9dcb35d7fa5082b0b031341014d8d187.png/show,◇,Genetic Apex (A1) Pikachu,Psychic,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 114,Clefable,https://img.game8.co/3998609/b2821886651ed293692c8d9cda69b2b5.png/show,◇◇,Genetic Apex (A1) Pikachu,Psychic,100,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 115,Abra,https://img.game8.co/4003397/cb58f454e33712f7b5c7e38e14abee70.png/show,◇,Genetic Apex (A1) Charizard,Psychic,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 116,Kadabra,https://img.game8.co/3998610/e67b77edfe99fadd96dcdcff683569be.png/show,◇◇,Genetic Apex (A1) Charizard,Psychic,80,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 117,Alakazam,https://img.game8.co/4006606/523ab122017000268224172795f85180.png/show,◇◇◇,Genetic Apex (A1) Charizard,Psychic,130,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 118,Slowpoke,https://img.game8.co/4009610/201934d9cc6bba93f69c6107bf319376.png/show,◇,Genetic Apex (A1) Any,Psychic,70,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 119,Slowbro,https://img.game8.co/3998608/65feb355a7e4b4c46edb192ed68fab50.png/show,◇◇,Genetic Apex (A1) Any,Psychic,130,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 120,Gastly,https://img.game8.co/3998607/dbb93af052f59df016605370ba7a25f7.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 121,Haunter,https://img.game8.co/3995541/262629502a9a145e53d062c261bdabad.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 122,Gengar,https://img.game8.co/4003429/f120acaa874e2fc0d8a4826d031783db.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,130,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 123,Gengar ex,https://img.game8.co/4003428/35f468fe22fdb7583f1fedd87cfba82c.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,500 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 124,Drowzee,https://img.game8.co/4004043/d7ed9c055fa250174c8a9a2d53f146e6.png/show,◇,Genetic Apex (A1) Pikachu,Psychic,70,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 125,Hypno,https://img.game8.co/4003512/f6adfd638f3b3ed7f2543cdc3f0cd64f.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Psychic,100,Stage 1,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 126,Mr. Mime,https://img.game8.co/3998933/f157c77e1774830de79d61befc2172f7.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Basic,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 127,Jynx,https://img.game8.co/4003514/51ed2e876172360fe15e001de05154d5.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,80,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 128,Mewtwo,https://img.game8.co/4006312/a888b167bfb0b129f0c62577d74f3830.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,120,Basic,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 129,Mewtwo ex,https://img.game8.co/3998355/f14c91467792bea73eb38ea1b73c394d.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,500 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 130,Ralts,https://img.game8.co/4004059/9cf2938800ac5ed17bb4dbefb365461b.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 131,Kirlia,https://img.game8.co/4006688/ca66f4d7724ac72cf3fd5b22114403c4.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 132,Gardevoir,https://img.game8.co/3995538/8f0a707732a41daba04a4b1ffd8d9924.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,110,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 133,Woobat,https://img.game8.co/3998654/140ea059e27793bccf20b65736701065.png/show,◇,Genetic Apex (A1) Any,Psychic,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 134,Swoobat,https://img.game8.co/3998655/07c7ed7eba5487a38e2c8491fb5a52fc.png/show,◇,Genetic Apex (A1) Any,Psychic,60,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 135,Golett,https://img.game8.co/4004045/2fd8372c6aaa6014a931e7d369a00a71.png/show,◇,Genetic Apex (A1) Any,Psychic,90,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 136,Golurk,https://img.game8.co/3998652/f676af9d5c04b1985428da54bfcd6523.png/show,◇◇,Genetic Apex (A1) Any,Psychic,140,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 137,Sandshrew,https://img.game8.co/3998653/9cd5ea3c6b7bcfbed012db869c788d66.png/show,◇,Genetic Apex (A1) Any,Fighting,70,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 138,Sandslash,https://img.game8.co/3998337/3c00a7468c8a83dbb62d061bc3837e76.png/show,◇◇,Genetic Apex (A1) Any,Fighting,100,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 139,Diglett,https://img.game8.co/4003416/cc387415208485e1cdbfc5f2229ad195.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,50,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 140,Dugtrio,https://img.game8.co/4006602/20668efc84e28401fe0525ee3938be74.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,70,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 141,Mankey,https://img.game8.co/4003518/3d568ebec7d930e269a876b272a89c3d.png/show,◇,Genetic Apex (A1) Charizard,Fighting,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 142,Primeape,https://img.game8.co/4003539/652b8c2e0e991bf7686eb8d33e8abfdf.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 143,Machop,https://img.game8.co/4006823/a5258bec9738adf95e20c5f2004f3295.png/show,◇,Genetic Apex (A1) Charizard,Fighting,70,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 144,Machoke,https://img.game8.co/3998367/91aa9c0103b3c854a5889540016b06b4.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,100,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 145,Machamp,https://img.game8.co/4006935/6891fd5c942d46afed777d8dfbc27532.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fighting,150,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 146,Machamp ex,https://img.game8.co/4003517/742fb22918369ddb455472957cdf3462.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,500 Pts,Open Genetic Apex (A1) Charizard packs
-A1 147,Geodude,https://img.game8.co/3998371/392f079998fdfa85aa1d8aa6993dc77b.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,70,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 148,Graveler,https://img.game8.co/4004064/b7fe0f284816cd08978b1d02e65762e5.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,100,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 149,Golem,https://img.game8.co/4006818/129f5a8b18e4c38b62469ed4961570bb.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Fighting,160,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 150,Onix,https://img.game8.co/3998961/a882e91232b19cd8d3de86e8f0b08b9d.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,110,Basic,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 151,Cubone,https://img.game8.co/3995528/14c693825b41c11e9a375b8aeae8a3fc.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 152,Marowak,https://img.game8.co/4006936/78aa9b9f6c3afbfc7f3a364c68ed425f.png/show,◇◇,Genetic Apex (A1) Mewtwo,Fighting,100,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 153,Marowak ex,https://img.game8.co/3998336/89619844d0b1b7c0c61573adf4fb56c0.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Fighting,140,Stage 1,500 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 154,Hitmonlee,https://img.game8.co/4009611/c81a5efaba0ec70d68defa66c676b144.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,80,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 155,Hitmonchan,https://img.game8.co/3998372/d89cdb8b06afb9380a0627fc2dc162cd.png/show,◇,Genetic Apex (A1) Charizard,Fighting,80,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 156,Rhyhorn,https://img.game8.co/3998349/c1b8fd39fce0da3ae342fb130f098f68.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,80,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 157,Rhydon,https://img.game8.co/4006831/cf3cc442a7229012ace62b92e5ccfab8.png/show,◇◇,Genetic Apex (A1) Mewtwo,Fighting,120,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 158,Kabuto,https://img.game8.co/3998959/d47b9c4995dd0c85e0ca90f15bd798b3.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 159,Kabutops,https://img.game8.co/3998958/b625adc521236a0ae506a5ee5b6ea0ee.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fighting,140,Stage 2,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 160,Mienfoo,https://img.game8.co/3995554/923feac2e8d16e4be2fde3ce671afd7c.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 161,Mienshao,https://img.game8.co/3998957/dd421699db038c54b63aa24a0623d4d3.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,80,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 162,Clobbopus,https://img.game8.co/3998360/44a15bfe556073283b8fe8c4cce4e6db.png/show,◇,Genetic Apex (A1) Any,Fighting,80,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 163,Grapploct,https://img.game8.co/3998996/9b610f5a691406f3b3ecc538d82fd59a.png/show,◇◇,Genetic Apex (A1) Any,Fighting,130,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 164,Ekans,https://img.game8.co/3998994/28c1cb93a5337e59f957c8e66d857391.png/show,◇,Genetic Apex (A1) Any,Darkness,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 165,Arbok,https://img.game8.co/3998348/8b30a6669f1d16c249143ec1f98b581e.png/show,◇◇,Genetic Apex (A1) Any,Darkness,100,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 166,Nidoran F,https://img.game8.co/4003527/1c1cfc36c52855f8c573771698b8d40e.png/show,◇,Genetic Apex (A1) Pikachu,Darkness,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 167,Nidorina,https://img.game8.co/3998995/3b3faf7b23b84f0d79c922bc9050b94b.png/show,◇◇,Genetic Apex (A1) Pikachu,Darkness,80,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 168,Nidoqueen,https://img.game8.co/4003526/f134aa8ae2dedc30cac2a52cfb329a09.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Darkness,140,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 169,Nidoran M,https://img.game8.co/4003529/134e97a2d6d2c075fa7190920210040d.png/show,◇,Genetic Apex (A1) Pikachu,Darkness,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 170,Nidorino,https://img.game8.co/4003531/2d3114a26ae095fb998e4ebe30a56c2f.png/show,◇◇,Genetic Apex (A1) Pikachu,Darkness,90,Stage 1,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 171,Nidoking,https://img.game8.co/3998341/f11efea55a7ac2d2f76ed2e33ba4f154.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Darkness,150,Stage 2,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 172,Zubat,https://img.game8.co/3998992/6e058f983a528a4780ee49f26650a41c.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,50,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 173,Golbat,https://img.game8.co/3998993/dae8b0ddb240315d058f9dd03ddba4ea.png/show,◇◇,Genetic Apex (A1) Mewtwo,Darkness,40,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 174,Grimer,https://img.game8.co/4006819/f16b9a744bafa482dbc2919c3e16e92b.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 175,Muk,https://img.game8.co/4006607/2a9dbb46ee7397e46f1822a43cd273f7.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Darkness,130,Stage 1,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 176,Koffing,https://img.game8.co/3998344/f9f63ebe9697671e81da2790e62d7833.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 177,Weezing,https://img.game8.co/4006321/3d637c863dc335eb1074e3057f6af701.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Darkness,110,Stage 1,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 178,Mawile,https://img.game8.co/3999024/d88e034430a8535db19a66f7aa325e81.png/show,◇,Genetic Apex (A1) Charizard,Metal,70,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 179,Pawniard,https://img.game8.co/3999023/3b7eb0ffdb3105eae0662a50b2e33aa2.png/show,◇,Genetic Apex (A1) Any,Metal,50,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 180,Bisharp,https://img.game8.co/3999025/ee0b3d044bd8994cd6bbd39f1c27613f.png/show,◇◇,Genetic Apex (A1) Any,Metal,70,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 181,Meltan,https://img.game8.co/4009609/e5cd8c0ef45c681ac2fd0fe541668e0e.png/show,◇,Genetic Apex (A1) Charizard,Metal,70,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 182,Melmetal,https://img.game8.co/4006824/9fa907a861b732c1633f0214bd53f9a8.png/show,◇◇◇,Genetic Apex (A1) Charizard,Metal,130,Stage 1,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 183,Dratini,https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show,◇,Genetic Apex (A1) Mewtwo,Dragon,70,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 184,Dragonair,https://img.game8.co/3998333/2ca1b85a1456c467fff8cb87311a664f.png/show,◇◇,Genetic Apex (A1) Mewtwo,Dragon,100,Stage 1,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 185,Dragonite,https://img.game8.co/4003421/af570ea43d94164a13b55142bc5b1fa1.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Dragon,160,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 186,Pidgey,https://img.game8.co/4003534/fdc6097918ecbb22868016dca585436b.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 187,Pidgeotto,https://img.game8.co/4003533/a3bfe78f284f53cd9f7a57c6ad68b1df.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,80,Stage 1,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 188,Pidgeot,https://img.game8.co/4006597/3d0ed642832267973161fd7fc47b9030.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,130,Stage 2,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 189,Rattata,https://img.game8.co/3998358/24efbd2c57e5649137de00885ac585bd.png/show,◇,Genetic Apex (A1) Any,Colorless,40,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 190,Raticate,https://img.game8.co/3998331/29e6dd0a73fe1c5a7e501d6feef5ec2d.png/show,◇,Genetic Apex (A1) Any,Colorless,80,Stage 1,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 191,Spearow,https://img.game8.co/3998365/89349bf1d4c0e933497b75eded7999bd.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 192,Fearow,https://img.game8.co/4003426/646690e32240925f624e7381d62f6a6b.png/show,◇,Genetic Apex (A1) Charizard,Colorless,100,Stage 1,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 193,Jigglypuff,https://img.game8.co/3999116/163dec7f3e18d728bb575bc6ec8c321f.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 194,Wigglytuff,https://img.game8.co/3999117/6f1c22b3e7cee7a7b05a18b77aceae26.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,100,Stage 1,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 195,Wigglytuff ex,https://img.game8.co/4006323/10185c388a698bdcc9e96053a8883105.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,500 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 196,Meowth,https://img.game8.co/3999118/f0ce29d5b9e703e0c85183b1afa93713.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 197,Persian,https://img.game8.co/4009508/6b5fcd585a8e52a04dff37f54a319674.png/show,◇◇,Genetic Apex (A1) Charizard,Colorless,90,Stage 1,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 198,Farfetch'd,https://img.game8.co/4006687/fec322f353d485852448532daf965ed9.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 199,Doduo,https://img.game8.co/3998347/5f8c5ff7f95309a33889be335c4a3a5f.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 200,Dodrio,https://img.game8.co/4003419/feccf1ec597240eea0633c9319bd861a.png/show,◇◇,Genetic Apex (A1) Any,Colorless,80,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 201,Lickitung,https://img.game8.co/4009513/16f6903244a08ad04f9eeba2ed6b9562.png/show,◇◇,Genetic Apex (A1) Mewtwo,Colorless,90,Basic,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 202,Chansey,https://img.game8.co/3995524/d4fe3c763412829163530d0487b66fa9.png/show,◇◇,Genetic Apex (A1) Pikachu,Colorless,120,Basic,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 203,Kangaskhan,https://img.game8.co/4009509/39571d714f2f68445e9b226a2c5055bf.png/show,◇◇◇,Genetic Apex (A1) Charizard,Colorless,100,Basic,150 Pts,Open Genetic Apex (A1) Charizard packs
-A1 204,Tauros,https://img.game8.co/3998359/9c2495056e4d0350365eb0699277958a.png/show,◇◇,Genetic Apex (A1) Charizard,Colorless,100,Basic,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 205,Ditto,https://img.game8.co/4003418/2a104f0b39f147c50bca1e3952ce2c58.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,70,Basic,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 206,Eevee,https://img.game8.co/3998362/7414dbc982903a3dd6cd529191995b9c.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 207,Eevee,https://img.game8.co/4006686/3a6c16b9882a68e59dcd0f1df302a4f8.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 208,Eevee,https://img.game8.co/4003423/5a2cc74f2cffa9d2a797f3f3763ba5e3.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,60,Basic,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 209,Porygon,https://img.game8.co/4003538/0f6b9055a3507b991fde9ad4c3d8b132.png/show,◇◇,Genetic Apex (A1) Mewtwo,Colorless,50,Basic,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 210,Aerodactyl,https://img.game8.co/4006291/ef10efd87d7c93de71dcbbc53b1a1071.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,100,Stage 1,150 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 211,Snorlax,https://img.game8.co/3995575/e6da282941f70b4987f0cdb44eef162c.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Colorless,150,Basic,150 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 212,Minccino,https://img.game8.co/4003523/bde0c5085b4496c3b48b2e76e39ab9d7.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 213,Cinccino,https://img.game8.co/3998346/cfc0a80b75fc6b58456086578f6d925a.png/show,◇◇,Genetic Apex (A1) Any,Colorless,90,Stage 1,70 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 214,Wooloo,https://img.game8.co/3995583/0aa65f7e80849f5ff5075a7b4ceb4bcf.png/show,◇,Genetic Apex (A1) Any,Colorless,70,Basic,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 215,Dubwool,https://img.game8.co/3998330/756181084ff47181399e8a4f53547840.png/show,◇,Genetic Apex (A1) Any,Colorless,120,Stage 1,35 Pts,"Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 216,Helix Fossil,https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show,◇,Genetic Apex (A1) Pikachu,Item,,,35 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 217,Dome Fossil,https://img.game8.co/4003420/3a48e38a9b18a8b2cbbe31cf2ab073ce.png/show,◇,Genetic Apex (A1) Charizard,Item,,,35 Pts,Open Genetic Apex (A1) Charizard packs
-A1 218,Old Amber,https://img.game8.co/4004046/7f7c477d6e42fd30ea75f71d6e26d51b.png/show,◇,Genetic Apex (A1) Mewtwo,Item,,,35 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 219,Erika,https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 220,Misty,https://img.game8.co/4000884/23ddf240cf20e7f45d028c39b070072e.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 221,Blaine,https://img.game8.co/4003402/360b3b8340f9bb16d72ccfcee2e77d48.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 222,Koga,https://img.game8.co/4006599/5e73bc4a027588078823269865149861.png/show,◇◇,Genetic Apex (A1) Mewtwo,Supporter,,,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 223,Giovanni,https://img.game8.co/4004047/6feadf37e41d8f0974ff9041ea4e5612.png/show,◇◇,Genetic Apex (A1) Mewtwo,Supporter,,,70 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 224,Brock,https://img.game8.co/3995521/f1b8235c638e64025383439980233625.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 225,Sabrina,https://img.game8.co/4000883/c336f16fef841ed9fd954977a134344e.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts,Open Genetic Apex (A1) Charizard packs
-A1 226,Lt. Surge,https://img.game8.co/4003515/ad83ced6f5c6f10d8a78640d1a1d497f.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 227,Bulbasaur,https://img.game8.co/3998329/0e9fc1153da201124cf34cf3b2e19e85.png/show,☆,Genetic Apex (A1) Mewtwo,Grass,70,Basic,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 228,Gloom,https://img.game8.co/4003430/8f731654dfe6ac762a19e7c97d160106.png/show,☆,Genetic Apex (A1) Charizard,Grass,80,Stage 1,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 229,Pinsir,https://img.game8.co/4003536/36d7faa5f69430099603927d89739743.png/show,☆,Genetic Apex (A1) Charizard,Grass,90,Basic,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 230,Charmander,https://img.game8.co/3998370/8d22416e59377d0a7b264435acd74d5c.png/show,☆,Genetic Apex (A1) Charizard,Fire,60,Basic,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 231,Rapidash,https://img.game8.co/4003540/39df1d269f5fc61d07c7be1cf36edf0c.png/show,☆,Genetic Apex (A1) Charizard,Fire,100,Stage 1,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 232,Squirtle,https://img.game8.co/3995576/fdbc69a9416a23429a33d8b7bddabecc.png/show,☆,Genetic Apex (A1) Pikachu,Water,60,Basic,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 233,Gyarados,https://img.game8.co/4003510/43149edce21c416e7bfc25466f4a50d8.png/show,☆,Genetic Apex (A1) Pikachu,Water,150,Stage 1,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 234,Lapras,https://img.game8.co/3995546/5565a86b915faf786b67c13bce355030.png/show,☆,Genetic Apex (A1) Charizard,Water,100,Basic,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 235,Electrode,https://img.game8.co/4006299/164e655e9ef51c7e87b0088a8e11f76d.png/show,☆,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 236,Alakazam,https://img.game8.co/4003398/2781900ee1e5f71b5a4a7c3213c915f7.png/show,☆,Genetic Apex (A1) Charizard,Psychic,130,Stage 2,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 237,Slowpoke,https://img.game8.co/4003543/5770fc7a4878760c0d2b322579f5db07.png/show,☆,Genetic Apex (A1) Charizard,Psychic,70,Basic,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 238,Diglett,https://img.game8.co/4003415/948ac4c249bf3f8b2d6f7e6958c7a745.png/show,☆,Genetic Apex (A1) Pikachu,Fighting,50,Basic,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 239,Cubone,https://img.game8.co/4006296/76cce8fcd59a1569404181bc2b401de6.png/show,☆,Genetic Apex (A1) Mewtwo,Fighting,60,Basic,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 240,Nidoqueen,https://img.game8.co/4003525/cb4f6f4897b3974c41576d102b7ab4ca.png/show,☆,Genetic Apex (A1) Pikachu,Darkness,140,Stage 2,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 241,Nidoking,https://img.game8.co/4006825/6a1b3b097957a4a0637a1cafcc57c879.png/show,☆,Genetic Apex (A1) Pikachu,Darkness,150,Stage 2,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 242,Golbat,https://img.game8.co/4003506/2a1cd3c9b1fdcbb900b0ce2886d1ec43.png/show,☆,Genetic Apex (A1) Mewtwo,Darkness,40,Stage 1,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 243,Weezing,https://img.game8.co/4003552/5626c04911ff7b0a31ca2da102a72b70.png/show,☆,Genetic Apex (A1) Mewtwo,Darkness,110,Stage 1,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 244,Dragonite,https://img.game8.co/4006603/a78574d9760d8f46021f9f2044256e41.png/show,☆,Genetic Apex (A1) Mewtwo,Dragon,160,Stage 2,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 245,Pidgeot,https://img.game8.co/3995559/0eaf9c41df36639f10e40dc720e33c0a.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,130,Stage 2,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 246,Meowth,https://img.game8.co/3995550/8168097e123bb4e439ff7e4258a4948d.png/show,☆,Genetic Apex (A1) Charizard,Colorless,60,Basic,400 Pts,Open Genetic Apex (A1) Charizard packs
-A1 247,Ditto,https://img.game8.co/4003417/bf41eda948bc197b182a5164fe7b314b.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,70,Basic,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 248,Eevee,https://img.game8.co/4006298/a3f453ef2786fd0d620f98d4d6b6ba4b.png/show,☆,Genetic Apex (A1) Pikachu,Colorless,60,Basic,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 249,Porygon,https://img.game8.co/4003537/09592d9582fbb1e5cd78be13565c2a87.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,50,Basic,400 Pts,Open Genetic Apex (A1) Mewtwo packs
-A1 250,Snorlax,https://img.game8.co/4006318/f113d0e6bb96dd18cb6ed0094279c25d.png/show,☆,Genetic Apex (A1) Pikachu,Colorless,150,Basic,400 Pts,Open Genetic Apex (A1) Pikachu packs
-A1 251,Venusaur ex,https://img.game8.co/4006320/46d757ec19e48106d126fb983f6cc3a9.png/show,☆☆,Genetic Apex (A1) Mewtwo,Grass,190,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 252,Exeggutor ex,https://img.game8.co/4006601/069a5adf7809808c40f191f981c87e2e.png/show,☆☆,Genetic Apex (A1) Charizard,Grass,160,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 253,Charizard ex,https://img.game8.co/3995525/18e37c47affcd450ba9c796c8d61df82.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,180,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 254,Arcanine ex,https://img.game8.co/4006604/7c2541e061600e9c8906866c46e61f6d.png/show,☆☆,Genetic Apex (A1) Pikachu,Fire,150,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 255,Moltres ex,https://img.game8.co/3995555/69a05c43883158f9223dcefcbeb836b8.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,140,Basic,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 256,Blastoise ex,https://img.game8.co/4003404/74a6d7a3866978dfd12b6fbbdd3ec049.png/show,☆☆,Genetic Apex (A1) Pikachu,Water,180,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 257,Starmie ex,https://img.game8.co/4006319/658ece44b06ffe49270ed013a4d992f2.png/show,☆☆,Genetic Apex (A1) Charizard,Water,130,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 258,Articuno ex,https://img.game8.co/4006292/f18219733f9466a19ab2b3c21b4df5dd.png/show,☆☆,Genetic Apex (A1) Mewtwo,Water,140,Basic,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 259,Pikachu ex,https://img.game8.co/4006317/d9eccaae10cd1e6a6e42cdf775d4df3b.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,120,Basic,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 260,Zapdos ex,https://img.game8.co/4006324/72931228894858cb2a0f917c118b8b10.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,130,Basic,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 261,Gengar ex,https://img.game8.co/4009511/4c11bbf1d9de86d55e5364cb86886b0d.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 262,Mewtwo ex,https://img.game8.co/4006310/fba1500128ca575a4a98cfbd1c54c694.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 263,Machamp ex,https://img.game8.co/4006307/5d4c7ea056aa8522b2da330627267a25.png/show,☆☆,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 264,Marowak ex,https://img.game8.co/4003519/857dcd5288999d90ec51356bcde97a35.png/show,☆☆,Genetic Apex (A1) Mewtwo,Fighting,140,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 265,Wigglytuff ex,https://img.game8.co/4006322/85193b4d376896a51e19d41f633bbb3c.png/show,☆☆,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 266,Erika,https://img.game8.co/4006301/e377eb2d11dc67d3a56e5d8266ee7dbc.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 267,Misty,https://img.game8.co/4006313/883b68da489048a408c4b042d3e9f3a7.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 268,Blaine,https://img.game8.co/4009514/a2735a2f51c75b7de641e1ffc015093f.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 269,Koga,https://img.game8.co/4004062/0c2bbaf7e3e34c46d1593b6780108de9.png/show,☆☆,Genetic Apex (A1) Mewtwo,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 270,Giovanni,https://img.game8.co/4006600/181c9ad102c86d25cd7fc4110324e035.png/show,☆☆,Genetic Apex (A1) Mewtwo,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 271,Brock,https://img.game8.co/4006295/45b892bab21569de57759d90f85a6368.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 272,Sabrina,https://img.game8.co/3995570/5363412994d6d586a28f14002fd2919d.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 273,Lt. Surge,https://img.game8.co/4006305/8742024b4fa2f2d51cde1662b0207935.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 274,Moltres ex,https://img.game8.co/4006314/4b2780b9486d31b4ba3e676f1efdddfc.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,140,Basic,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 275,Articuno ex,https://img.game8.co/3995518/1a7462d806bf260c2e9d310c79337d86.png/show,☆☆,Genetic Apex (A1) Mewtwo,Water,140,Basic,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 276,Zapdos ex,https://img.game8.co/4006595/b23afefb20009f237f67574c1df4e15e.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,130,Basic,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 277,Gengar ex,https://img.game8.co/4006304/6d99f4800a08971b09a53537d16b3a51.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 278,Machamp ex,https://img.game8.co/4006309/6bf549fc24608f9a0b9ceab9e5a415a0.png/show,☆☆,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,"1,250 Pts",Open Genetic Apex (A1) Charizard packs
-A1 279,Wigglytuff ex,https://img.game8.co/4003553/29add5661f1e274510ee800fc43dead8.png/show,☆☆,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,"1,250 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 280,Charizard ex,https://img.game8.co/4003413/3e370eaf341ab999848cf8897857a14a.png/show,☆☆☆,Genetic Apex (A1) Charizard,Fire,180,Stage 2,"1,500 Pts",Open Genetic Apex (A1) Charizard packs
-A1 281,Pikachu ex,https://img.game8.co/4003535/a81d2d3359e2826570e8d56b0bdc1261.png/show,☆☆☆,Genetic Apex (A1) Pikachu,Lightning,120,Basic,"1,500 Pts",Open Genetic Apex (A1) Pikachu packs
-A1 282,Mewtwo ex,https://img.game8.co/3998374/e2c23965071d31ddee3b44f139828f01.png/show,☆☆☆,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,"1,500 Pts",Open Genetic Apex (A1) Mewtwo packs
-A1 283,Mew,https://img.game8.co/4003521/d4c306cd6e9a7b1b7e329a0b222dcb4c.png/show,☆☆☆,Genetic Apex (A1) Special,Psychic,60,Basic,-,Collect all Kanto Pokedex cards in Genetic Apex (A1) set
-A1 284,Charizard ex,https://img.game8.co/4003412/b421fe6ecd5abf05495d9bc913dac38c.png/show,♛,Genetic Apex (A1) Any,Fire,180,Stage 2,"2,500 Pts","Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 285,Pikachu ex,https://img.game8.co/4006316/ddc5959a5f198f650fc5cd02977cc92c.png/show,♛,Genetic Apex (A1) Any,Lightning,120,Basic,"2,500 Pts","Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
-A1 286,Mewtwo ex,https://img.game8.co/4003522/31cffe0b0a2dccac69c03c84adc1003e.png/show,♛,Genetic Apex (A1) Any,Psychic,150,Basic,"2,500 Pts","Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs"
+number,name,image,rarity,pack_name,type,HP,stage,pack_points
+A1 001,Bulbasaur,https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,70,Basic,35 Pts
+A1 002,Ivysaur,https://img.game8.co/4006820/34e0ae3e3a08bf4586263f804fd42d06.png/show,◇◇,Genetic Apex (A1) Mewtwo,Grass,90,Stage 1,70 Pts
+A1 003,Venusaur,https://img.game8.co/4003548/e62b9303f29d5360acfef5c9a1d8c6d3.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Grass,160,Stage 2,150 Pts
+A1 004,Venusaur ex,https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Grass,190,Stage 2,500 Pts
+A1 005,Caterpie,https://img.game8.co/4004054/ac3d9d05b0255de5e3e1d2e6f5609407.png/show,◇,Genetic Apex (A1) Pikachu,Grass,50,Basic,35 Pts
+A1 006,Metapod,https://img.game8.co/3998380/4ce586957c9259bc8efb497a18d39279.png/show,◇,Genetic Apex (A1) Pikachu,Grass,80,Stage 1,35 Pts
+A1 007,Butterfree,https://img.game8.co/4004057/6ba461fb08292cbabe715b6ead54dfb9.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Grass,120,Stage 2,150 Pts
+A1 008,Weedle,https://img.game8.co/3998345/90945e1d343b71b9b81367632fc6419d.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,50,Basic,35 Pts
+A1 009,Kakuna,https://img.game8.co/3998379/6580ab259f93a510e399d0cd4c6c82d1.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,80,Stage 1,35 Pts
+A1 010,Beedrill,https://img.game8.co/4006294/0ee9cea4b4d3ce61396be4dd82cd9421.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Grass,120,Stage 2,150 Pts
+A1 011,Oddish,https://img.game8.co/3998375/428ea8dcd492a0df8d480a41bb5bc4d0.png/show,◇,Genetic Apex (A1) Charizard,Grass,60,Basic,35 Pts
+A1 012,Gloom,https://img.game8.co/3998364/e57c97310b27c6efac8506d7dd48921b.png/show,◇◇,Genetic Apex (A1) Charizard,Grass,80,Stage 1,70 Pts
+A1 013,Vileplume,https://img.game8.co/4004049/8f7c224f4dde3d6d6012b428d57a748c.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,140,Stage 2,150 Pts
+A1 014,Paras,https://img.game8.co/4006689/109616011b848f2a6858f7f34eafa06a.png/show,◇,Genetic Apex (A1) Pikachu,Grass,70,Basic,35 Pts
+A1 015,Parasect,https://img.game8.co/4004050/ddfd3df6e04bf4b005bd856ced03be18.png/show,◇◇,Genetic Apex (A1) Pikachu,Grass,120,Stage 1,70 Pts
+A1 016,Venonat,https://img.game8.co/4003547/5e326a850486a8ee124abdbc89d4e4b0.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,60,Basic,35 Pts
+A1 017,Venomoth,https://img.game8.co/4004056/277ad272b4379fa0fb3a423da11b729d.png/show,◇◇,Genetic Apex (A1) Mewtwo,Grass,80,Stage 1,70 Pts
+A1 018,Bellsprout,https://img.game8.co/3998361/0bb8f6247718d51699261c3b317fe1e2.png/show,◇,Genetic Apex (A1) Charizard,Grass,60,Basic,35 Pts
+A1 019,Weepinbell,https://img.game8.co/4003551/f3c89b9b13f35dd7a9f7826673294337.png/show,◇◇,Genetic Apex (A1) Charizard,Grass,90,Stage 1,70 Pts
+A1 020,Victreebel,https://img.game8.co/3998369/33445897d312b1f7e399bcd686aff8d8.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,140,Stage 2,150 Pts
+A1 021,Exeggcute,https://img.game8.co/3998366/d833f142d39f949cb107c5ebde8d2cc8.png/show,◇,Genetic Apex (A1) Charizard,Grass,50,Basic,35 Pts
+A1 022,Exeggutor,https://img.game8.co/4006628/4e6a5342b585a516bc44f5b09eac3346.png/show,◇◇◇,Genetic Apex (A1) Charizard,Grass,130,Stage 1,150 Pts
+A1 023,Exeggutor ex,https://img.game8.co/4003424/51e6ed4a578f4c675ff5a1244baaf3d4.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Grass,160,Stage 1,500 Pts
+A1 024,Tangela,https://img.game8.co/3998378/c8049287f4ba1febaef374a272089479.png/show,◇,Genetic Apex (A1) Charizard,Grass,80,Basic,35 Pts
+A1 025,Scyther,https://img.game8.co/4003541/14fb34453ef5a5c42d9d1eb6757eefe3.png/show,◇,Genetic Apex (A1) Mewtwo,Grass,70,Basic,35 Pts
+A1 026,Pinsir,https://img.game8.co/3998396/85716016d8d17502c3856d4d2c2276aa.png/show,◇◇,Genetic Apex (A1) Any,Grass,90,Basic,70 Pts
+A1 027,Cottonee,https://img.game8.co/3998397/fb4a5971f55742782dc4f27c0ff15fa6.png/show,◇,Genetic Apex (A1) Any,Grass,50,Basic,35 Pts
+A1 028,Whimsicott,https://img.game8.co/3998398/8e97268b460993362631b70832e21c9d.png/show,◇◇,Genetic Apex (A1) Any,Grass,80,Stage 1,70 Pts
+A1 029,Petilil,https://img.game8.co/3998419/b455ac123c02f6c732de99735eaa7252.png/show,◇,Genetic Apex (A1) Any,Grass,60,Basic,35 Pts
+A1 030,Lilligant,https://img.game8.co/3998418/e81820ee6cc447493f392500522e5ee2.png/show,◇◇,Genetic Apex (A1) Any,Grass,100,Stage 1,70 Pts
+A1 031,Skiddo,https://img.game8.co/4006629/41624508d971975a45d85a2aacf96ce2.png/show,◇,Genetic Apex (A1) Charizard,Grass,70,Basic,35 Pts
+A1 032,Gogoat,https://img.game8.co/3998368/7f43ea90627358975107d9a4c8d10f35.png/show,◇,Genetic Apex (A1) Charizard,Grass,120,Stage 1,35 Pts
+A1 033,Charmander,https://img.game8.co/3998416/7111224e0f37fe89ebb846f71819eede.png/show,◇,Genetic Apex (A1) Charizard,Fire,60,Basic,35 Pts
+A1 034,Charmeleon,https://img.game8.co/3998417/4d026dbc3730454880ff65ce607f3a11.png/show,◇◇,Genetic Apex (A1) Charizard,Fire,90,Stage 1,70 Pts
+A1 035,Charizard,https://img.game8.co/3995527/abacc583cb2b4f639c07d9642045695b.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,150,Stage 2,150 Pts
+A1 036,Charizard ex,https://img.game8.co/3995526/ac9d9361799eb484958ffd4873a7c091.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fire,180,Stage 2,500 Pts
+A1 037,Vulpix,https://img.game8.co/4003549/d9d1247e0b2a309b5090972bcde080bd.png/show,◇,Genetic Apex (A1) Charizard,Fire,50,Basic,35 Pts
+A1 038,Ninetales,https://img.game8.co/4004066/5355e3320f79bd5ddbac28f0938d55a0.png/show,◇◇,Genetic Apex (A1) Charizard,Fire,90,Stage 1,70 Pts
+A1 039,Growlithe,https://img.game8.co/4003508/3be46036163a4e381ae76d28fc5e0d22.png/show,◇,Genetic Apex (A1) Pikachu,Fire,70,Basic,35 Pts
+A1 040,Arcanine,https://img.game8.co/4003400/2f9c7d5d4ac15b6f3bc1cf7dd3a0573a.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Fire,130,Stage 1,150 Pts
+A1 041,Arcanine ex,https://img.game8.co/4003399/4c2f076ef192173f119eb22a26b79c2b.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Fire,150,Stage 1,500 Pts
+A1 042,Ponyta,https://img.game8.co/3998340/042513122da40bdb24bbb4d9aa94ac8c.png/show,◇,Genetic Apex (A1) Any,Fire,60,Basic,35 Pts
+A1 043,Rapidash,https://img.game8.co/3998414/32d4d0de5496b62ebb673635adb0a6d3.png/show,◇◇,Genetic Apex (A1) Any,Fire,100,Stage 1,70 Pts
+A1 044,Magmar,https://img.game8.co/3995548/76e7e3892ac03f7fed96427ae3471227.png/show,◇,Genetic Apex (A1) Charizard,Fire,80,Basic,35 Pts
+A1 045,Flareon,https://img.game8.co/3998420/23b100d03bec98c9c196c2f1aa8ec53f.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,120,Stage 1,150 Pts
+A1 046,Moltres,https://img.game8.co/3998415/7172694cc4c05519129ba7d82daed78a.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fire,100,Basic,150 Pts
+A1 047,Moltres ex,https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fire,140,Basic,500 Pts
+A1 048,Heatmor,https://img.game8.co/3998429/5d2064be73c52dc19b28b55e63194dfc.png/show,◇,Genetic Apex (A1) Any,Fire,80,Basic,35 Pts
+A1 049,Salandit,https://img.game8.co/3998430/3ae9351100ff3a974da5daddbb884f0e.png/show,◇,Genetic Apex (A1) Mewtwo,Fire,60,Basic,35 Pts
+A1 050,Salazzle,https://img.game8.co/3998343/7bf6c55d29bbc68aeebcee10439ac8ff.png/show,◇,Genetic Apex (A1) Mewtwo,Fire,90,Stage 1,35 Pts
+A1 051,Sizzlipede,https://img.game8.co/4009562/7ebb7e264e76b0147c832713a586d0da.png/show,◇,Genetic Apex (A1) Any,Fire,60,Basic,35 Pts
+A1 052,Centiskorch,https://img.game8.co/3998428/eb959a838599765d74ba341ce551e350.png/show,◇◇,Genetic Apex (A1) Any,Fire,130,Stage 1,70 Pts
+A1 053,Squirtle,https://img.game8.co/4009613/ec28a480cd492b00e08358f1ab8825f1.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts
+A1 054,Wartortle,https://img.game8.co/4003550/72e8caf9f66e3572d2b55a9f1e057b9c.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,80,Stage 1,70 Pts
+A1 055,Blastoise,https://img.game8.co/4003409/7285ece5bb82599b1a1d55caebc554d5.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,150,Stage 2,150 Pts
+A1 056,Blastoise ex,https://img.game8.co/4003405/fc6b1543ab68abd28e0d0b93666aa88e.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Water,180,Stage 2,500 Pts
+A1 057,Psyduck,https://img.game8.co/3995566/cb61632690b48259222114d7a09df5b7.png/show,◇,Genetic Apex (A1) Any,Water,60,Basic,35 Pts
+A1 058,Golduck,https://img.game8.co/3998459/a1e017b103081f39e8de3fdb8e9f8c69.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Stage 1,70 Pts
+A1 059,Poliwag,https://img.game8.co/3998457/12c23d6f600b8e3347c0c832d5006f0b.png/show,◇,Genetic Apex (A1) Charizard,Water,60,Basic,35 Pts
+A1 060,Poliwhirl,https://img.game8.co/4006826/de67ff4ff13cc5b0e22faadbeac6c7ef.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts
+A1 061,Poliwrath,https://img.game8.co/4006828/1bdf9ef3c3b5bf7609cf20f50e19e2d1.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,150,Stage 2,150 Pts
+A1 062,Tentacool,https://img.game8.co/4006829/91eec5ba87f6078bd567471730f55656.png/show,◇,Genetic Apex (A1) Mewtwo,Water,60,Basic,35 Pts
+A1 063,Tentacruel,https://img.game8.co/3998458/64cd10178f355800afc1b565915ee36c.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,110,Stage 1,70 Pts
+A1 064,Seel,https://img.game8.co/3998460/76266868e10d2922b75a48765dfe62ba.png/show,◇,Genetic Apex (A1) Pikachu,Water,80,Basic,35 Pts
+A1 065,Dewgong,https://img.game8.co/4009512/71527afe3e34a581f59655b6a377be1a.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,120,Stage 1,70 Pts
+A1 066,Shellder,https://img.game8.co/3998339/fc01d6b7ff02466837ea9b1e5412aede.png/show,◇,Genetic Apex (A1) Mewtwo,Water,60,Basic,35 Pts
+A1 067,Cloyster,https://img.game8.co/4004053/96b7d3754c42fe6602afa381d78d24d3.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,120,Stage 1,70 Pts
+A1 068,Krabby,https://img.game8.co/3998350/ada9543996209297185fa2c341f937ee.png/show,◇,Genetic Apex (A1) Mewtwo,Water,70,Basic,35 Pts
+A1 069,Kingler,https://img.game8.co/3998493/abf4e60f00e858bba141b09abad9d098.png/show,◇◇,Genetic Apex (A1) Mewtwo,Water,120,Stage 1,70 Pts
+A1 070,Horsea,https://img.game8.co/4004065/56b520f0a72cb4fc66af441ad836940c.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts
+A1 071,Seadra,https://img.game8.co/4009510/380b6d5a2b0d812eefedb05276069db3.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,70,Stage 1,70 Pts
+A1 072,Goldeen,https://img.game8.co/4003507/e5b2bbebbc5581d528e4f1a04e769370.png/show,◇,Genetic Apex (A1) Pikachu,Water,60,Basic,35 Pts
+A1 073,Seaking,https://img.game8.co/4003542/b6a9d04f2690db002130a8bb221eab89.png/show,◇,Genetic Apex (A1) Pikachu,Water,100,Stage 1,35 Pts
+A1 074,Staryu,https://img.game8.co/3998492/54446b2a9146a6b8de5e58bebe938486.png/show,◇,Genetic Apex (A1) Charizard,Water,50,Basic,35 Pts
+A1 075,Starmie,https://img.game8.co/3998357/a0b9d92ae5fe5492c19eef25f9c16bda.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts
+A1 076,Starmie ex,https://img.game8.co/4003544/74f3705c0d05d68b6eafd78d909d6f7a.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Water,130,Stage 1,500 Pts
+A1 077,Magikarp,https://img.game8.co/3995547/e0ed4a55a686a207fb3615b019eaeabc.png/show,◇,Genetic Apex (A1) Pikachu,Water,30,Basic,35 Pts
+A1 078,Gyarados,https://img.game8.co/4003511/dfc29f4deb4bfd57aeeb421bebd7963e.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,150,Stage 1,150 Pts
+A1 079,Lapras,https://img.game8.co/4004052/90ae53c4b2578c10e5fa54fc35d894f7.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,100,Basic,150 Pts
+A1 080,Vaporeon,https://img.game8.co/3995579/edc2fc6a3a756ca04c64309406df20fb.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Water,130,Stage 1,150 Pts
+A1 081,Omanyte,https://img.game8.co/3998490/2b471b4bb21496fa600bef6fd6e0a004.png/show,◇◇,Genetic Apex (A1) Pikachu,Water,90,Stage 1,70 Pts
+A1 082,Omastar,https://img.game8.co/4003532/1207d27ea9377b4e478a05fbafe1104b.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Water,140,Stage 2,150 Pts
+A1 083,Articuno,https://img.game8.co/4003401/85f08a35d3ec58bc3df44f6380963b3b.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Water,100,Basic,150 Pts
+A1 084,Articuno ex,https://img.game8.co/4006293/5f81841bf27137231b254d4a5652f07f.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Water,140,Basic,500 Pts
+A1 085,Ducklett,https://img.game8.co/3998491/fc5844476c9169af97d64aafb4e6b02d.png/show,◇,Genetic Apex (A1) Charizard,Water,50,Basic,35 Pts
+A1 086,Swanna,https://img.game8.co/3998363/a0f26ca95898427319f71be7725fe221.png/show,◇◇,Genetic Apex (A1) Charizard,Water,90,Stage 1,70 Pts
+A1 087,Froakie,https://img.game8.co/3998356/3253d8301d0aa7580b60a42102b04671.png/show,◇,Genetic Apex (A1) Charizard,Water,60,Basic,35 Pts
+A1 088,Frogadier,https://img.game8.co/3998543/d70b39b79ed0b84fa5f80f821d912267.png/show,◇◇,Genetic Apex (A1) Charizard,Water,80,Stage 1,70 Pts
+A1 089,Greninja,https://img.game8.co/3995539/9195cfe2483b2f1213439fac00fc008c.png/show,◇◇◇,Genetic Apex (A1) Charizard,Water,120,Stage 2,150 Pts
+A1 090,Pyukumuku,https://img.game8.co/3998373/c3da27b1f8379fbeb1f7b0919dd39a98.png/show,◇,Genetic Apex (A1) Charizard,Water,70,Basic,35 Pts
+A1 091,Bruxish,https://img.game8.co/4003410/0a8ddfe9ea24fe467034d436821424b4.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Basic,70 Pts
+A1 092,Snom,https://img.game8.co/3998545/f3f9f31036b3689b13e7178938a95511.png/show,◇,Genetic Apex (A1) Any,Water,50,Basic,35 Pts
+A1 093,Frosmoth,https://img.game8.co/3998546/3c05f23cab5b100c71d9822565f832cd.png/show,◇◇,Genetic Apex (A1) Any,Water,90,Stage 1,70 Pts
+A1 094,Pikachu,https://img.game8.co/3995562/df4942ff2ae721eeebcd9a18aed6086d.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts
+A1 095,Raichu,https://img.game8.co/4004063/afcbe335840deda435dba5d2ab2c8428.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,100,Stage 1,150 Pts
+A1 096,Pikachu ex,https://img.game8.co/3995561/9ab8b09b4013f8a5eafb5cd08f8faf11.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Lightning,120,Basic,500 Pts
+A1 097,Magnemite,https://img.game8.co/3998544/35e5ade3f5571739f7354394e96c997f.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts
+A1 098,Magneton,https://img.game8.co/4006934/965f0329be2eab24d7476c9f91ddde38.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,150 Pts
+A1 099,Voltorb,https://img.game8.co/4004039/f9929457cd2eba7f509a4098421bd577.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,60,Basic,35 Pts
+A1 100,Electrode,https://img.game8.co/4004040/bf02e265efb4d9af8a1ed87d316d03d6.png/show,◇◇,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,70 Pts
+A1 101,Electabuzz,https://img.game8.co/3995534/2a00fe7be840d52441121ae1072a30e4.png/show,◇,Genetic Apex (A1) Pikachu,Lightning,70,Basic,35 Pts
+A1 102,Jolteon,https://img.game8.co/4006822/ed62f5a9def93af10a971be762d7c72f.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,90,Stage 1,150 Pts
+A1 103,Zapdos,https://img.game8.co/4006832/42cbfcf6fa53511aa6383c0743577107.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Lightning,100,Basic,150 Pts
+A1 104,Zapdos ex,https://img.game8.co/4003554/f068b46b953ea963da1c8139cfb2c13f.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Lightning,130,Basic,500 Pts
+A1 105,Blitzle,https://img.game8.co/3998587/15228aeea697296839a27955d00f0923.png/show,◇,Genetic Apex (A1) Any,Lightning,60,Basic,35 Pts
+A1 106,Zebstrika,https://img.game8.co/3998338/51a7c6f568cf9f76dd82b06bbdb0f225.png/show,◇◇,Genetic Apex (A1) Any,Lightning,90,Stage 1,70 Pts
+A1 107,Tynamo,https://img.game8.co/4003545/1d1ce66d61a50dc2030e96dd152d1f14.png/show,◇,Genetic Apex (A1) Mewtwo,Lightning,30,Basic,35 Pts
+A1 108,Eelektrik,https://img.game8.co/4004061/5f845c24c20efc13a0074e5e71958472.png/show,◇◇,Genetic Apex (A1) Mewtwo,Lightning,80,Stage 1,70 Pts
+A1 109,Eelektross,https://img.game8.co/4003422/efc24d07c4a4cd932ae71bfd6845877f.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Lightning,140,Stage 2,150 Pts
+A1 110,Helioptile,https://img.game8.co/3998588/0b4ddf3650dca6877055a40d082d63ef.png/show,◇,Genetic Apex (A1) Any,Lightning,60,Basic,35 Pts
+A1 111,Heliolisk,https://img.game8.co/3998589/9ee41cdaf51a7e7711e47857024d2f2d.png/show,◇,Genetic Apex (A1) Any,Lightning,90,Stage 1,35 Pts
+A1 112,Pincurchin,https://img.game8.co/4009612/66b07b414ccc648238bc60ac3d579c6f.png/show,◇◇,Genetic Apex (A1) Any,Lightning,70,Basic,70 Pts
+A1 113,Clefairy,https://img.game8.co/4003414/9dcb35d7fa5082b0b031341014d8d187.png/show,◇,Genetic Apex (A1) Pikachu,Psychic,60,Basic,35 Pts
+A1 114,Clefable,https://img.game8.co/3998609/b2821886651ed293692c8d9cda69b2b5.png/show,◇◇,Genetic Apex (A1) Pikachu,Psychic,100,Stage 1,70 Pts
+A1 115,Abra,https://img.game8.co/4003397/cb58f454e33712f7b5c7e38e14abee70.png/show,◇,Genetic Apex (A1) Charizard,Psychic,60,Basic,35 Pts
+A1 116,Kadabra,https://img.game8.co/3998610/e67b77edfe99fadd96dcdcff683569be.png/show,◇◇,Genetic Apex (A1) Charizard,Psychic,80,Stage 1,70 Pts
+A1 117,Alakazam,https://img.game8.co/4006606/523ab122017000268224172795f85180.png/show,◇◇◇,Genetic Apex (A1) Charizard,Psychic,130,Stage 2,150 Pts
+A1 118,Slowpoke,https://img.game8.co/4009610/201934d9cc6bba93f69c6107bf319376.png/show,◇,Genetic Apex (A1) Any,Psychic,70,Basic,35 Pts
+A1 119,Slowbro,https://img.game8.co/3998608/65feb355a7e4b4c46edb192ed68fab50.png/show,◇◇,Genetic Apex (A1) Any,Psychic,130,Stage 1,70 Pts
+A1 120,Gastly,https://img.game8.co/3998607/dbb93af052f59df016605370ba7a25f7.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,60,Basic,35 Pts
+A1 121,Haunter,https://img.game8.co/3995541/262629502a9a145e53d062c261bdabad.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Stage 1,70 Pts
+A1 122,Gengar,https://img.game8.co/4003429/f120acaa874e2fc0d8a4826d031783db.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,130,Stage 2,150 Pts
+A1 123,Gengar ex,https://img.game8.co/4003428/35f468fe22fdb7583f1fedd87cfba82c.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,500 Pts
+A1 124,Drowzee,https://img.game8.co/4004043/d7ed9c055fa250174c8a9a2d53f146e6.png/show,◇,Genetic Apex (A1) Pikachu,Psychic,70,Basic,35 Pts
+A1 125,Hypno,https://img.game8.co/4003512/f6adfd638f3b3ed7f2543cdc3f0cd64f.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Psychic,100,Stage 1,150 Pts
+A1 126,Mr. Mime,https://img.game8.co/3998933/f157c77e1774830de79d61befc2172f7.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Basic,70 Pts
+A1 127,Jynx,https://img.game8.co/4003514/51ed2e876172360fe15e001de05154d5.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,80,Basic,35 Pts
+A1 128,Mewtwo,https://img.game8.co/4006312/a888b167bfb0b129f0c62577d74f3830.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,120,Basic,150 Pts
+A1 129,Mewtwo ex,https://img.game8.co/3998355/f14c91467792bea73eb38ea1b73c394d.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,500 Pts
+A1 130,Ralts,https://img.game8.co/4004059/9cf2938800ac5ed17bb4dbefb365461b.png/show,◇,Genetic Apex (A1) Mewtwo,Psychic,60,Basic,35 Pts
+A1 131,Kirlia,https://img.game8.co/4006688/ca66f4d7724ac72cf3fd5b22114403c4.png/show,◇◇,Genetic Apex (A1) Mewtwo,Psychic,80,Stage 1,70 Pts
+A1 132,Gardevoir,https://img.game8.co/3995538/8f0a707732a41daba04a4b1ffd8d9924.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Psychic,110,Stage 2,150 Pts
+A1 133,Woobat,https://img.game8.co/3998654/140ea059e27793bccf20b65736701065.png/show,◇,Genetic Apex (A1) Any,Psychic,60,Basic,35 Pts
+A1 134,Swoobat,https://img.game8.co/3998655/07c7ed7eba5487a38e2c8491fb5a52fc.png/show,◇,Genetic Apex (A1) Any,Psychic,60,Stage 1,70 Pts
+A1 135,Golett,https://img.game8.co/4004045/2fd8372c6aaa6014a931e7d369a00a71.png/show,◇,Genetic Apex (A1) Any,Psychic,90,Basic,35 Pts
+A1 136,Golurk,https://img.game8.co/3998652/f676af9d5c04b1985428da54bfcd6523.png/show,◇◇,Genetic Apex (A1) Any,Psychic,140,Stage 1,70 Pts
+A1 137,Sandshrew,https://img.game8.co/3998653/9cd5ea3c6b7bcfbed012db869c788d66.png/show,◇,Genetic Apex (A1) Any,Fighting,70,Basic,35 Pts
+A1 138,Sandslash,https://img.game8.co/3998337/3c00a7468c8a83dbb62d061bc3837e76.png/show,◇◇,Genetic Apex (A1) Any,Fighting,100,Stage 1,70 Pts
+A1 139,Diglett,https://img.game8.co/4003416/cc387415208485e1cdbfc5f2229ad195.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,50,Basic,35 Pts
+A1 140,Dugtrio,https://img.game8.co/4006602/20668efc84e28401fe0525ee3938be74.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,70,Stage 1,70 Pts
+A1 141,Mankey,https://img.game8.co/4003518/3d568ebec7d930e269a876b272a89c3d.png/show,◇,Genetic Apex (A1) Charizard,Fighting,60,Basic,35 Pts
+A1 142,Primeape,https://img.game8.co/4003539/652b8c2e0e991bf7686eb8d33e8abfdf.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,90,Stage 1,70 Pts
+A1 143,Machop,https://img.game8.co/4006823/a5258bec9738adf95e20c5f2004f3295.png/show,◇,Genetic Apex (A1) Charizard,Fighting,70,Basic,35 Pts
+A1 144,Machoke,https://img.game8.co/3998367/91aa9c0103b3c854a5889540016b06b4.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,100,Stage 1,70 Pts
+A1 145,Machamp,https://img.game8.co/4006935/6891fd5c942d46afed777d8dfbc27532.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fighting,150,Stage 2,150 Pts
+A1 146,Machamp ex,https://img.game8.co/4003517/742fb22918369ddb455472957cdf3462.png/show,◇◇◇◇,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,500 Pts
+A1 147,Geodude,https://img.game8.co/3998371/392f079998fdfa85aa1d8aa6993dc77b.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,70,Basic,35 Pts
+A1 148,Graveler,https://img.game8.co/4004064/b7fe0f284816cd08978b1d02e65762e5.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,100,Stage 1,70 Pts
+A1 149,Golem,https://img.game8.co/4006818/129f5a8b18e4c38b62469ed4961570bb.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Fighting,160,Stage 2,150 Pts
+A1 150,Onix,https://img.game8.co/3998961/a882e91232b19cd8d3de86e8f0b08b9d.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,110,Basic,70 Pts
+A1 151,Cubone,https://img.game8.co/3995528/14c693825b41c11e9a375b8aeae8a3fc.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,60,Basic,35 Pts
+A1 152,Marowak,https://img.game8.co/4006936/78aa9b9f6c3afbfc7f3a364c68ed425f.png/show,◇◇,Genetic Apex (A1) Mewtwo,Fighting,100,Stage 1,70 Pts
+A1 153,Marowak ex,https://img.game8.co/3998336/89619844d0b1b7c0c61573adf4fb56c0.png/show,◇◇◇◇,Genetic Apex (A1) Mewtwo,Fighting,140,Stage 1,500 Pts
+A1 154,Hitmonlee,https://img.game8.co/4009611/c81a5efaba0ec70d68defa66c676b144.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,80,Basic,35 Pts
+A1 155,Hitmonchan,https://img.game8.co/3998372/d89cdb8b06afb9380a0627fc2dc162cd.png/show,◇,Genetic Apex (A1) Charizard,Fighting,80,Basic,35 Pts
+A1 156,Rhyhorn,https://img.game8.co/3998349/c1b8fd39fce0da3ae342fb130f098f68.png/show,◇,Genetic Apex (A1) Mewtwo,Fighting,80,Basic,35 Pts
+A1 157,Rhydon,https://img.game8.co/4006831/cf3cc442a7229012ace62b92e5ccfab8.png/show,◇◇,Genetic Apex (A1) Mewtwo,Fighting,120,Stage 1,70 Pts
+A1 158,Kabuto,https://img.game8.co/3998959/d47b9c4995dd0c85e0ca90f15bd798b3.png/show,◇◇,Genetic Apex (A1) Charizard,Fighting,90,Stage 1,70 Pts
+A1 159,Kabutops,https://img.game8.co/3998958/b625adc521236a0ae506a5ee5b6ea0ee.png/show,◇◇◇,Genetic Apex (A1) Charizard,Fighting,140,Stage 2,150 Pts
+A1 160,Mienfoo,https://img.game8.co/3995554/923feac2e8d16e4be2fde3ce671afd7c.png/show,◇,Genetic Apex (A1) Pikachu,Fighting,60,Basic,35 Pts
+A1 161,Mienshao,https://img.game8.co/3998957/dd421699db038c54b63aa24a0623d4d3.png/show,◇◇,Genetic Apex (A1) Pikachu,Fighting,80,Stage 1,70 Pts
+A1 162,Clobbopus,https://img.game8.co/3998360/44a15bfe556073283b8fe8c4cce4e6db.png/show,◇,Genetic Apex (A1) Any,Fighting,80,Basic,35 Pts
+A1 163,Grapploct,https://img.game8.co/3998996/9b610f5a691406f3b3ecc538d82fd59a.png/show,◇◇,Genetic Apex (A1) Any,Fighting,130,Stage 1,70 Pts
+A1 164,Ekans,https://img.game8.co/3998994/28c1cb93a5337e59f957c8e66d857391.png/show,◇,Genetic Apex (A1) Any,Darkness,60,Basic,35 Pts
+A1 165,Arbok,https://img.game8.co/3998348/8b30a6669f1d16c249143ec1f98b581e.png/show,◇◇,Genetic Apex (A1) Any,Darkness,100,Stage 1,70 Pts
+A1 166,Nidoran F,https://img.game8.co/4003527/1c1cfc36c52855f8c573771698b8d40e.png/show,◇,Genetic Apex (A1) Pikachu,Darkness,60,Basic,35 Pts
+A1 167,Nidorina,https://img.game8.co/3998995/3b3faf7b23b84f0d79c922bc9050b94b.png/show,◇◇,Genetic Apex (A1) Pikachu,Darkness,80,Stage 1,70 Pts
+A1 168,Nidoqueen,https://img.game8.co/4003526/f134aa8ae2dedc30cac2a52cfb329a09.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Darkness,140,Stage 2,150 Pts
+A1 169,Nidoran M,https://img.game8.co/4003529/134e97a2d6d2c075fa7190920210040d.png/show,◇,Genetic Apex (A1) Pikachu,Darkness,60,Basic,35 Pts
+A1 170,Nidorino,https://img.game8.co/4003531/2d3114a26ae095fb998e4ebe30a56c2f.png/show,◇◇,Genetic Apex (A1) Pikachu,Darkness,90,Stage 1,70 Pts
+A1 171,Nidoking,https://img.game8.co/3998341/f11efea55a7ac2d2f76ed2e33ba4f154.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Darkness,150,Stage 2,150 Pts
+A1 172,Zubat,https://img.game8.co/3998992/6e058f983a528a4780ee49f26650a41c.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,50,Basic,35 Pts
+A1 173,Golbat,https://img.game8.co/3998993/dae8b0ddb240315d058f9dd03ddba4ea.png/show,◇◇,Genetic Apex (A1) Mewtwo,Darkness,40,Stage 1,70 Pts
+A1 174,Grimer,https://img.game8.co/4006819/f16b9a744bafa482dbc2919c3e16e92b.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,70,Basic,35 Pts
+A1 175,Muk,https://img.game8.co/4006607/2a9dbb46ee7397e46f1822a43cd273f7.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Darkness,130,Stage 1,150 Pts
+A1 176,Koffing,https://img.game8.co/3998344/f9f63ebe9697671e81da2790e62d7833.png/show,◇,Genetic Apex (A1) Mewtwo,Darkness,70,Basic,35 Pts
+A1 177,Weezing,https://img.game8.co/4006321/3d637c863dc335eb1074e3057f6af701.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Darkness,110,Stage 1,150 Pts
+A1 178,Mawile,https://img.game8.co/3999024/d88e034430a8535db19a66f7aa325e81.png/show,◇,Genetic Apex (A1) Charizard,Metal,70,Basic,35 Pts
+A1 179,Pawniard,https://img.game8.co/3999023/3b7eb0ffdb3105eae0662a50b2e33aa2.png/show,◇,Genetic Apex (A1) Any,Metal,50,Basic,35 Pts
+A1 180,Bisharp,https://img.game8.co/3999025/ee0b3d044bd8994cd6bbd39f1c27613f.png/show,◇◇,Genetic Apex (A1) Any,Metal,70,Stage 1,70 Pts
+A1 181,Meltan,https://img.game8.co/4009609/e5cd8c0ef45c681ac2fd0fe541668e0e.png/show,◇,Genetic Apex (A1) Charizard,Metal,70,Basic,35 Pts
+A1 182,Melmetal,https://img.game8.co/4006824/9fa907a861b732c1633f0214bd53f9a8.png/show,◇◇◇,Genetic Apex (A1) Charizard,Metal,130,Stage 1,150 Pts
+A1 183,Dratini,https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show,◇,Genetic Apex (A1) Mewtwo,Dragon,70,Basic,35 Pts
+A1 184,Dragonair,https://img.game8.co/3998333/2ca1b85a1456c467fff8cb87311a664f.png/show,◇◇,Genetic Apex (A1) Mewtwo,Dragon,100,Stage 1,70 Pts
+A1 185,Dragonite,https://img.game8.co/4003421/af570ea43d94164a13b55142bc5b1fa1.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Dragon,160,Stage 2,150 Pts
+A1 186,Pidgey,https://img.game8.co/4003534/fdc6097918ecbb22868016dca585436b.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,60,Basic,35 Pts
+A1 187,Pidgeotto,https://img.game8.co/4003533/a3bfe78f284f53cd9f7a57c6ad68b1df.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,80,Stage 1,35 Pts
+A1 188,Pidgeot,https://img.game8.co/4006597/3d0ed642832267973161fd7fc47b9030.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,130,Stage 2,150 Pts
+A1 189,Rattata,https://img.game8.co/3998358/24efbd2c57e5649137de00885ac585bd.png/show,◇,Genetic Apex (A1) Any,Colorless,40,Basic,35 Pts
+A1 190,Raticate,https://img.game8.co/3998331/29e6dd0a73fe1c5a7e501d6feef5ec2d.png/show,◇,Genetic Apex (A1) Any,Colorless,80,Stage 1,35 Pts
+A1 191,Spearow,https://img.game8.co/3998365/89349bf1d4c0e933497b75eded7999bd.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts
+A1 192,Fearow,https://img.game8.co/4003426/646690e32240925f624e7381d62f6a6b.png/show,◇,Genetic Apex (A1) Charizard,Colorless,100,Stage 1,35 Pts
+A1 193,Jigglypuff,https://img.game8.co/3999116/163dec7f3e18d728bb575bc6ec8c321f.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,60,Basic,35 Pts
+A1 194,Wigglytuff,https://img.game8.co/3999117/6f1c22b3e7cee7a7b05a18b77aceae26.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,100,Stage 1,35 Pts
+A1 195,Wigglytuff ex,https://img.game8.co/4006323/10185c388a698bdcc9e96053a8883105.png/show,◇◇◇◇,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,500 Pts
+A1 196,Meowth,https://img.game8.co/3999118/f0ce29d5b9e703e0c85183b1afa93713.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts
+A1 197,Persian,https://img.game8.co/4009508/6b5fcd585a8e52a04dff37f54a319674.png/show,◇◇,Genetic Apex (A1) Charizard,Colorless,90,Stage 1,70 Pts
+A1 198,Farfetch'd,https://img.game8.co/4006687/fec322f353d485852448532daf965ed9.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts
+A1 199,Doduo,https://img.game8.co/3998347/5f8c5ff7f95309a33889be335c4a3a5f.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts
+A1 200,Dodrio,https://img.game8.co/4003419/feccf1ec597240eea0633c9319bd861a.png/show,◇◇,Genetic Apex (A1) Any,Colorless,80,Stage 1,70 Pts
+A1 201,Lickitung,https://img.game8.co/4009513/16f6903244a08ad04f9eeba2ed6b9562.png/show,◇◇,Genetic Apex (A1) Mewtwo,Colorless,90,Basic,70 Pts
+A1 202,Chansey,https://img.game8.co/3995524/d4fe3c763412829163530d0487b66fa9.png/show,◇◇,Genetic Apex (A1) Pikachu,Colorless,120,Basic,70 Pts
+A1 203,Kangaskhan,https://img.game8.co/4009509/39571d714f2f68445e9b226a2c5055bf.png/show,◇◇◇,Genetic Apex (A1) Charizard,Colorless,100,Basic,150 Pts
+A1 204,Tauros,https://img.game8.co/3998359/9c2495056e4d0350365eb0699277958a.png/show,◇◇,Genetic Apex (A1) Charizard,Colorless,100,Basic,70 Pts
+A1 205,Ditto,https://img.game8.co/4003418/2a104f0b39f147c50bca1e3952ce2c58.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,70,Basic,150 Pts
+A1 206,Eevee,https://img.game8.co/3998362/7414dbc982903a3dd6cd529191995b9c.png/show,◇,Genetic Apex (A1) Charizard,Colorless,60,Basic,35 Pts
+A1 207,Eevee,https://img.game8.co/4006686/3a6c16b9882a68e59dcd0f1df302a4f8.png/show,◇,Genetic Apex (A1) Mewtwo,Colorless,60,Basic,35 Pts
+A1 208,Eevee,https://img.game8.co/4003423/5a2cc74f2cffa9d2a797f3f3763ba5e3.png/show,◇,Genetic Apex (A1) Pikachu,Colorless,60,Basic,35 Pts
+A1 209,Porygon,https://img.game8.co/4003538/0f6b9055a3507b991fde9ad4c3d8b132.png/show,◇◇,Genetic Apex (A1) Mewtwo,Colorless,50,Basic,70 Pts
+A1 210,Aerodactyl,https://img.game8.co/4006291/ef10efd87d7c93de71dcbbc53b1a1071.png/show,◇◇◇,Genetic Apex (A1) Mewtwo,Colorless,100,Stage 1,150 Pts
+A1 211,Snorlax,https://img.game8.co/3995575/e6da282941f70b4987f0cdb44eef162c.png/show,◇◇◇,Genetic Apex (A1) Pikachu,Colorless,150,Basic,150 Pts
+A1 212,Minccino,https://img.game8.co/4003523/bde0c5085b4496c3b48b2e76e39ab9d7.png/show,◇,Genetic Apex (A1) Any,Colorless,60,Basic,35 Pts
+A1 213,Cinccino,https://img.game8.co/3998346/cfc0a80b75fc6b58456086578f6d925a.png/show,◇◇,Genetic Apex (A1) Any,Colorless,90,Stage 1,70 Pts
+A1 214,Wooloo,https://img.game8.co/3995583/0aa65f7e80849f5ff5075a7b4ceb4bcf.png/show,◇,Genetic Apex (A1) Any,Colorless,70,Basic,35 Pts
+A1 215,Dubwool,https://img.game8.co/3998330/756181084ff47181399e8a4f53547840.png/show,◇,Genetic Apex (A1) Any,Colorless,120,Stage 1,35 Pts
+A1 216,Helix Fossil,https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show,◇,Genetic Apex (A1) Pikachu,Item,,,35 Pts
+A1 217,Dome Fossil,https://img.game8.co/4003420/3a48e38a9b18a8b2cbbe31cf2ab073ce.png/show,◇,Genetic Apex (A1) Charizard,Item,,,35 Pts
+A1 218,Old Amber,https://img.game8.co/4004046/7f7c477d6e42fd30ea75f71d6e26d51b.png/show,◇,Genetic Apex (A1) Mewtwo,Item,,,35 Pts
+A1 219,Erika,https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts
+A1 220,Misty,https://img.game8.co/4000884/23ddf240cf20e7f45d028c39b070072e.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts
+A1 221,Blaine,https://img.game8.co/4003402/360b3b8340f9bb16d72ccfcee2e77d48.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts
+A1 222,Koga,https://img.game8.co/4006599/5e73bc4a027588078823269865149861.png/show,◇◇,Genetic Apex (A1) Mewtwo,Supporter,,,70 Pts
+A1 223,Giovanni,https://img.game8.co/4004047/6feadf37e41d8f0974ff9041ea4e5612.png/show,◇◇,Genetic Apex (A1) Mewtwo,Supporter,,,70 Pts
+A1 224,Brock,https://img.game8.co/3995521/f1b8235c638e64025383439980233625.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts
+A1 225,Sabrina,https://img.game8.co/4000883/c336f16fef841ed9fd954977a134344e.png/show,◇◇,Genetic Apex (A1) Charizard,Supporter,,,70 Pts
+A1 226,Lt. Surge,https://img.game8.co/4003515/ad83ced6f5c6f10d8a78640d1a1d497f.png/show,◇◇,Genetic Apex (A1) Pikachu,Supporter,,,70 Pts
+A1 227,Bulbasaur,https://img.game8.co/3998329/0e9fc1153da201124cf34cf3b2e19e85.png/show,☆,Genetic Apex (A1) Mewtwo,Grass,70,Basic,400 Pts
+A1 228,Gloom,https://img.game8.co/4003430/8f731654dfe6ac762a19e7c97d160106.png/show,☆,Genetic Apex (A1) Charizard,Grass,80,Stage 1,400 Pts
+A1 229,Pinsir,https://img.game8.co/4003536/36d7faa5f69430099603927d89739743.png/show,☆,Genetic Apex (A1) Charizard,Grass,90,Basic,400 Pts
+A1 230,Charmander,https://img.game8.co/3998370/8d22416e59377d0a7b264435acd74d5c.png/show,☆,Genetic Apex (A1) Charizard,Fire,60,Basic,400 Pts
+A1 231,Rapidash,https://img.game8.co/4003540/39df1d269f5fc61d07c7be1cf36edf0c.png/show,☆,Genetic Apex (A1) Charizard,Fire,100,Stage 1,400 Pts
+A1 232,Squirtle,https://img.game8.co/3995576/fdbc69a9416a23429a33d8b7bddabecc.png/show,☆,Genetic Apex (A1) Pikachu,Water,60,Basic,400 Pts
+A1 233,Gyarados,https://img.game8.co/4003510/43149edce21c416e7bfc25466f4a50d8.png/show,☆,Genetic Apex (A1) Pikachu,Water,150,Stage 1,400 Pts
+A1 234,Lapras,https://img.game8.co/3995546/5565a86b915faf786b67c13bce355030.png/show,☆,Genetic Apex (A1) Charizard,Water,100,Basic,400 Pts
+A1 235,Electrode,https://img.game8.co/4006299/164e655e9ef51c7e87b0088a8e11f76d.png/show,☆,Genetic Apex (A1) Pikachu,Lightning,80,Stage 1,400 Pts
+A1 236,Alakazam,https://img.game8.co/4003398/2781900ee1e5f71b5a4a7c3213c915f7.png/show,☆,Genetic Apex (A1) Charizard,Psychic,130,Stage 2,400 Pts
+A1 237,Slowpoke,https://img.game8.co/4003543/5770fc7a4878760c0d2b322579f5db07.png/show,☆,Genetic Apex (A1) Charizard,Psychic,70,Basic,400 Pts
+A1 238,Diglett,https://img.game8.co/4003415/948ac4c249bf3f8b2d6f7e6958c7a745.png/show,☆,Genetic Apex (A1) Pikachu,Fighting,50,Basic,400 Pts
+A1 239,Cubone,https://img.game8.co/4006296/76cce8fcd59a1569404181bc2b401de6.png/show,☆,Genetic Apex (A1) Mewtwo,Fighting,60,Basic,400 Pts
+A1 240,Nidoqueen,https://img.game8.co/4003525/cb4f6f4897b3974c41576d102b7ab4ca.png/show,☆,Genetic Apex (A1) Pikachu,Darkness,140,Stage 2,400 Pts
+A1 241,Nidoking,https://img.game8.co/4006825/6a1b3b097957a4a0637a1cafcc57c879.png/show,☆,Genetic Apex (A1) Pikachu,Darkness,150,Stage 2,400 Pts
+A1 242,Golbat,https://img.game8.co/4003506/2a1cd3c9b1fdcbb900b0ce2886d1ec43.png/show,☆,Genetic Apex (A1) Mewtwo,Darkness,40,Stage 1,400 Pts
+A1 243,Weezing,https://img.game8.co/4003552/5626c04911ff7b0a31ca2da102a72b70.png/show,☆,Genetic Apex (A1) Mewtwo,Darkness,110,Stage 1,400 Pts
+A1 244,Dragonite,https://img.game8.co/4006603/a78574d9760d8f46021f9f2044256e41.png/show,☆,Genetic Apex (A1) Mewtwo,Dragon,160,Stage 2,400 Pts
+A1 245,Pidgeot,https://img.game8.co/3995559/0eaf9c41df36639f10e40dc720e33c0a.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,130,Stage 2,400 Pts
+A1 246,Meowth,https://img.game8.co/3995550/8168097e123bb4e439ff7e4258a4948d.png/show,☆,Genetic Apex (A1) Charizard,Colorless,60,Basic,400 Pts
+A1 247,Ditto,https://img.game8.co/4003417/bf41eda948bc197b182a5164fe7b314b.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,70,Basic,400 Pts
+A1 248,Eevee,https://img.game8.co/4006298/a3f453ef2786fd0d620f98d4d6b6ba4b.png/show,☆,Genetic Apex (A1) Pikachu,Colorless,60,Basic,400 Pts
+A1 249,Porygon,https://img.game8.co/4003537/09592d9582fbb1e5cd78be13565c2a87.png/show,☆,Genetic Apex (A1) Mewtwo,Colorless,50,Basic,400 Pts
+A1 250,Snorlax,https://img.game8.co/4006318/f113d0e6bb96dd18cb6ed0094279c25d.png/show,☆,Genetic Apex (A1) Pikachu,Colorless,150,Basic,400 Pts
+A1 251,Venusaur ex,https://img.game8.co/4006320/46d757ec19e48106d126fb983f6cc3a9.png/show,☆☆,Genetic Apex (A1) Mewtwo,Grass,190,Stage 2,"1,250 Pts"
+A1 252,Exeggutor ex,https://img.game8.co/4006601/069a5adf7809808c40f191f981c87e2e.png/show,☆☆,Genetic Apex (A1) Charizard,Grass,160,Stage 1,"1,250 Pts"
+A1 253,Charizard ex,https://img.game8.co/3995525/18e37c47affcd450ba9c796c8d61df82.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,180,Stage 2,"1,250 Pts"
+A1 254,Arcanine ex,https://img.game8.co/4006604/7c2541e061600e9c8906866c46e61f6d.png/show,☆☆,Genetic Apex (A1) Pikachu,Fire,150,Stage 1,"1,250 Pts"
+A1 255,Moltres ex,https://img.game8.co/3995555/69a05c43883158f9223dcefcbeb836b8.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,140,Basic,"1,250 Pts"
+A1 256,Blastoise ex,https://img.game8.co/4003404/74a6d7a3866978dfd12b6fbbdd3ec049.png/show,☆☆,Genetic Apex (A1) Pikachu,Water,180,Stage 2,"1,250 Pts"
+A1 257,Starmie ex,https://img.game8.co/4006319/658ece44b06ffe49270ed013a4d992f2.png/show,☆☆,Genetic Apex (A1) Charizard,Water,130,Stage 1,"1,250 Pts"
+A1 258,Articuno ex,https://img.game8.co/4006292/f18219733f9466a19ab2b3c21b4df5dd.png/show,☆☆,Genetic Apex (A1) Mewtwo,Water,140,Basic,"1,250 Pts"
+A1 259,Pikachu ex,https://img.game8.co/4006317/d9eccaae10cd1e6a6e42cdf775d4df3b.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,120,Basic,"1,250 Pts"
+A1 260,Zapdos ex,https://img.game8.co/4006324/72931228894858cb2a0f917c118b8b10.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,130,Basic,"1,250 Pts"
+A1 261,Gengar ex,https://img.game8.co/4009511/4c11bbf1d9de86d55e5364cb86886b0d.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,"1,250 Pts"
+A1 262,Mewtwo ex,https://img.game8.co/4006310/fba1500128ca575a4a98cfbd1c54c694.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,"1,250 Pts"
+A1 263,Machamp ex,https://img.game8.co/4006307/5d4c7ea056aa8522b2da330627267a25.png/show,☆☆,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,"1,250 Pts"
+A1 264,Marowak ex,https://img.game8.co/4003519/857dcd5288999d90ec51356bcde97a35.png/show,☆☆,Genetic Apex (A1) Mewtwo,Fighting,140,Stage 1,"1,250 Pts"
+A1 265,Wigglytuff ex,https://img.game8.co/4006322/85193b4d376896a51e19d41f633bbb3c.png/show,☆☆,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,"1,250 Pts"
+A1 266,Erika,https://img.game8.co/4006301/e377eb2d11dc67d3a56e5d8266ee7dbc.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts"
+A1 267,Misty,https://img.game8.co/4006313/883b68da489048a408c4b042d3e9f3a7.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts"
+A1 268,Blaine,https://img.game8.co/4009514/a2735a2f51c75b7de641e1ffc015093f.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts"
+A1 269,Koga,https://img.game8.co/4004062/0c2bbaf7e3e34c46d1593b6780108de9.png/show,☆☆,Genetic Apex (A1) Mewtwo,Supporter,,,"1,250 Pts"
+A1 270,Giovanni,https://img.game8.co/4006600/181c9ad102c86d25cd7fc4110324e035.png/show,☆☆,Genetic Apex (A1) Mewtwo,Supporter,,,"1,250 Pts"
+A1 271,Brock,https://img.game8.co/4006295/45b892bab21569de57759d90f85a6368.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts"
+A1 272,Sabrina,https://img.game8.co/3995570/5363412994d6d586a28f14002fd2919d.png/show,☆☆,Genetic Apex (A1) Charizard,Supporter,,,"1,250 Pts"
+A1 273,Lt. Surge,https://img.game8.co/4006305/8742024b4fa2f2d51cde1662b0207935.png/show,☆☆,Genetic Apex (A1) Pikachu,Supporter,,,"1,250 Pts"
+A1 274,Moltres ex,https://img.game8.co/4006314/4b2780b9486d31b4ba3e676f1efdddfc.png/show,☆☆,Genetic Apex (A1) Charizard,Fire,140,Basic,"1,250 Pts"
+A1 275,Articuno ex,https://img.game8.co/3995518/1a7462d806bf260c2e9d310c79337d86.png/show,☆☆,Genetic Apex (A1) Mewtwo,Water,140,Basic,"1,250 Pts"
+A1 276,Zapdos ex,https://img.game8.co/4006595/b23afefb20009f237f67574c1df4e15e.png/show,☆☆,Genetic Apex (A1) Pikachu,Lightning,130,Basic,"1,250 Pts"
+A1 277,Gengar ex,https://img.game8.co/4006304/6d99f4800a08971b09a53537d16b3a51.png/show,☆☆,Genetic Apex (A1) Mewtwo,Psychic,170,Stage 2,"1,250 Pts"
+A1 278,Machamp ex,https://img.game8.co/4006309/6bf549fc24608f9a0b9ceab9e5a415a0.png/show,☆☆,Genetic Apex (A1) Charizard,Fighting,180,Stage 2,"1,250 Pts"
+A1 279,Wigglytuff ex,https://img.game8.co/4003553/29add5661f1e274510ee800fc43dead8.png/show,☆☆,Genetic Apex (A1) Pikachu,Colorless,140,Stage 1,"1,250 Pts"
+A1 280,Charizard ex,https://img.game8.co/4003413/3e370eaf341ab999848cf8897857a14a.png/show,☆☆☆,Genetic Apex (A1) Charizard,Fire,180,Stage 2,"1,500 Pts"
+A1 281,Pikachu ex,https://img.game8.co/4003535/a81d2d3359e2826570e8d56b0bdc1261.png/show,☆☆☆,Genetic Apex (A1) Pikachu,Lightning,120,Basic,"1,500 Pts"
+A1 282,Mewtwo ex,https://img.game8.co/3998374/e2c23965071d31ddee3b44f139828f01.png/show,☆☆☆,Genetic Apex (A1) Mewtwo,Psychic,150,Basic,"1,500 Pts"
+A1 283,Mew,https://img.game8.co/4003521/d4c306cd6e9a7b1b7e329a0b222dcb4c.png/show,☆☆☆,Genetic Apex (A1) Special,Psychic,60,Basic,-
+A1 284,Charizard ex,https://img.game8.co/4003412/b421fe6ecd5abf05495d9bc913dac38c.png/show,♛,Genetic Apex (A1) Any,Fire,180,Stage 2,"2,500 Pts"
+A1 285,Pikachu ex,https://img.game8.co/4006316/ddc5959a5f198f650fc5cd02977cc92c.png/show,♛,Genetic Apex (A1) Any,Lightning,120,Basic,"2,500 Pts"
+A1 286,Mewtwo ex,https://img.game8.co/4003522/31cffe0b0a2dccac69c03c84adc1003e.png/show,♛,Genetic Apex (A1) Any,Psychic,150,Basic,"2,500 Pts"

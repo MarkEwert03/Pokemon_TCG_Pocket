@@ -2,20 +2,27 @@ import csv
 import os
 import bs4
 
+# Raw data found at
+# https://game8.co/games/Pokemon-TCG-Pocket/archives/482685
+
 # Input and output file paths
 input_file = "data/raw/medium.html"
 output_file = "data/processed/medium.csv"
 
 
-def clean_str(string: str) -> str:
+def clean_str(string: str, empty_val : str = "N/A") -> str:
     """
     Remove extra whitespace from a string.
 
     Strips leading and trailing whitespace and collapses
     multiple spaces, tabs, or newlines into a single space.
+    
+    If final output is empty, returns empty_val parameter.
 
     Args:
         string (str): Raw string to be cleaned.
+        empty_vap (str): The value to replace empty strings
+            (optional defaults to `''`)
 
     Returns:
         output (str): Cleaned string with normalized spacing.
@@ -27,8 +34,14 @@ def clean_str(string: str) -> str:
         'Line1 Line2 Line3'
         >>> clean_str("   Multiple    spaces   and\\nnewlines\\t")
         'Multiple spaces and newlines'
+        >>> clean_str("\\t \\n   \\t", empty_val="N/A")
+        'N/A'
     """
-    return " ".join(string.strip().split())
+    output = " ".join(string.strip().split())
+    if output == "":
+        return empty_val
+    else:
+        return output
 
 
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
@@ -76,7 +89,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "pack_points": pack_points
     }
 
-    # Normalize spacing in all fields
+    # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
 
     return card

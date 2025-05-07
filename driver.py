@@ -1,51 +1,68 @@
 import csv
-from bs4 import BeautifulSoup
+import bs4
 
+# Input and output file paths
 input_file = "data/raw/single.html"
 output_file = "data/processed/single.csv"
 
 
-def clean_str(s):
-    """Removes and cleans redundant whitespace characters from strings."""
-    return " ".join(s.strip().split())
+def clean_str(string: str) -> str:
+    """
+    Remove extra whitespace from a string.
+
+    Strips leading and trailing whitespace and collapses
+    multiple spaces, tabs, or newlines into a single space.
+
+    Args:
+        string (str): Raw string to be cleaned.
+
+    Returns:
+        output (str): Cleaned string with normalized spacing.
+
+    Examples:
+        >>> clean_str("   Hello   World   ")
+        'Hello World'
+        >>> clean_str("Line1\\nLine2\\t\\tLine3")
+        'Line1 Line2 Line3'
+        >>> clean_str("   Multiple    spaces   and\\nnewlines\\t")
+        'Multiple spaces and newlines'
+    """
+    return " ".join(string.strip().split())
 
 
-def extract_card(cells):
-    """Extracts and returns pokemon card data as an organized dict."""
-    # cell_0 is checkmark (unnecessary)
+def extract_card(cells: list[bs4.element.Tag]) -> dict[str, str]:
+    """
+    Extract card data from a list of `<td>` elements in a table row.
 
-    # cell_1 is card #
+    This function parses specific columns from the row of HTML table data,
+    extracting structured information such as the card number, name, type, HP,
+    and image link. Cell indices correspond to known table structure.
+
+    Args:
+        cells (list): List of `<td>` tags representing one table row.
+
+    Returns:
+        outpit (dict): Dictionary containing structured card data, with whitespace cleaned.
+        The columns of the outputted dict are `{number, name, image, rarity, pack_name,
+        type, HP, stage, pack_points, how_to_get}`
+    """
+    # cell_0 is checkmark (ignored)
+
+    # Extract card data from each cell
     number = cells[1].text
-
-    # cell_2 is card name, image link
     name = cells[2].find("a").text
     image = cells[2].find("img").get("data-src")
-
-    # cell_3 is rarity
     rarity = cells[3].text
-
-    # cell_4 is exclusive pack
     pack = cells[4].text
-
-    # cell_5 is type
     type = cells[5].find("img")["alt"].split("-")[-1]
-
-    # cell_6 is HP
     HP = cells[6].text
-
-    # cell_7 is stage
     stage = cells[7].text
-
-    # cell_8 is pack points
     pack_points = cells[8].text
-
-    # cell_9 is retreat cost, effect, moves
-    # TODO parse and extract
-
-    # cell_10 is how to get
+    # cell 9 contains retreat cost, effect, and moves data
+    # TODO parse and extract cell_9
     how_to_get = cells[10].text
 
-    # Create dict to store data
+    # Create dictionary with raw data
     card = {
         "number": number,
         "name": name,
@@ -59,14 +76,22 @@ def extract_card(cells):
         "how_to_get": how_to_get,
     }
 
-    # Clean up whitespaces and new lines
+    # Normalize spacing in all fields
     card = {k: clean_str(v) for k, v in card.items()}
 
     return card
 
 
-def write_to_csv(card):
-    """Writes the card data to the output csv file."""
+def write_to_csv(card: dict[str, str]):
+    """
+    Write a dictionary of card data to a CSV file.
+
+    Creates a CSV file at the output path, writes headers based on dictionary keys,
+    and inserts one row of card data.
+
+    Args:
+        card (dict): A dictionary containing cleaned card attributes.
+    """
     fieldnames = card.keys()
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
@@ -75,16 +100,28 @@ def write_to_csv(card):
 
 
 def main():
-    """Run the main function."""
-    with open(input_file, "r", encoding="utf-8") as file:
-        soup = BeautifulSoup(file, "lxml")
+    """
+    Main driver function for HTML parsing and CSV writing.
 
+    This function:
+    - Opens the raw HTML file
+    - Parses it with BeautifulSoup
+    - Extracts one row from a table
+    - Converts it to a structured dictionary
+    - Writes it to a CSV file
+    """
+     # Load and parse the raw HTML file
+    with open(input_file, "r", encoding="utf-8") as file:
+        soup = bs4.BeautifulSoup(file, "lxml")
+
+    # Extract the first table row
     table = soup.find("tr")
     cells = table.find_all("td")
 
-    # Extract HTML data and organize card into a dict
+    # Parse the table row into a structured dictionary
     card = extract_card(cells)
-    
+
+    # Export the parsed data to CSV
     write_to_csv(card)
 
     print(f"CSV file '{output_file}' created successfully!")

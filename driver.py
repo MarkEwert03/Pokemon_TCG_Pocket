@@ -6,16 +6,12 @@ output_file = "data/processed/single.csv"
 
 
 def clean_str(s):
+    """Removes and cleans redundant whitespace characters from strings."""
     return " ".join(s.strip().split())
 
 
-def main():
-    """Run the main function."""
-    with open(input_file, "r", encoding="utf-8") as file:
-        soup = BeautifulSoup(file, "lxml")
-
-    table = soup.find("tr")
-    cells = table.find_all("td")
+def extract_card(cells):
+    """Extracts and returns pokemon card data as an organized dict."""
     # cell_0 is checkmark (unnecessary)
 
     # cell_1 is card #
@@ -66,11 +62,31 @@ def main():
     # Clean up whitespaces and new lines
     card = {k: clean_str(v) for k, v in card.items()}
 
+    return card
+
+
+def write_to_csv(card):
+    """Writes the card data to the output csv file."""
     fieldnames = card.keys()
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerow(card)
+
+
+def main():
+    """Run the main function."""
+    with open(input_file, "r", encoding="utf-8") as file:
+        soup = BeautifulSoup(file, "lxml")
+
+    table = soup.find("tr")
+    cells = table.find_all("td")
+
+    # Extract HTML data and organize card into a dict
+    card = extract_card(cells)
+    
+    write_to_csv(card)
+
     print(f"CSV file '{output_file}' created successfully!")
 
 

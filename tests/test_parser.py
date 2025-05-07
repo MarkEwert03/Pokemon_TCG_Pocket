@@ -28,10 +28,23 @@ def test_extract_card_sample():
     row = BeautifulSoup(html, "lxml").find("tr")
     card = extract_card(row)
 
+    expected_keys = {
+        "number",
+        "name",
+        "image",
+        "rarity",
+        "pack_name",
+        "type",
+        "HP",
+        "stage",
+        "pack_points"
+    }
+    assert set(card.keys()) == expected_keys
     assert card["number"] == "A1 001"
     assert card["name"] == "Bulbasaur"
     assert card["image"] == "image.png"
     assert card["rarity"] == "◇"
     assert card["type"] == "Grass"
     assert card["HP"] == "70"
+    assert card["stage"] == "Basic"
     assert card["pack_points"] == "35"

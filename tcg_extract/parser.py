@@ -1,38 +1,5 @@
 import bs4
-
-
-def clean_str(string: str, empty_val: str = "N/A") -> str:
-    """
-    Remove extra whitespace from a string.
-
-    Strips leading and trailing whitespace and collapses
-    multiple spaces, tabs, or newlines into a single space.
-
-    If final output is empty, returns empty_val parameter.
-
-    Args:
-        string (str): Raw string to be cleaned.
-        empty_vap (str): The value to replace empty strings
-            (optional defaults to `''`)
-
-    Returns:
-        output (str): Cleaned string with normalized spacing.
-
-    Examples:
-        >>> clean_str("   Hello   World   ")
-        'Hello World'
-        >>> clean_str("Line1\\nLine2\\t\\tLine3")
-        'Line1 Line2 Line3'
-        >>> clean_str("   Multiple    spaces   and\\nnewlines\\t")
-        'Multiple spaces and newlines'
-        >>> clean_str("\\t \\n   \\t", empty_val="N/A")
-        'N/A'
-    """
-    output = " ".join(string.strip().split())
-    if output == "":
-        return empty_val
-    else:
-        return output
+from utils import clean_str
 
 
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
@@ -71,9 +38,8 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         "move1_effect": "N/A",
         "move2_name": "N/A",
         "move2_damage": "N/A",
-        "move2_effect": "N/A"
+        "move2_effect": "N/A",
     }
-
 
     # --- Stage ---
     stage_tag = cell9.find("b", string="Stage")
@@ -90,7 +56,7 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
 
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
-    for i, div in enumerate(move_divs, start=1): # 1-based index for the dict
+    for i, div in enumerate(move_divs, start=1):  # 1-based index for the dict
         # move_i name
         name_tag = div.find("b")
         if name_tag:

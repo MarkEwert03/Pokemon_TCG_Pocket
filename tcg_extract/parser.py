@@ -36,9 +36,34 @@ def clean_str(string: str, empty_val: str = "N/A") -> str:
 
 
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
-    """Extracts data from cell 9"""
+    """
+    Extracts key Pokémon TCG card details from a `<td class="left">` element into a flat dictionary.
+
+    Args:
+        cell9 (bs4.element.Tag):
+            A `<td>` tag containing:
+            - A <b>Stage</b> label and value
+            - A <b>Retreat Cost</b> label with cost icons
+            - Up to two <div class="align"> blocks for attacks, each with:
+                • <b>Attack Name</b>
+                • Energy cost icons
+                • Damage value
+                • Optional effect text
+
+    Returns:
+        cell9_data (Dict[str, str]):
+            A dict with these keys (all default to "N/A" if not found):
+            - stage        : Stage description (e.g. "Stage 2")
+            - retreat_cost : Comma-separated alt texts of retreat-cost icons
+            - move1_name   : First attack's name
+            - move1_damage : First attack's damage amount
+            - move1_effect : First attack's optional effect text
+            - move2_name   : Second attack's name
+            - move2_damage : Second attack's damage amount
+            - move2_effect : Second attack's optional effect text
+    """
     # Create dict with desired keys and default values
-    result = {
+    cell9_data = {
         "stage": "N/A",
         "retreat_cost": "N/A",
         "move1_name": "N/A",
@@ -53,7 +78,7 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
     # --- Stage ---
     stage_tag = cell9.find("b", string="Stage")
     if stage_tag and stage_tag.next_sibling:
-        result["stage"] = clean_str(stage_tag.next_sibling.strip(":"))
+        cell9_data["stage"] = clean_str(stage_tag.next_sibling.strip(":"))
 
     # --- Retreat Cost ---
     retreat_tag = cell9.find("b", string="Retreat Cost")
@@ -61,7 +86,7 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         # its parent <div> holds the <img> icons
         retreat_div = retreat_tag.find_parent("div")
         retreat_img = retreat_div.find("img").get("data-src")
-        result["retreat_cost"] = retreat_img
+        cell9_data["retreat_cost"] = retreat_img
 
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
@@ -69,7 +94,7 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         # move_i name
         name_tag = div.find("b")
         if name_tag:
-            result[f"move{i}_name"] = clean_str(name_tag.text)
+            cell9_data[f"move{i}_name"] = clean_str(name_tag.text)
 
         # go through siblings for damage then effect
         damage = None
@@ -88,12 +113,12 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
                 break
 
         if damage is not None:
-            result[f"move{i}_damage"] = damage
+            cell9_data[f"move{i}_damage"] = damage
         if effect:
-            result[f"move{i}_effect"] = effect
+            cell9_data[f"move{i}_effect"] = effect
 
-    print(result)
-    return result
+    print(cell9_data)
+    return cell9_data
 
 
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:

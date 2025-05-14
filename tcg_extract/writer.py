@@ -12,8 +12,27 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
         cards_data (list): A list full of dictionaries containing cleaned card attributes.
         output_file (str): The path to save the created csv to.
     """
-    # Use the first entry to get the column names
-    column_names = cards_data[0].keys()
+    # Specify the ordering of the columns
+    column_names = [
+        "number",
+        "name",
+        "image",
+        "rarity",
+        "stage",
+        "HP",
+        "type",
+        "move1_name",
+        "move1_cost",
+        "move1_damage",
+        "move1_effect",
+        "move2_name",
+        "move2_cost",
+        "move2_damage",
+        "move2_effect",
+        "retreat_cost",
+        "pack_name",
+        "pack_points",
+    ]
 
     # Iterate through list and write each dict as a new row
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:

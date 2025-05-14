@@ -90,7 +90,6 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         if effect:
             cell9_data[f"move{i}_effect"] = effect
 
-    print(cell9_data)
     return cell9_data
 
 
@@ -138,8 +137,12 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "stage": stage,
         "pack_points": pack_points,
     }
+    
+    # Merge data from cell 9
+    card = card | cell9
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
+    
 
-    return card
+    return card | cell9

@@ -1,5 +1,5 @@
 import bs4
-from utils import clean_str
+from utils import clean_str, parse_energy_cost
 
 
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
@@ -34,9 +34,11 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         "stage": "N/A",
         "retreat_cost": "N/A",
         "move1_name": "N/A",
+        "move1_cost": "N/A",
         "move1_damage": "N/A",
         "move1_effect": "N/A",
         "move2_name": "N/A",
+        "move2_cost": "N/A",
         "move2_damage": "N/A",
         "move2_effect": "N/A",
     }
@@ -62,10 +64,15 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         if name_tag:
             cell9_data[f"move{i}_name"] = clean_str(name_tag.text)
 
-        # go through siblings for damage then effect
+        # go through siblings for cost, damage, and effect
         damage = None
         effect = None
         for sib in div.next_siblings:
+            # 
+            alts = [img.get("alt","") for img in div.find_all("img")]
+            cost_str = "".join(parse_energy_cost(alt) for alt in alts)
+            cell9_data[f"move{i}_cost"] = cost_str or "N/A"
+            
             # text nodes or NavigableString
             text = sib.strip() if isinstance(sib, str) else None
             if not text:

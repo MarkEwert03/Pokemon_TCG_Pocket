@@ -35,6 +35,67 @@ def clean_str(string: str, empty_val: str = "N/A") -> str:
         return output
 
 
+def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
+    """Extracts data from cell 9"""
+    # Create dict with desired keys and default values
+    result = {
+        "stage": "N/A",
+        "retreat_cost": "N/A",
+        "move1_name": "N/A",
+        "move1_damage": "N/A",
+        "move1_effect": "N/A",
+        "move2_name": "N/A",
+        "move2_damage": "N/A",
+        "move2_effect": "N/A"
+    }
+
+
+    # --- Stage ---
+    stage_tag = cell9.find("b", string="Stage")
+    if stage_tag and stage_tag.next_sibling:
+        result["stage"] = clean_str(stage_tag.next_sibling.strip(":"))
+
+    # --- Retreat Cost ---
+    retreat_tag = cell9.find("b", string="Retreat Cost")
+    if retreat_tag:
+        # its parent <div> holds the <img> icons
+        retreat_div = retreat_tag.find_parent("div")
+        retreat_img = retreat_div.find("img").get("data-src")
+        result["retreat_cost"] = retreat_img
+
+    # --- Moves (up to 2) ---
+    move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
+    for i, div in enumerate(move_divs, start=1): # 1-based index for the dict
+        # move_i name
+        name_tag = div.find("b")
+        if name_tag:
+            result[f"move{i}_name"] = clean_str(name_tag.text)
+
+        # go through siblings for damage then effect
+        damage = None
+        effect = None
+        for sib in div.next_siblings:
+            # text nodes or NavigableString
+            text = sib.strip() if isinstance(sib, str) else None
+            if not text:
+                continue
+            if damage is None and text.isdigit():
+                damage = text
+                continue
+            # anything non-digit after damage is the effect
+            if damage is not None:
+                effect = text
+                break
+
+        if damage is not None:
+            result[f"move{i}_damage"] = damage
+        if effect:
+            result[f"move{i}_effect"] = effect
+
+    print(result)
+    return result
+
+
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     """
     Extract card data `<tr>` element into a dict.
@@ -65,7 +126,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     stage = cells[7].text
     pack_points = cells[8].text.replace(",", "")[:-4]  # remove comma and "Pts"
     # cell 9 contains retreat cost, effect, and moves data
-    # TODO parse and extract cell_9
+    cell9 = extract_cell9(cells[9])
 
     # Create dictionary with raw data
     card = {

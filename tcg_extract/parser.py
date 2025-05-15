@@ -1,5 +1,5 @@
 import bs4
-from utils import clean_str, parse_energy_cost, parse_retreat_cost
+from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
 
 
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:

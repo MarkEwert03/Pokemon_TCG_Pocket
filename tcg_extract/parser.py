@@ -1,5 +1,5 @@
 import bs4
-from utils import clean_str, parse_energy_cost
+from utils import clean_str, parse_energy_cost, parse_retreat_cost
 
 
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
@@ -54,7 +54,7 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         # its parent <div> holds the <img> icons
         retreat_div = retreat_tag.find_parent("div")
         retreat_img = retreat_div.find("img").get("data-src")
-        cell9_data["retreat_cost"] = retreat_img
+        cell9_data["retreat_cost"] = str(parse_retreat_cost(retreat_img))
 
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)

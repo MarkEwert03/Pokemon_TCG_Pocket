@@ -11,6 +11,14 @@ ENERGY_SYMBOLS = {
     "Dragon": "🟠",
 }
 
+RETREAT_COSTS = {
+    "https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show": 0,
+    "https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show": 1,
+    "https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show": 2,
+    "https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show": 3,
+    "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,
+}
+
 
 def clean_str(string: str, empty_val: str = "N/A") -> str:
     """
@@ -45,6 +53,7 @@ def clean_str(string: str, empty_val: str = "N/A") -> str:
     else:
         return output
 
+
 def parse_energy_cost(energy_str: str) -> str:
     """
     Convert an energy descriptor like "Fire 2" into repeated symbols.
@@ -73,3 +82,24 @@ def parse_energy_cost(energy_str: str) -> str:
 
     symbol = ENERGY_SYMBOLS.get(type_name, "?")
     return symbol * count
+
+def parse_retreat_cost(retreat_cost_img: str) -> int:
+    """
+    Maps a retreat cost image URL to its corresponding numeric retreat cost.
+
+    Parameters:
+        retreat_cost_img (str):
+            The full URL of the retreat cost icon image (e.g., from an <img> tag's "data-src" attribute).
+
+    Returns:
+        out (int):
+            The numeric retreat cost (0-4) if the URL is recognized,
+            or -1 if the image is not found in the known RETREAT_COSTS mapping.
+
+    Examples:
+    >>> parse_retreat_cost("https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show")
+    3
+    >>> parse_retreat_cost("https://img.unknown.com/retreat5.png")
+    -1
+    """
+    return RETREAT_COSTS.get(retreat_cost_img, -1)

@@ -2,6 +2,64 @@ import bs4
 from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
 
 
+def extract_move_info(
+    div: bs4.element.Tag, next_align: bs4.element.Tag | None
+) -> tuple[str, str, str, str]:
+    """
+    Extracts move informationfrom a `<div class="align">` element.
+    
+    Stops parsing once it reaches `next_align`, or end of siblings.
+    
+    Args:
+        div (bs4.element.Tag):
+            The `div` element containing the move inforation about the card.
+        next_align (bs4.element.Tag):
+            The next `<div class="align">` element.
+            
+    Returns:
+        out (Tuple[str, str, str, str]):
+            A tuple containing the following move information:
+                - move_name
+                - move_cost
+                - move_damage
+                - move_effect
+
+    """
+    # --- Name ---
+    name = div.find("b").text.strip() if div.find("b") else "N/A"
+
+    # --- Cost ---
+    alt_texts = [img.get("alt", "") for img in div.find_all("img")]
+
+    cost = "".join(parse_energy_cost(alt) for alt in alt_texts) or "N/A"
+
+    # --- Damage + Effect ---
+    damage = "N/A"
+    effect = "N/A"
+    found_damage = False
+
+    for sib in div.next_siblings:
+        # stop if we hit the next move div
+        if sib == next_align:
+            break
+        # if it's a Tag, skip non-useful ones like <br>
+        if isinstance(sib, bs4.element.Tag):
+            continue
+        # if it's a string
+        text = sib.strip()
+        if not text:
+            continue
+        if not found_damage and text.isdigit():
+            damage = text
+            found_damage = True
+        elif found_damage:
+            # first non-digit string after damage
+            effect = text
+            break
+
+    return name, cost, damage, effect
+
+
 def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
     """
     Extracts key Pokémon TCG card details from a `<td class="left">` element into a flat dictionary.
@@ -59,36 +117,13 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
     for i, div in enumerate(move_divs, start=1):  # 1-based index for the dict
-        # move_i name
-        name_tag = div.find("b")
-        if name_tag:
-            cell9_data[f"move{i}_name"] = clean_str(name_tag.text)
+        next_align = move_divs[i] if i < len(move_divs) else None
+        name, cost, dmg, effect = extract_move_info(div, next_align)
 
-        # go through siblings for cost, damage, and effect
-        damage = None
-        effect = None
-        for sib in div.next_siblings:
-            # 
-            alts = [img.get("alt","") for img in div.find_all("img")]
-            cost_str = "".join(parse_energy_cost(alt) for alt in alts)
-            cell9_data[f"move{i}_cost"] = cost_str or "N/A"
-            
-            # text nodes or NavigableString
-            text = sib.strip() if isinstance(sib, str) else None
-            if not text:
-                continue
-            if damage is None and text.isdigit():
-                damage = text
-                continue
-            # anything non-digit after damage is the effect
-            if damage is not None:
-                effect = text
-                break
-
-        if damage is not None:
-            cell9_data[f"move{i}_damage"] = damage
-        if effect:
-            cell9_data[f"move{i}_effect"] = effect
+        cell9_data[f"move{i}_name"] = name
+        cell9_data[f"move{i}_cost"] = cost
+        cell9_data[f"move{i}_damage"] = dmg
+        cell9_data[f"move{i}_effect"] = effect
 
     return cell9_data
 
@@ -137,12 +172,11 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "stage": stage,
         "pack_points": pack_points,
     }
-    
+
     # Merge data from cell 9
     card = card | cell9
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
-    
 
     return card | cell9

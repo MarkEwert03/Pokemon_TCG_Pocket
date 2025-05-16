@@ -203,4 +203,4 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
 
-    return card | cell9
+    return card

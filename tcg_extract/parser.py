@@ -7,15 +7,15 @@ def extract_move_info(
 ) -> tuple[str, str, str, str]:
     """
     Extracts move informationfrom a `<div class="align">` element.
-    
+
     Stops parsing once it reaches `next_align`, or end of siblings.
-    
+
     Args:
         div (bs4.element.Tag):
             The `div` element containing the move inforation about the card.
         next_align (bs4.element.Tag):
             The next `<div class="align">` element.
-            
+
     Returns:
         out (Tuple[str, str, str, str]):
             A tuple containing the following move information:
@@ -115,8 +115,8 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         retreat_div = retreat_tag.find_parent("div")
         retreat_img = retreat_div.find("img").get("data-src")
         cell9_data["retreat_cost"] = str(parse_retreat_cost(retreat_img))
-        
-    # --- Ability (optional) ---
+
+    # --- Ability (optional for the card) ---
     ability_span = cell9.find("span", string="[Ability]")
     if ability_span:
         name = None
@@ -131,19 +131,23 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
                     elif effect is None:
                         effect = text
             sib = sib.next_sibling
+
         cell9_data["ability_name"] = name or "N/A"
         cell9_data["ability_effect"] = effect or "N/A"
 
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
-    for i, div in enumerate(move_divs, start=1):  # 1-based index for the dict
-        next_align = move_divs[i] if i < len(move_divs) else None
-        name, cost, dmg, effect = extract_move_info(div, next_align)
+    move_start_index = 2 if ability_span else 1  # shift moves if ability is present
+    
+    for i, div in enumerate(move_divs):
+        j = move_start_index + i  # will be 1 or 2 depending on ability
+        next_div = move_divs[i+1] if i+1 < len(move_divs) else None
+        name, cost, dmg, effect = extract_move_info(div, next_div)
 
-        cell9_data[f"move{i}_name"] = name
-        cell9_data[f"move{i}_cost"] = cost
-        cell9_data[f"move{i}_damage"] = dmg
-        cell9_data[f"move{i}_effect"] = effect
+        cell9_data[f"move{j}_name"] = name
+        cell9_data[f"move{j}_cost"] = cost
+        cell9_data[f"move{j}_damage"] = dmg
+        cell9_data[f"move{j}_effect"] = effect
 
     return cell9_data
 

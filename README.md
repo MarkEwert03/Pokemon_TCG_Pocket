@@ -61,6 +61,6 @@ Columns include:
 
 ## 🧪 How to Run
 From the project root directory:
-   `python tcg_extract/driver.py`
+   `python run.py`
 
 

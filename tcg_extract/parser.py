@@ -91,6 +91,8 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
     cell9_data = {
         "stage": "N/A",
         "retreat_cost": "N/A",
+        "ability_name": "N/A",
+        "ability_effect": "N/A",
         "move1_name": "N/A",
         "move1_cost": "N/A",
         "move1_damage": "N/A",
@@ -113,6 +115,24 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         retreat_div = retreat_tag.find_parent("div")
         retreat_img = retreat_div.find("img").get("data-src")
         cell9_data["retreat_cost"] = str(parse_retreat_cost(retreat_img))
+        
+    # --- Ability (optional) ---
+    ability_span = cell9.find("span", string="[Ability]")
+    if ability_span:
+        name = None
+        effect = None
+        sib = ability_span.next_sibling
+        while sib and (name is None or effect is None):
+            if isinstance(sib, str):
+                text = sib.strip()
+                if text:
+                    if name is None:
+                        name = text
+                    elif effect is None:
+                        effect = text
+            sib = sib.next_sibling
+        cell9_data["ability_name"] = name or "N/A"
+        cell9_data["ability_effect"] = effect or "N/A"
 
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)

@@ -20,6 +20,8 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
         "stage",
         "HP",
         "type",
+        "ability_name",
+        "ability_effect",
         "move1_name",
         "move1_cost",
         "move1_damage",

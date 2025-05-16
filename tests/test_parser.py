@@ -94,7 +94,6 @@ def test_pokemon_one_attack():
     expected_keys = {
         "number",
         "name",
-        "image",
         "rarity",
         "stage",
         "HP",
@@ -110,11 +109,12 @@ def test_pokemon_one_attack():
         "retreat_cost",
         "pack_name",
         "pack_points",
+        "image",
     }
+
     assert set(card.keys()) == expected_keys
     assert card["number"] == "A1 001"
     assert card["name"] == "Bulbasaur"
-    assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
     assert card["rarity"] == "◇"
     assert card["stage"] == "Basic"
     assert card["HP"] == "70"
@@ -130,6 +130,7 @@ def test_pokemon_one_attack():
     assert card["retreat_cost"] == "1"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "35"
+    assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
 
 
 def test_pokemon_two_attacks():
@@ -243,7 +244,6 @@ def test_pokemon_two_attacks():
 
     assert card["number"] == "A1 004"
     assert card["name"] == "Venusaur ex"
-    assert card["image"] == "https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show"
     assert card["rarity"] == "◇◇◇◇"
     assert card["stage"] == "Stage 2"
     assert card["HP"] == "190"
@@ -259,3 +259,4 @@ def test_pokemon_two_attacks():
     assert card["retreat_cost"] == "3"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "500"
+    assert card["image"] == "https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show"

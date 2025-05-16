@@ -16,7 +16,6 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
     column_names = [
         "number",
         "name",
-        "image",
         "rarity",
         "stage",
         "HP",
@@ -32,6 +31,7 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
         "retreat_cost",
         "pack_name",
         "pack_points",
+        "image",
     ]
 
     # Iterate through list and write each dict as a new row

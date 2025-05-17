@@ -107,7 +107,9 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
     if is_trainer:
         # Trainer cards only have 1 description
         # Put description in ability_effect
-        cell9_data["ability_effect"] = cell9.text
+        cell_text = clean_str(cell9.text)
+        trainer_desc = cell_text if cell_text[0] != "-" else cell_text[6:]
+        cell9_data["ability_effect"] = trainer_desc
         return cell9_data
 
     # --- Stage ---

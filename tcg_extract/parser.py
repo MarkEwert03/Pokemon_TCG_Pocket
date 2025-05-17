@@ -3,59 +3,47 @@ from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
 
 
 def extract_move_info(
-    div: bs4.element.Tag, next_align: bs4.element.Tag | None
+    div: bs4.element.Tag, next_div: bs4.element.Tag | None
 ) -> tuple[str, str, str, str]:
     """
-    Extracts move informationfrom a `<div class="align">` element.
+    Given one <div class="align"> for a move, and an optional `next_div`
+    (the very next `<div class="align">`, or `None`), return:
+    `(name, cost_symbols, damage, effect)`
 
-    Stops parsing once it reaches `next_align`, or end of siblings.
-
-    Args:
-        div (bs4.element.Tag):
-            The `div` element containing the move inforation about the card.
-        next_align (bs4.element.Tag):
-            The next `<div class="align">` element.
-
-    Returns:
-        out (Tuple[str, str, str, str]):
-            A tuple containing the following move information:
-                - move_name
-                - move_cost
-                - move_damage
-                - move_effect
-
+    - name:      the attack name
+    - cost:      run each `<img alt="Type N">` `through parse_energy_cost(...)`
+    - damage:    string digits or `"N/A"`
+    - effect:    string (never `None`; `"N/A"` if no effect)
     """
-    # --- Name ---
-    name = div.find("b").text.strip() if div.find("b") else "N/A"
 
-    # --- Cost ---
-    alt_texts = [img.get("alt", "") for img in div.find_all("img")]
+    # Get Name
+    name_tag = div.find("b")
+    name = name_tag.text.strip() if name_tag else "N/A"
 
-    cost = "".join(parse_energy_cost(alt) for alt in alt_texts) or "N/A"
+    cost_alts = [img["alt"] for img in div.find_all("img", alt=True)]
+    cost = "".join(parse_energy_cost(alt) for alt in cost_alts) or "N/A"
 
-    # --- Damage + Effect ---
-    damage = "N/A"
-    effect = "N/A"
-    found_damage = False
-
+    # Gather all text siblings up to next_div
+    texts: list[str] = []
     for sib in div.next_siblings:
-        # stop if we hit the next move div
-        if sib == next_align:
+        if sib is next_div:
             break
-        # if it's a Tag, skip non-useful ones like <br>
         if isinstance(sib, bs4.element.Tag):
             continue
-        # if it's a string
-        text = sib.strip()
-        if not text:
-            continue
-        if not found_damage and text.isdigit():
-            damage = text
-            found_damage = True
-        elif found_damage:
-            # first non-digit string after damage
-            effect = text
-            break
+        t = sib.strip()
+        if t:
+            texts.append(t)
+
+    # Decide damage/effect
+    if texts and texts[0].isdigit():
+        damage = texts[0]
+        effect = texts[1] if len(texts) > 1 else ""
+    elif texts:
+        damage = "N/A"
+        effect = texts[0]
+    else:
+        damage = "N/A"
+        effect = ""
 
     return name, cost, damage, effect
 
@@ -147,10 +135,10 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
     # --- Moves (up to 2) ---
     move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
     move_start_index = 2 if ability_span else 1  # shift moves if ability is present
-    
+
     for i, div in enumerate(move_divs):
         j = move_start_index + i  # will be 1 or 2 depending on ability
-        next_div = move_divs[i+1] if i+1 < len(move_divs) else None
+        next_div = move_divs[i + 1] if i + 1 < len(move_divs) else None
         name, cost, dmg, effect = extract_move_info(div, next_div)
 
         cell9_data[f"move{j}_name"] = name

@@ -264,6 +264,133 @@ def test_extract_card_pokemon_two_attacks():
     assert card["image"] == "https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show"
 
 
+def test_extract_card_pokemon_move_desc_no_dmg():
+    """Testing `A1 047` (Moltres ex)"""
+    html = """
+      <tr>
+        <td class="center"><input type="checkbox" id="checkbox1_47"></td>
+        <td class="center"><b class="a-bold">A1 047</b></td>
+
+        <td class="center">
+          <div class="imageLink js-archive-open-image-modal"
+            data-image-url="https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/original"
+            data-micromodal-trigger="js-archive-open-image-modal" data-archive-url><img
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - A1 047 Moltres ex"
+              data-src="https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show"
+              width="172"
+              style="height: 0; padding-bottom: calc(px*240/172); padding-bottom: calc(min(100%,172px)*240/172);"><span
+              class="imageLink__icon"></span></div> <a class="a-link"
+            href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476048">Moltres ex</a>
+
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - ◇◇◇◇ rarity"
+            data-src="https://img.game8.co/3995617/622e1c0cca9ffdaa43cdd588b8e18d78.png/show"
+            width="74"
+            style="height: 0; padding-bottom: calc(px*25/74); padding-bottom: calc(min(100%,74px)*25/74);">
+          <hr class="a-table__line">◇◇◇◇
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy" alt="Pokemon TCG Pocket - Charizard Booster Pack"
+            data-src="https://img.game8.co/3999185/6405ea32582539f6e270b2b15529d130.png/show"
+            width="50" height="50">
+          <br> <b class="a-bold">Genetic Apex (A1)</b> <br> Charizard
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy" alt="Pokemon TCG Pocket - Fire"
+            data-src="https://img.game8.co/3994715/1a36293e91b194645e3977ace96e446e.png/show"
+            width="40" height="40">
+        </td>
+
+        <td class="center"> 140 </td>
+
+        <td class="center"> Basic </td>
+
+        <td class="center">500 Pts </td>
+        <td class="left">
+          <br> <b class="a-bold">Stage</b>: Basic <br>
+          <div class="align"> <b class="a-bold">Retreat Cost</b>: <img
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - Retreat Cost"
+              data-src="https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show"
+              width="40"
+              style="height: 0; padding-bottom: calc(px*20/40); padding-bottom: calc(min(100%,40px)*20/40);">
+          </div>
+          <hr class="a-table__line">
+
+          <div class="align"> <b class="a-bold">Inferno Dance</b>
+
+            <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476411"><img
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                class="a-img lazy"
+                alt="Fire"
+                data-src="https://img.game8.co/4018725/13914d1a973822da2863205cffe8d814.png/show"
+                width="15"
+                height="15"></a>
+
+          </div>
+          <br>
+          Flip 3 coins. Take an amount of Fire Energy from your Energy Zone equal to the number of
+          heads and attach it
+          to your Benched Fire Pokemon in any way you like.
+
+          <div class="align"> <b class="a-bold">Heat Blast</b>
+
+            <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476411"><img
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                class="a-img lazy"
+                alt="Fire"
+                data-src="https://img.game8.co/4018725/13914d1a973822da2863205cffe8d814.png/show"
+                width="15"
+                height="15"></a>
+
+            <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476389"><img
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                class="a-img lazy lazy-non-square" alt="Colorless 2"
+                data-src="https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show"
+                width="30"
+                style="height: 0; padding-bottom: calc(px*15/30); padding-bottom: calc(min(100%,30px)*15/30);"></a>
+
+          </div>
+          70 <br>
+
+        </td>
+        <td class="left">Open Genetic Apex (A1) Charizard packs</td>
+      </tr>
+    """
+    row = BeautifulSoup(html, "lxml").find("tr")
+    card = extract_card(row)
+
+    assert card["number"] == "A1 047"
+    assert card["name"] == "Moltres ex"
+    assert card["rarity"] == "◇◇◇◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "140"
+    assert card["type"] == "Fire"
+    assert card["move1_name"] == "Inferno Dance"
+    assert card["move1_cost"] == "🔴"
+    assert card["move1_damage"] == "N/A"
+    assert (
+        card["move1_effect"]
+        == "Flip 3 coins. Take an amount of Fire Energy from your Energy Zone equal to the number of heads and attach it to your Benched Fire Pokemon in any way you like."
+    )
+    assert card["move2_name"] == "Heat Blast"
+    assert card["move2_cost"] == "🔴*️⃣*️⃣"
+    assert card["move2_damage"] == "70"
+    assert card["move2_effect"] == "N/A"
+    assert card["retreat_cost"] == "2"
+    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
+    assert card["pack_points"] == "500"
+    assert card["image"] == "https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show"
+
+
 def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""
     html = """

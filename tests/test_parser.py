@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from tcg_extract.parser import extract_card
 
 
-def test_pokemon_one_attack():
+def test_extract_card_pokemon_one_attack():
     """Testing `A1 001` (Bulbasaur)"""
     html = """
     <tr>
@@ -135,7 +135,7 @@ def test_pokemon_one_attack():
     assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
 
 
-def test_pokemon_two_attacks():
+def test_extract_card_pokemon_two_attacks():
     """Testing `A1 004` (Venusaur ex)"""
     html = """
     <tr>
@@ -264,7 +264,7 @@ def test_pokemon_two_attacks():
     assert card["image"] == "https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show"
 
 
-def test_pokemon_ability():
+def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""
     html = """
     <tr>
@@ -385,3 +385,103 @@ def test_pokemon_ability():
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
     assert card["pack_points"] == "150"
     assert card["image"] == "https://img.game8.co/4004057/6ba461fb08292cbabe715b6ead54dfb9.png/show"
+
+
+def test_extract_card_fossil():
+    """Testing `A1 216` (Helix Fossil)"""
+    html = """
+    <tr>
+    <td class="center"><input type="checkbox" id="checkbox1_216"></td>
+    <td class="center"><b class="a-bold">A1 216</b></td>
+
+    <td class="center">
+        <div class="imageLink js-archive-open-image-modal"
+        data-image-url="https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/original"
+        data-micromodal-trigger="js-archive-open-image-modal" data-archive-url><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - A1 216 Helix Fossil"
+            data-src="https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show"
+            width="172"
+            style="height: 0; padding-bottom: calc(px*240/172); padding-bottom: calc(min(100%,172px)*240/172);"><span
+            class="imageLink__icon"></span></div> <a class="a-link"
+        href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476269">Helix Fossil</a>
+
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - ◇ rarity"
+        data-src="https://img.game8.co/3994728/d0cbe26800d9abdfccddbbfd5aeab3e5.png/show"
+        width="18"
+        style="height: 0; padding-bottom: calc(px*25/18); padding-bottom: calc(min(100%,18px)*25/18);">
+        <hr class="a-table__line">◇
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy" alt="Pokemon TCG Pocket - Pikachu Booster Pack"
+        data-src="https://img.game8.co/3999192/eb4a00290df0eccf54b42ff80d4983f8.png/show"
+        width="50" height="50">
+        <br> <b class="a-bold">Genetic Apex (A1)</b> <br> Pikachu
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy" alt="Pokemon TCG Pocket - Item"
+        data-src="https://img.game8.co/3999104/2fda8d32cc0036ee2ac97b392cc37871.png/show"
+        width="40" height="40">
+    </td>
+
+    <td class="center"> <img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="N/A"
+        data-src="https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show"
+        width="84"
+        style="height: 0; padding-bottom: calc(px*40/84); padding-bottom: calc(min(100%,84px)*40/84);">
+    </td>
+
+    <td class="center"> <img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="N/A"
+        data-src="https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show"
+        width="84"
+        style="height: 0; padding-bottom: calc(px*40/84); padding-bottom: calc(min(100%,84px)*40/84);">
+    </td>
+
+    <td class="center">35 Pts </td>
+    <td class="left">
+
+        Play this card as if it were a 40-HP Basic Colorless Pokemon. At any time during your
+        turn, you may discard
+        this card from play. This card can't retreat.
+
+    </td>
+    <td class="left">Open Genetic Apex (A1) Pikachu packs</td>
+    </tr>
+    """
+    row = BeautifulSoup(html, "lxml").find("tr")
+    card = extract_card(row)
+
+    assert card["number"] == "A1 216"
+    assert card["name"] == "Helix Fossil"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "N/A"
+    assert card["HP"] == "N/A"
+    assert card["type"] == "Item"
+    assert card["ability_name"] == "N/A"
+    assert (
+        card["ability_effect"]
+        == "Play this card as if it were a 40-HP Basic Colorless Pokemon. At any time during your turn, you may discard this card from play. This card can't retreat."
+    )
+    assert card["move1_name"] == "N/A"
+    assert card["move1_cost"] == "N/A"
+    assert card["move1_damage"] == "N/A"
+    assert card["move1_effect"] == "N/A"
+    assert card["move2_name"] == "N/A"
+    assert card["move2_cost"] == "N/A"
+    assert card["move2_damage"] == "N/A"
+    assert card["move2_effect"] == "N/A"
+    assert card["retreat_cost"] == "N/A"
+    assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
+    assert card["pack_points"] == "35"
+    assert card["image"] == "https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show"

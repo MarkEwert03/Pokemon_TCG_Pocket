@@ -60,7 +60,7 @@ def extract_move_info(
     return name, cost, damage, effect
 
 
-def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
+def extract_cell9(cell9: bs4.element.Tag, is_item: bool) -> dict[str, str]:
     """
     Extracts key Pokémon TCG card details from a `<td class="left">` element into a flat dictionary.
 
@@ -102,6 +102,12 @@ def extract_cell9(cell9: bs4.element.Tag) -> list[str]:
         "move2_damage": "N/A",
         "move2_effect": "N/A",
     }
+
+    # Handle case for type item first
+    if is_item:
+        # Fossil-style item: only a free-text effect
+        cell9_data["ability_effect"] = cell9.text
+        return cell9_data
 
     # --- Stage ---
     stage_tag = cell9.find("b", string="Stage")
@@ -182,7 +188,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     stage = cells[7].text
     pack_points = cells[8].text.replace(",", "")[:-4]  # remove comma and "Pts"
     # cell 9 contains retreat cost, effect, and moves data
-    cell9 = extract_cell9(cells[9])
+    cell9 = extract_cell9(cells[9], is_item=(clean_str(type) == "Item"))
 
     # Create dictionary with raw data
     card = {

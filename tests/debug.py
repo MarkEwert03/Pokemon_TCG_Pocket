@@ -1,15 +1,19 @@
 import argparse
 import json
-from pathlib import Path
 from collections import OrderedDict
-from bs4 import BeautifulSoup
+import bs4
 from tcg_extract.parser import extract_card
 from tcg_extract.io import fetch_html_table
 
 
-def debug_card_extract(pokemon_id: str) -> dict[str, str]:
-    # Pipeline input data directly from page
-    pokemon_table = fetch_html_table()
+def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None) -> dict[str, str]:
+    if html is None:
+        # Pipeline input data directly from page
+        pokemon_table = fetch_html_table()
+    else:
+        # Use cached HTML table
+        pokemon_table = html
+
     cards_html = pokemon_table.find("tbody").find_all("tr")
 
     for row in cards_html:
@@ -29,7 +33,7 @@ def main():
     args = parser.parse_args()
 
     card = debug_card_extract(args.pokemon_id)
-    
+
     column_order = [
         "number",
         "name",

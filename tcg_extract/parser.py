@@ -50,7 +50,7 @@ def extract_move_info(
     # Decide damage/effect
     # Only allow digits, "x", and "+" to account for "50x" or "30+"
     is_pokemon_numeric = bool(re.fullmatch(r"[0-9x+]+", texts[0]))
-    if texts and is_pokemon_numeric: 
+    if texts and is_pokemon_numeric:
         damage = texts[0]
         effect = texts[1] if len(texts) > 1 else "N/A"
     elif texts:
@@ -209,7 +209,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     type = cells[5].find("img")["alt"].split("-")[-1]  # last word is the type
     HP = cells[6].text
     stage = cells[7].text
-    pack_points = cells[8].text.replace(",", "")[:-4]  # remove comma and "Pts"
+    pack_points = cells[8].text.replace(",", "").replace("Pts", "")
     # cell 9 contains retreat cost, effect, and moves data
     is_trainer = clean_str(type) in ["Item", "Supporter"]
     cell9 = extract_cell9(cells[9], is_trainer=is_trainer)

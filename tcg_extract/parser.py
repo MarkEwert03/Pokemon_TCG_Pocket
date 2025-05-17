@@ -6,14 +6,26 @@ def extract_move_info(
     div: bs4.element.Tag, next_div: bs4.element.Tag | None
 ) -> tuple[str, str, str, str]:
     """
-    Given one <div class="align"> for a move, and an optional `next_div`
-    (the very next `<div class="align">`, or `None`), return:
-    `(name, cost_symbols, damage, effect)`
+    Extract a single attack's name, cost, damage and effect.
 
-    - name:      the attack name
-    - cost:      run each `<img alt="Type N">` `through parse_energy_cost(...)`
-    - damage:    string digits or `"N/A"`
-    - effect:    string (never `None`; `"N/A"` if no effect)
+    Parameters
+    ----------
+    div : bs4.element.Tag
+        A `<div class="align">` that wraps:
+        - A `<b>` containing the `attack name`.
+        - One or more `<img alt="Type N">` energy-cost icons.
+    next_div : bs4.element.Tag or None
+        The `next` `<div class="align">` tag (or `None`), used as a boundary
+        to stop gathering sibling text.
+
+    Returns
+    -------
+    tuple[str, str, str, str]
+        A 4-tuple:
+        - `name` (`str`): The attack's name (or `"N/A"`).
+        - `cost_symbols` (`str`): Symbols (e.g. `"⚫⚫"`) from `parse_energy_cost`.
+        - `damage` (`str`): Numeric damage or `"N/A"`.
+        - `effect` (`str`): The textual effect or `"N/A"`
     """
 
     # Get Name
@@ -37,43 +49,43 @@ def extract_move_info(
     # Decide damage/effect
     if texts and texts[0].isdigit():
         damage = texts[0]
-        effect = texts[1] if len(texts) > 1 else ""
+        effect = texts[1] if len(texts) > 1 else "N/A"
     elif texts:
         damage = "N/A"
         effect = texts[0]
     else:
         damage = "N/A"
-        effect = ""
+        effect = "N/A"
 
     return name, cost, damage, effect
 
 
 def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
     """
-    Extracts key Pokémon TCG card details from a `<td class="left">` element into a flat dictionary.
+    Parse the details cell (`<td class="left">`) into flat fields.
 
-    Args:
-        cell9 (bs4.element.Tag):
-            A `<td>` tag containing:
-            - A <b>Stage</b> label and value
-            - A <b>Retreat Cost</b> label with cost icons
-            - Up to two <div class="align"> blocks for attacks, each with:
-                • <b>Attack Name</b>
-                • Energy cost icons
-                • Damage value
-                • Optional effect text
+    Parameters
+    ----------
+    cell9 : bs4.element.Tag
+        The `<td class="left">` containing:
+        - A `Stage` label/value
+        - A `Retreat Cost` icon
+        - Optional `[Ability]` block
+        - Up to two `<div class="align">` attack blocks
+    is_trainer : bool
+        If `True`, this is a Trainer/Item card (no Stage/moves) so
+        its full description goes into `ability_effect`.
 
-    Returns:
-        cell9_data (Dict[str, str]):
-            A dict with these keys (all default to "N/A" if not found):
-            - stage        : Stage description (e.g. "Stage 2")
-            - retreat_cost : Comma-separated alt texts of retreat-cost icons
-            - move1_name   : First attack's name
-            - move1_damage : First attack's damage amount
-            - move1_effect : First attack's optional effect text
-            - move2_name   : Second attack's name
-            - move2_damage : Second attack's damage amount
-            - move2_effect : Second attack's optional effect text
+    Returns
+    -------
+    dict[str, str]
+        Flat mapping with default `"N/A"`:
+
+        - `stage`: e.g. `"Stage 2"`
+        - `retreat_cost`: numeric cost from `parse_retreat_cost`
+        - `ability_name`, `ability_effect`
+        - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
+        - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
     """
     # Create dict with desired keys and default values
     cell9_data = {
@@ -151,19 +163,36 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
 
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     """
-    Extract card data `<tr>` element into a dict.
+    Convert a `<tr>` row into a full card-info dict.
 
-    This function parses specific columns from the row of HTML table data,
-    extracting structured information such as the card number, name, type, HP,
-    and image link. Cell indices correspond to known table structure.
+    Parameters
+    ----------
+    card_html : bs4.element.Tag
+        A `<tr>` containing exactly ten `<td>` cells in the known layout:
 
-    Args:
-        card_html (Tag): Tag containing list of `<td>` tags representing one table row.
+            0) checkbox
+            1) number
+            2) name/image
+            3) rarity
+            4) pack,
+            5) type
+            6) HP
+            7) stage
+            8) points
+            9) moves/details.
 
-    Returns:
-        output (dict): Dictionary containing structured card data, with whitespace cleaned.
-        The columns of the outputted dict are `{number, name, image, rarity, pack_name,
-        type, HP, stage, pack_points}`
+    Returns
+    -------
+    dict[str, str]
+        Merges:
+        - Basic columns: `number`, `name`, `image`, `rarity`,
+          `pack_name`, `type`, `HP`, `stage`, `pack_points`
+        - Detail fields from `extract_cell9(...)`
+
+    Notes
+    -----
+    - Determines `is_trainer` by `type` in `{"Item","Supporter"}`.
+    - Cleans whitespace via `clean_str()` at the end.
     """
     cells = card_html.find_all("td")
     # cell_0 is checkmark (ignored)

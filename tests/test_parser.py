@@ -390,6 +390,109 @@ def test_extract_card_pokemon_move_desc_no_dmg():
     assert card["pack_points"] == "500"
     assert card["image"] == "https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show"
 
+def test_extract_card_pokemon_dynamic_dmg():
+    """Testing `A1 026` (Pinsir)"""
+    html = """
+      <tr>
+        <td class="center"><input type="checkbox" id="checkbox1_26"></td>
+        <td class="center"><b class="a-bold">A1 026</b></td>
+
+        <td class="center">
+          <div class="imageLink js-archive-open-image-modal"
+            data-image-url="https://img.game8.co/3998396/85716016d8d17502c3856d4d2c2276aa.png/original"
+            data-micromodal-trigger="js-archive-open-image-modal" data-archive-url><img
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - A1 026 Pinsir"
+              data-src="https://img.game8.co/3998396/85716016d8d17502c3856d4d2c2276aa.png/show"
+              width="172"
+              style="height: 0; padding-bottom: calc(px*240/172); padding-bottom: calc(min(100%,172px)*240/172);"><span
+              class="imageLink__icon"></span></div> <a class="a-link"
+            href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476027">Pinsir</a>
+
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - ◇◇ rarity"
+            data-src="https://img.game8.co/3995615/ef7758a60d9c9d1871eca629c203b81e.png/show"
+            width="37"
+            style="height: 0; padding-bottom: calc(px*25/37); padding-bottom: calc(min(100%,37px)*25/37);">
+          <hr class="a-table__line">◇◇
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy" alt="Pokemon TCG Pocket - Any Booster Pack"
+            data-src="https://img.game8.co/3999905/88136e17a38d045c78234c0cca8dfcf7.png/show"
+            width="50" height="50">
+          <br> <b class="a-bold">Genetic Apex (A1)</b> <br> Any
+        </td>
+
+        <td class="center"><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy" alt="Pokemon TCG Pocket - Grass"
+            data-src="https://img.game8.co/3994729/63b3ad9a73304c7fb7ca479cee7ed4c3.png/show"
+            width="40" height="40">
+        </td>
+
+        <td class="center"> 90 </td>
+
+        <td class="center"> Basic </td>
+
+        <td class="center">70 Pts </td>
+        <td class="left">
+          <br> <b class="a-bold">Stage</b>: Basic <br>
+          <div class="align"> <b class="a-bold">Retreat Cost</b>: <img
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+              class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - Retreat Cost"
+              data-src="https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show"
+              width="40"
+              style="height: 0; padding-bottom: calc(px*20/40); padding-bottom: calc(min(100%,40px)*20/40);">
+          </div>
+          <hr class="a-table__line">
+
+          <div class="align"> <b class="a-bold">Double Horn</b>
+
+            <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476531"><img
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                class="a-img lazy lazy-non-square" alt="Grass 2"
+                data-src="https://img.game8.co/3998531/579b7f81ac7b52e36dd4e8b52a9d2da8.png/show"
+                width="30"
+                style="height: 0; padding-bottom: calc(px*15/30); padding-bottom: calc(min(100%,30px)*15/30);"></a>
+
+          </div>
+          50x <br>
+          Flip 2 coins. This attack does 50 damage for each heads.
+
+        </td>
+        <td class="left">Open either Genetic Apex (A1) Pikachu, Charizard or Mewtwo packs</td>
+      </tr>
+    """
+    row = BeautifulSoup(html, "lxml").find("tr")
+    card = extract_card(row)
+
+    assert card["number"] == "A1 026"
+    assert card["name"] == "Pinsir"
+    assert card["rarity"] == "◇◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "90"
+    assert card["type"] == "Grass"
+    assert card["move1_name"] == "Double Horn"
+    assert card["move1_cost"] == "🟢🟢"
+    assert card["move1_damage"] == "50x"
+    assert (
+        card["move1_effect"]
+        == "Flip 2 coins. This attack does 50 damage for each heads."
+    )
+    assert card["move2_name"] == "N/A"
+    assert card["move2_cost"] == "N/A"
+    assert card["move2_damage"] == "N/A"
+    assert card["move2_effect"] == "N/A"
+    assert card["retreat_cost"] == "2"
+    assert card["pack_name"] == "Genetic Apex (A1) Any"
+    assert card["pack_points"] == "70"
+    assert card["image"] == "https://img.game8.co/3998396/85716016d8d17502c3856d4d2c2276aa.png/show"
+
 
 def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""

@@ -47,7 +47,9 @@ def extract_move_info(
             texts.append(t)
 
     # Decide damage/effect
-    if texts and texts[0].isdigit():
+    # Only test first char to account for "50x" or "30+"
+    first_char = texts[0][0]
+    if texts and first_char.isdigit(): 
         damage = texts[0]
         effect = texts[1] if len(texts) > 1 else "N/A"
     elif texts:

@@ -6,7 +6,7 @@ from tcg_extract.parser import extract_card
 from tcg_extract.io import fetch_html_table
 
 
-def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None) -> dict[str, str]:
+def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> dict[str, str]:
     if html is None:
         # Pipeline input data directly from page
         pokemon_table = fetch_html_table()
@@ -19,6 +19,7 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None) -> dict[st
     for row in cards_html:
         bold = row.find("b", class_="a-bold")
         if bold and bold.text.strip() == pokemon_id:
+            print(row)
             card = extract_card(row)
             return card
 
@@ -32,6 +33,7 @@ def main():
     )
     args = parser.parse_args()
 
+    # Get HTML table from url
     card = debug_card_extract(args.pokemon_id)
 
     column_order = [

@@ -14,6 +14,7 @@ ENERGY_SYMBOLS = {
 RETREAT_COSTS = {
     "https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show": 0,
     "https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show": 1,
+    "https://img.game8.co/4018721/a654c44596214b3bf38769c180602a16.png/show": 1,
     "https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show": 2,
     "https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show": 3,
     "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,

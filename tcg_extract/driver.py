@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
 from tcg_extract.parser import extract_card
-from tcg_extract.writer import write_to_csv
+from tcg_extract.io import write_to_csv
 
 
 # Raw data found at

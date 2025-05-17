@@ -485,3 +485,98 @@ def test_extract_card_fossil():
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
     assert card["pack_points"] == "35"
     assert card["image"] == "https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show"
+
+
+def test_extract_card_supporter():
+    """Testing `A1 219` (Erika)"""
+    html = """
+    <tr>
+    <td class="center"><input type="checkbox" id="checkbox1_219"></td>
+    <td class="center"><b class="a-bold">A1 219</b></td>
+
+    <td class="center">
+        <div class="imageLink js-archive-open-image-modal"
+        data-image-url="https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/original"
+        data-micromodal-trigger="js-archive-open-image-modal" data-archive-url><img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - A1 219 Erika"
+            data-src="https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/show"
+            width="172"
+            style="height: 0; padding-bottom: calc(px*240/172); padding-bottom: calc(min(100%,172px)*240/172);"><span
+            class="imageLink__icon"></span></div> <a class="a-link"
+        href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476272">Erika</a>
+
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="Pokemon TCG Pocket - ◇◇ rarity"
+        data-src="https://img.game8.co/3995615/ef7758a60d9c9d1871eca629c203b81e.png/show"
+        width="37"
+        style="height: 0; padding-bottom: calc(px*25/37); padding-bottom: calc(min(100%,37px)*25/37);">
+        <hr class="a-table__line">◇◇
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy" alt="Pokemon TCG Pocket - Charizard Booster Pack"
+        data-src="https://img.game8.co/3999185/6405ea32582539f6e270b2b15529d130.png/show"
+        width="50" height="50">
+        <br> <b class="a-bold">Genetic Apex (A1)</b> <br> Charizard
+    </td>
+
+    <td class="center"><img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy" alt="Pokemon TCG Pocket - Supporter"
+        data-src="https://img.game8.co/3999105/893d8772aca3c05fc5f0d5021a795a23.png/show"
+        width="40" height="40">
+    </td>
+
+    <td class="center"> <img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="N/A"
+        data-src="https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show"
+        width="84"
+        style="height: 0; padding-bottom: calc(px*40/84); padding-bottom: calc(min(100%,84px)*40/84);">
+    </td>
+
+    <td class="center"> <img
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+        class="a-img lazy lazy-non-square" alt="N/A"
+        data-src="https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show"
+        width="84"
+        style="height: 0; padding-bottom: calc(px*40/84); padding-bottom: calc(min(100%,84px)*40/84);">
+    </td>
+
+    <td class="center">70 Pts </td>
+    <td class="left">
+
+        Heal 50 damage from 1 of your Grass Pokemon.
+
+    </td>
+    <td class="left">Open Genetic Apex (A1) Charizard packs</td>
+    </tr>
+    """
+    row = BeautifulSoup(html, "lxml").find("tr")
+    card = extract_card(row)
+
+    assert card["number"] == "A1 219"
+    assert card["name"] == "Erika"
+    assert card["rarity"] == "◇◇"
+    assert card["stage"] == "N/A"
+    assert card["HP"] == "N/A"
+    assert card["type"] == "Supporter"
+    assert card["ability_name"] == "N/A"
+    assert card["ability_effect"] == "Heal 50 damage from 1 of your Grass Pokemon."
+    assert card["move1_name"] == "N/A"
+    assert card["move1_cost"] == "N/A"
+    assert card["move1_damage"] == "N/A"
+    assert card["move1_effect"] == "N/A"
+    assert card["move2_name"] == "N/A"
+    assert card["move2_cost"] == "N/A"
+    assert card["move2_damage"] == "N/A"
+    assert card["move2_effect"] == "N/A"
+    assert card["retreat_cost"] == "N/A"
+    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
+    assert card["pack_points"] == "70"
+    assert card["image"] == "https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/show"

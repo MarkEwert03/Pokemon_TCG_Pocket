@@ -1,4 +1,5 @@
 import bs4
+import re
 from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
 
 
@@ -47,9 +48,9 @@ def extract_move_info(
             texts.append(t)
 
     # Decide damage/effect
-    # Only test first char to account for "50x" or "30+"
-    first_char = texts[0][0]
-    if texts and first_char.isdigit(): 
+    # Only allow digits, "x", and "+" to account for "50x" or "30+"
+    is_pokemon_numeric = bool(re.fullmatch(r"[0-9x+]+", texts[0]))
+    if texts and is_pokemon_numeric: 
         damage = texts[0]
         effect = texts[1] if len(texts) > 1 else "N/A"
     elif texts:

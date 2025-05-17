@@ -7,6 +7,7 @@ from tcg_extract.io import fetch_html_table
 
 
 def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> dict[str, str]:
+    """Given a pokemon_id, returns the dict with extracted card info."""
     if html is None:
         # Pipeline input data directly from page
         pokemon_table = fetch_html_table()
@@ -19,7 +20,6 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
     for row in cards_html:
         bold = row.find("b", class_="a-bold")
         if bold and bold.text.strip() == pokemon_id:
-            print(row)
             card = extract_card(row)
             return card
 
@@ -27,6 +27,7 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
 
 
 def main():
+    """Runs main debug function by printing card dict."""
     parser = argparse.ArgumentParser(description="Debug Pokémon card extraction.")
     parser.add_argument(
         "pokemon_id", nargs="?", default="A1 001", help="Card ID to extract (e.g., 'A1 007')"

@@ -24,11 +24,11 @@ def main():
     PROJ_ROOT = driver_file.parent.parent
     
     # Define input/output folders using absolute paths
-    processed_dir = PROJ_ROOT / "data" / "processed"
-    processed_dir.mkdir(parents=True, exist_ok=True)
+    data_dir = PROJ_ROOT / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
     
     # Define output path
-    output_file = processed_dir / "full.csv"
+    output_file = data_dir / "full.csv"
     
     # Pipeline input data directly from page
     pokemon_table = fetch_html_table()

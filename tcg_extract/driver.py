@@ -26,7 +26,7 @@ def main():
     raw_dir = PROJ_ROOT / "data" / "raw"
     processed_dir = PROJ_ROOT / "data" / "processed"
     # Choose input file and generate matching output file path
-    input_file = raw_dir / "medium.html"
+    input_file = raw_dir / "large.html"
     output_file = processed_dir / input_file.with_suffix(".csv").name
 
     # Validate input and create output dir if needed

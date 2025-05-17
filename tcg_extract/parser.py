@@ -2,6 +2,7 @@ import bs4
 import re
 from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
 
+DEFAULT_EMPTY = None
 
 def extract_move_info(
     div: bs4.element.Tag, next_div: bs4.element.Tag | None
@@ -23,18 +24,18 @@ def extract_move_info(
     -------
     tuple[str, str, str, str]
         A 4-tuple:
-        - `name` (`str`): The attack's name (or `"N/A"`).
+        - `name` (`str`): The attack's name.
         - `cost_symbols` (`str`): Symbols (e.g. `"⚫⚫"`) from `parse_energy_cost`.
-        - `damage` (`str`): Numeric damage or `"N/A"`.
-        - `effect` (`str`): The textual effect or `"N/A"`
+        - `damage` (`str`): Numeric damage.
+        - `effect` (`str`): The textual effect
     """
 
     # Get Name
     name_tag = div.find("b")
-    name = name_tag.text.strip() if name_tag else "N/A"
+    name = name_tag.text.strip() if name_tag else DEFAULT_EMPTY
 
     cost_alts = [img["alt"] for img in div.find_all("img", alt=True)]
-    cost = "".join(parse_energy_cost(alt) for alt in cost_alts) or "N/A"
+    cost = "".join(parse_energy_cost(alt) for alt in cost_alts) or DEFAULT_EMPTY
 
     # Gather all text siblings up to next_div
     texts: list[str] = []
@@ -52,18 +53,18 @@ def extract_move_info(
     is_pokemon_numeric = bool(re.fullmatch(r"[0-9x+]+", texts[0]))
     if texts and is_pokemon_numeric:
         damage = texts[0]
-        effect = texts[1] if len(texts) > 1 else "N/A"
+        effect = texts[1] if len(texts) > 1 else DEFAULT_EMPTY
     elif texts:
-        damage = "N/A"
+        damage = DEFAULT_EMPTY
         effect = texts[0]
     else:
-        damage = "N/A"
-        effect = "N/A"
+        damage = DEFAULT_EMPTY
+        effect = DEFAULT_EMPTY
 
     return name, cost, damage, effect
 
 
-def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
+def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | None]:
     """
     Parse the details cell (`<td class="left">`) into flat fields.
 
@@ -81,8 +82,8 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
 
     Returns
     -------
-    dict[str, str]
-        Flat mapping with default `"N/A"`:
+    dict[str, str | None]
+        Flat mapping with default DEFAULT_EMPTY:
 
         - `stage`: e.g. `"Stage 2"`
         - `retreat_cost`: numeric cost from `parse_retreat_cost`
@@ -92,18 +93,18 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str]:
     """
     # Create dict with desired keys and default values
     cell9_data = {
-        "stage": "N/A",
-        "retreat_cost": "N/A",
-        "ability_name": "N/A",
-        "ability_effect": "N/A",
-        "move1_name": "N/A",
-        "move1_cost": "N/A",
-        "move1_damage": "N/A",
-        "move1_effect": "N/A",
-        "move2_name": "N/A",
-        "move2_cost": "N/A",
-        "move2_damage": "N/A",
-        "move2_effect": "N/A",
+        "stage": DEFAULT_EMPTY,
+        "retreat_cost": DEFAULT_EMPTY,
+        "ability_name": DEFAULT_EMPTY,
+        "ability_effect": DEFAULT_EMPTY,
+        "move1_name": DEFAULT_EMPTY,
+        "move1_cost": DEFAULT_EMPTY,
+        "move1_damage": DEFAULT_EMPTY,
+        "move1_effect": DEFAULT_EMPTY,
+        "move2_name": DEFAULT_EMPTY,
+        "move2_cost": DEFAULT_EMPTY,
+        "move2_damage": DEFAULT_EMPTY,
+        "move2_effect": DEFAULT_EMPTY,
     }
 
     # Handle case for trainer type first

@@ -19,8 +19,9 @@ RETREAT_COSTS = {
     "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,
 }
 
+DEFAULT_EMPTY = None
 
-def clean_str(string: str, empty_val: str = "N/A") -> str:
+def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
     """
     Remove extra whitespace from a string.
 
@@ -47,6 +48,9 @@ def clean_str(string: str, empty_val: str = "N/A") -> str:
         >>> clean_str("\\t \\n   \\t", empty_val="N/A")
         'N/A'
     """
+    if string is None:
+        return DEFAULT_EMPTY
+    
     output = " ".join(string.strip().split())
     if output == "":
         return empty_val

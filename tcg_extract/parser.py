@@ -1,8 +1,14 @@
 import bs4
 import re
-from tcg_extract.utils import clean_str, parse_energy_cost, parse_retreat_cost
+from tcg_extract.utils import (
+    clean_str,
+    parse_energy_cost,
+    parse_retreat_cost,
+    trim_after_second_parens,
+)
 
 DEFAULT_EMPTY = None
+
 
 def extract_move_info(
     div: bs4.element.Tag, next_div: bs4.element.Tag | None
@@ -206,7 +212,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     name = cells[2].find("a").text
     image = cells[2].find("img").get("data-src")
     rarity = cells[3].text
-    pack = cells[4].text
+    pack = trim_after_second_parens(cells[4].text)
     type = cells[5].find("img")["alt"].split("-")[-1]  # last word is the type
     HP = cells[6].text
     stage = cells[7].text

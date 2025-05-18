@@ -1,3 +1,5 @@
+import re
+
 ENERGY_SYMBOLS = {
     "Colorless": "*️⃣",
     "Grass": "🟢",
@@ -111,3 +113,40 @@ def parse_retreat_cost(retreat_cost_img: str) -> int:
     -1
     """
     return RETREAT_COSTS.get(retreat_cost_img, -1)
+
+def trim_after_second_parens(s: str) -> str:
+    """
+    Trims a string to just before the second opening parenthesis, if one exists.
+
+    This function is useful for removing trailing descriptive or redundant info
+    that appears after the second set of parentheses in a string, while preserving
+    the core phrase up to and including the first set of parentheses.
+
+    Args:
+        s (str): Input string that may contain multiple sets of parentheses.
+
+    Returns:
+        str: The trimmed string, or the original string if there are fewer than two
+             opening parentheses.
+
+    Examples:
+        >>> trim_after_second_parens("Genetic Apex (A1) Mewtwo")
+        'Genetic Apex (A1) Mewtwo'
+        >>> trim_after_second_parens("Genetic Apex (A1) Any")
+        'Genetic Apex (A1) Any'
+        >>> trim_after_second_parens("Space-Time Smackdown (A2) Any (Space-Time Smackdown)")
+        'Space-Time Smackdown (A2)'
+        >>> trim_after_second_parens("Name (Alpha) (Beta) (Gamma)")
+        'Name (Alpha)'
+        >>> trim_after_second_parens("No parentheses here")
+        'No parentheses here'
+        >>> trim_after_second_parens("(Only one)")
+        '(Only one)'
+    """
+    # Find all positions of opening parentheses
+    matches = list(re.finditer(r'\(', s))
+    if len(matches) <= 1:
+        return s  # Keep original if only one or none
+
+    # Cut string just before the second opening parenthesis
+    return s[:matches[1].start()].strip()

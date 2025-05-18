@@ -15,12 +15,14 @@ RETREAT_COSTS = {
     "https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show": 0,
     "https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show": 1,
     "https://img.game8.co/4018721/a654c44596214b3bf38769c180602a16.png/show": 1,
+    "https://img.game8.co/3346529/3dd07276f0d15aef9ef1b5f294a8c94a.png/show": 1,  # only for P-A 051
     "https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show": 2,
     "https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show": 3,
     "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,
 }
 
 DEFAULT_EMPTY = None
+
 
 def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
     """
@@ -51,7 +53,7 @@ def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
     """
     if string is None:
         return DEFAULT_EMPTY
-    
+
     output = " ".join(string.strip().split())
     if output == "":
         return empty_val
@@ -87,6 +89,7 @@ def parse_energy_cost(energy_str: str) -> str:
 
     symbol = ENERGY_SYMBOLS.get(type_name, "?")
     return symbol * count
+
 
 def parse_retreat_cost(retreat_cost_img: str) -> int:
     """

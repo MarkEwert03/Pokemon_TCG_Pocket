@@ -23,7 +23,7 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             card = extract_card(row)
             return card
 
-    print(f"[!] No row found for Pokémon ID: {pokemon_id}")
+    raise Exception(f"[!] No row found for Pokémon ID: {pokemon_id}")
 
 
 def main():

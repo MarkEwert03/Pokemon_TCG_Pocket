@@ -6,6 +6,7 @@ from tests.debug import debug_card_extract
 TABLE_HTML = fetch_html_table()
 DEFAULT_EMPTY = None
 
+
 def test_extract_card_pokemon_one_attack():
     """Testing `A1 001` (Bulbasaur)"""
 
@@ -238,3 +239,32 @@ def test_extract_card_full_art_supporter():
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "1250"
     assert card["image"] == "https://img.game8.co/4004062/0c2bbaf7e3e34c46d1593b6780108de9.png/show"
+
+
+def test_extract_card_tool():
+    """Testing `A3 146` (Poison Barb)"""
+    card = debug_card_extract("A3 146", html=TABLE_HTML)
+
+    assert card["number"] == "A3 146"
+    assert card["name"] == "Poison Barb"
+    assert card["rarity"] == "◇◇"
+    assert card["stage"] == DEFAULT_EMPTY
+    assert card["HP"] == DEFAULT_EMPTY
+    assert card["type"] == "Pokemon Tool"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert (
+        card["ability_effect"]
+        == "If the Pokemon this card is attached to is your Active Pokemon and is damaged by an attack from your opponent’s Pokemon, the Attacking Pokemon is now Poisoned."
+    )
+    assert card["move1_name"] == DEFAULT_EMPTY
+    assert card["move1_cost"] == DEFAULT_EMPTY
+    assert card["move1_damage"] == DEFAULT_EMPTY
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
+    assert card["pack_points"] == "70"
+    assert card["image"] == "https://img.game8.co/4162476/1cdd88829801e39c73f40dc50816b558.png/show"

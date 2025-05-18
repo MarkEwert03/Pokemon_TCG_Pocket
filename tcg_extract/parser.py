@@ -218,7 +218,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     stage = cells[7].text
     pack_points = cells[8].text.replace(",", "").replace("Pts", "")
     # cell 9 contains retreat cost, effect, and moves data
-    is_trainer = clean_str(type) in ["Item", "Supporter"]
+    is_trainer = clean_str(type) in ["Item", "Supporter", "Pokemon Tool"]
     cell9 = extract_cell9(cells[9], is_trainer=is_trainer)
 
     # Create dictionary with raw data

@@ -1,5 +1,7 @@
 import bs4
+from bs4 import BeautifulSoup
 import re
+import requests
 from tcg_extract.utils import (
     clean_str,
     parse_energy_cost,
@@ -171,6 +173,50 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     return cell9_data
 
 
+def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
+    """
+    Parse additional details from the cards full page.
+
+    Parameters
+    ----------
+    card_full_url : str
+        The url linking to the cards full page
+
+    Returns
+    -------
+    card_extra_details : dict[str, str | None]
+        Flat mapping of the fields with default DEFAULT_EMPTY:
+            - Rating
+            - Generation
+            - Illustrator
+            - Weakness
+    """
+    # Download page
+    response = requests.get(card_full_url)
+    response.raise_for_status()
+
+    # Parse total HTML with BeautifulSoup
+    soup = BeautifulSoup(response.text, "lxml")
+    table = soup.select_one("table.a-table.table--fixed.a-table")
+    rows = table.find_all("tr")
+
+    # Get metadata with soup operations
+    rating = rows[1].find("td").find("a").find("img").get("data-src")
+    generation = rows[5].find("td").text
+    illustrator = rows[7].find("td").text
+    weakness = rows[9].find_all("td")[2].find("a").find("img").get("alt")
+
+    # Create dictionary with card info
+    card_extra_details = {
+        "Rating": rating,
+        "Generation": generation,
+        "Illustrator": illustrator,
+        "Weakness": weakness,
+    }
+
+    return card_extra_details
+
+
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     """
     Convert a `<tr>` row into a full card-info dict.
@@ -219,9 +265,14 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     HP = cells[6].text
     stage = cells[7].text
     pack_points = cells[8].text.replace(",", "").replace("Pts", "")
-    # cell 9 contains retreat cost, effect, and moves data
+
+    # Cell 9 contains retreat cost, effect, and moves data
     is_trainer = clean_str(type) in ["Item", "Supporter", "Pokemon Tool"]
     cell9 = extract_cell9(cells[9], is_trainer=is_trainer)
+
+    # Extract more information from the individual card pages
+    card_full_url = cells[2].find("a").get("href")
+    extra_card_details = extract_extra_card_details(card_full_url)
 
     # Create dictionary with raw data
     card = {
@@ -234,14 +285,16 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "HP": HP,
         "stage": stage,
         "pack_points": pack_points,
+        "url": card_full_url
     }
 
-    # Merge data from cell 9
+    # Merge data from cell 9 and full page
     card = card | cell9
+    card = card | extra_card_details
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
-    
+
     # Weird edge case; missing energy cost for A1a 057 (Pidgey)
     if card["number"] == "A1a 057":
         card["move1_cost"] = "*️⃣"

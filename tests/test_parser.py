@@ -1,10 +1,12 @@
 from bs4 import BeautifulSoup
-from tcg_extract.parser import extract_card
-from tcg_extract.io import fetch_html_table
 from tests.debug import debug_card_extract
+from tcg_extract.io import fetch_html_table
+from tcg_extract.parser import extract_card
+from tcg_extract.parser import DEFAULT_EMPTY
+
 
 TABLE_HTML = fetch_html_table()
-DEFAULT_EMPTY = None
+
 
 def test_extract_card_raw_from_html():
     """Testing `A1 001` (Bulbasaur)"""
@@ -94,13 +96,21 @@ def test_extract_card_raw_from_html():
         """
     row = BeautifulSoup(html, "lxml").find("tr")
     card = extract_card(row)
-    
+
     assert card["number"] == "A1 001"
     assert card["name"] == "Bulbasaur"
     assert card["rarity"] == "◇"
     assert card["stage"] == "Basic"
     assert card["HP"] == "70"
     assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Narumi Sato"
+    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Vine Whip"
     assert card["move1_cost"] == "🟢*️⃣"
     assert card["move1_damage"] == "40"
@@ -109,10 +119,9 @@ def test_extract_card_raw_from_html():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == "1"
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
-    assert card["pack_points"] == "35"
     assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
+
 
 def test_extract_card_pokemon_one_attack():
     """Testing `A1 001` (Bulbasaur)"""
@@ -124,6 +133,12 @@ def test_extract_card_pokemon_one_attack():
         "stage",
         "HP",
         "type",
+        "weakness",
+        "retreat_cost",
+        "generation",
+        "illustrator",
+        "pack_name",
+        "pack_points",
         "ability_name",
         "ability_effect",
         "move1_name",
@@ -134,10 +149,8 @@ def test_extract_card_pokemon_one_attack():
         "move2_cost",
         "move2_damage",
         "move2_effect",
-        "retreat_cost",
-        "pack_name",
-        "pack_points",
         "image",
+        "url",
     }
 
     card = debug_card_extract("A1 001", html=TABLE_HTML)
@@ -149,6 +162,14 @@ def test_extract_card_pokemon_one_attack():
     assert card["stage"] == "Basic"
     assert card["HP"] == "70"
     assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Narumi Sato"
+    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Vine Whip"
     assert card["move1_cost"] == "🟢*️⃣"
     assert card["move1_damage"] == "40"
@@ -157,10 +178,8 @@ def test_extract_card_pokemon_one_attack():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == "1"
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
-    assert card["pack_points"] == "35"
     assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
 
 
 def test_extract_card_pokemon_two_attacks():
@@ -173,6 +192,14 @@ def test_extract_card_pokemon_two_attacks():
     assert card["stage"] == "Stage 2"
     assert card["HP"] == "190"
     assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "3"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "PLANETA CG Works"
+    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["pack_points"] == "500"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Razor Leaf"
     assert card["move1_cost"] == "🟢*️⃣*️⃣"
     assert card["move1_damage"] == "60"
@@ -181,10 +208,8 @@ def test_extract_card_pokemon_two_attacks():
     assert card["move2_cost"] == "🟢🟢*️⃣*️⃣"
     assert card["move2_damage"] == "100"
     assert card["move2_effect"] == "Heal 30 damage from this Pokemon."
-    assert card["retreat_cost"] == "3"
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
-    assert card["pack_points"] == "500"
     assert card["image"] == "https://img.game8.co/3995580/151d2c9455f83899618147d85881a75e.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476005"
 
 
 def test_extract_card_pokemon_move_desc_no_dmg():
@@ -197,6 +222,14 @@ def test_extract_card_pokemon_move_desc_no_dmg():
     assert card["stage"] == "Basic"
     assert card["HP"] == "140"
     assert card["type"] == "Fire"
+    assert card["weakness"] == "Lightning"
+    assert card["retreat_cost"] == "2"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "PLANETA Tsuji"
+    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
+    assert card["pack_points"] == "500"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Inferno Dance"
     assert card["move1_cost"] == "🔴"
     assert card["move1_damage"] == DEFAULT_EMPTY
@@ -208,10 +241,8 @@ def test_extract_card_pokemon_move_desc_no_dmg():
     assert card["move2_cost"] == "🔴*️⃣*️⃣"
     assert card["move2_damage"] == "70"
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == "2"
-    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
-    assert card["pack_points"] == "500"
     assert card["image"] == "https://img.game8.co/3998342/21cb0fbf6aa4a791867a2c21ff9add20.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476048"
 
 
 def test_extract_card_pokemon_dynamic_dmg():
@@ -224,6 +255,14 @@ def test_extract_card_pokemon_dynamic_dmg():
     assert card["stage"] == "Basic"
     assert card["HP"] == "90"
     assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "2"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Eri Yamaki"
+    assert card["pack_name"] == "Genetic Apex (A1) Any"
+    assert card["pack_points"] == "70"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Double Horn"
     assert card["move1_cost"] == "🟢🟢"
     assert card["move1_damage"] == "50x"
@@ -232,10 +271,8 @@ def test_extract_card_pokemon_dynamic_dmg():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == "2"
-    assert card["pack_name"] == "Genetic Apex (A1) Any"
-    assert card["pack_points"] == "70"
     assert card["image"] == "https://img.game8.co/4171739/029c4cb3ce8eb5f85a1359121766e8ce.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476027"
 
 
 def test_extract_card_pokemon_ability():
@@ -248,6 +285,12 @@ def test_extract_card_pokemon_ability():
     assert card["stage"] == "Stage 2"
     assert card["HP"] == "120"
     assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Shin Nagasawa"
+    assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
+    assert card["pack_points"] == "150"
     assert card["ability_name"] == "Powder Heal"
     assert (
         card["ability_effect"]
@@ -261,10 +304,8 @@ def test_extract_card_pokemon_ability():
     assert card["move2_cost"] == "🟢*️⃣*️⃣"
     assert card["move2_damage"] == "60"
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == "1"
-    assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
-    assert card["pack_points"] == "150"
     assert card["image"] == "https://img.game8.co/4004057/6ba461fb08292cbabe715b6ead54dfb9.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476008"
 
 
 def test_extract_card_fossil():
@@ -277,6 +318,12 @@ def test_extract_card_fossil():
     assert card["stage"] == DEFAULT_EMPTY
     assert card["HP"] == DEFAULT_EMPTY
     assert card["type"] == "Item"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Toyste Beach"
+    assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
+    assert card["pack_points"] == "35"
     assert card["ability_name"] == DEFAULT_EMPTY
     assert (
         card["ability_effect"]
@@ -290,10 +337,8 @@ def test_extract_card_fossil():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
-    assert card["pack_points"] == "35"
     assert card["image"] == "https://img.game8.co/4004042/6f1a71c0a509b36ccf7dd29bf8bfa967.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476269"
 
 
 def test_extract_card_supporter():
@@ -306,6 +351,12 @@ def test_extract_card_supporter():
     assert card["stage"] == DEFAULT_EMPTY
     assert card["HP"] == DEFAULT_EMPTY
     assert card["type"] == "Supporter"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "kirisAki"
+    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
+    assert card["pack_points"] == "70"
     assert card["ability_name"] == DEFAULT_EMPTY
     assert card["ability_effect"] == "Heal 50 damage from 1 of your Grass Pokemon."
     assert card["move1_name"] == DEFAULT_EMPTY
@@ -316,10 +367,8 @@ def test_extract_card_supporter():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["pack_name"] == "Genetic Apex (A1) Charizard"
-    assert card["pack_points"] == "70"
     assert card["image"] == "https://img.game8.co/3995535/5bc1164c2b9a79f4c40f21a8975adbb3.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476272"
 
 
 def test_extract_card_full_art_supporter():
@@ -332,6 +381,12 @@ def test_extract_card_full_art_supporter():
     assert card["stage"] == DEFAULT_EMPTY
     assert card["HP"] == DEFAULT_EMPTY
     assert card["type"] == "Supporter"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["generation"] == "Gen 1"
+    assert card["illustrator"] == "Souichirou Gunjima"
+    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["pack_points"] == "1250"
     assert card["ability_name"] == DEFAULT_EMPTY
     assert card["ability_effect"] == "Put your Muk or Weezing in the Active Spot into your hand."
     assert card["move1_name"] == DEFAULT_EMPTY
@@ -342,10 +397,8 @@ def test_extract_card_full_art_supporter():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
-    assert card["pack_points"] == "1250"
     assert card["image"] == "https://img.game8.co/4004062/0c2bbaf7e3e34c46d1593b6780108de9.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476283"
 
 
 def test_extract_card_tool():
@@ -358,6 +411,12 @@ def test_extract_card_tool():
     assert card["stage"] == DEFAULT_EMPTY
     assert card["HP"] == DEFAULT_EMPTY
     assert card["type"] == "Pokemon Tool"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["generation"] == "Gen 2"
+    assert card["illustrator"] == "Toyste Beach"
+    assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
+    assert card["pack_points"] == "70"
     assert card["ability_name"] == DEFAULT_EMPTY
     assert (
         card["ability_effect"]
@@ -371,7 +430,5 @@ def test_extract_card_tool():
     assert card["move2_cost"] == DEFAULT_EMPTY
     assert card["move2_damage"] == DEFAULT_EMPTY
     assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
-    assert card["pack_points"] == "70"
     assert card["image"] == "https://img.game8.co/4162476/1cdd88829801e39c73f40dc50816b558.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/518821"

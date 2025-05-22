@@ -305,8 +305,12 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
 
-    # Weird edge case; missing energy cost for A1a 057 (Pidgey)
+    # Edge cases:
+    # Missing energy cost for A1a 057 (Pidgey)
     if card["number"] == "A1a 057":
-        card["move1_cost"] = "*️⃣"
+        card["move1_cost"] = "*️⃣"   
+    # Incorrect damage for A1 183 (Dratini)
+    if card["number"] == "A1 183":
+        card["move1_damage"] = "40"
 
     return card

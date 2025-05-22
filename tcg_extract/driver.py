@@ -34,15 +34,15 @@ def main():
     pokemon_table = fetch_html_table()
 
     # Extract all <tr> elements of the <tbody>
-    cards_html = pokemon_table.find("tbody").find_all("tr")
-    if not cards_html:
+    card_tr_elements = pokemon_table.find("tbody").find_all("tr")
+    if not card_tr_elements:
         raise ValueError("No <tr> elements found int <tbody>")
 
     # Create list to store dict of cleaned card data
     cards_data = []
 
     # Iterate over each <tr> element representing all metadata for one card
-    for card_html in cards_html:
+    for card_html in card_tr_elements:
         row = extract_card(card_html)
         cards_data.append(row)
 

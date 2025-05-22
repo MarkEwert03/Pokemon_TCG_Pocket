@@ -197,7 +197,9 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         Merges:
         - Basic columns: `number`, `name`, `image`, `rarity`,
           `pack_name`, `type`, `HP`, `stage`, `pack_points`
-        - Detail fields from `extract_cell9(...)`
+        - Cell 9 columns: `stage`, `retreat_cost`, `ability_name`, `ability_effect`,
+          `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
+          `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
 
     Notes
     -----

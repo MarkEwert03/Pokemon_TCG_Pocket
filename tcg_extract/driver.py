@@ -31,6 +31,7 @@ def main():
     output_file = data_dir / "full.csv"
     
     # Pipeline input data directly from page
+    print(f"Fetching HTML Table...")
     pokemon_table = fetch_html_table()
 
     # Extract all <tr> elements of the <tbody>
@@ -44,6 +45,7 @@ def main():
     # Iterate over each <tr> element representing all metadata for one card
     for card_html in card_tr_elements:
         row = extract_card(card_html)
+        print(f"  Extracted card <{row['number']}>")
         cards_data.append(row)
 
     # Export the parsed data to CSV

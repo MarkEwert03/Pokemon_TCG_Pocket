@@ -308,6 +308,37 @@ def test_extract_card_pokemon_ability():
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476008"
 
 
+def test_extract_card_pokemon_dragon_weakness():
+    """Testing `A1 183` (Dratini)"""
+    card = debug_card_extract("A1 183", html=TABLE_HTML)
+    
+    assert card["number"] == "A1 183"
+    assert card["name"] == "Dratini"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "70"
+    assert card["type"] == "Dragon"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == "1"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "Ayaka Yoshida"
+    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Ram"
+    assert card["move1_cost"] == "🔵🟡"
+    assert card["move1_damage"] == "40"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476184"
+
+
+
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""
     card = debug_card_extract("A1 216", html=TABLE_HTML)
@@ -432,3 +463,4 @@ def test_extract_card_tool():
     assert card["move2_effect"] == DEFAULT_EMPTY
     assert card["image"] == "https://img.game8.co/4162476/1cdd88829801e39c73f40dc50816b558.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/518821"
+

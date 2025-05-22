@@ -42,6 +42,12 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             "stage": "Basic",
             "HP": "70",
             "type": "Grass",
+            "weakness": "Fire",
+            "retreat_cost": "1",
+            "generation": "Gen 1",
+            "illustrator": "Narumi Sato",
+            "pack_name": "Genetic Apex (A1) Mewtwo",
+            "pack_points": "35",
             "ability_name": null,
             "ability_effect": null,
             "move1_name": "Vine Whip",
@@ -52,10 +58,8 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             "move2_cost": null,
             "move2_damage": null,
             "move2_effect": null,
-            "retreat_cost": "1",
-            "pack_name": "Genetic Apex (A1) Mewtwo",
-            "pack_points": "35",
-            "image": "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
+            "image": "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show",
+            "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
         }
     """
     if html is None:

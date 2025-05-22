@@ -185,10 +185,9 @@ def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
     -------
     card_extra_details : dict[str, str | None]
         Flat mapping of the fields with default DEFAULT_EMPTY:
-            - Rating
-            - Generation
-            - Illustrator
-            - Weakness
+            - `generation`
+            - `illustrator`
+            - `weakness`
     """
     # Download page
     response = requests.get(card_full_url)
@@ -200,14 +199,13 @@ def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
     rows = table.find_all("tr")
 
     # Get metadata with soup operations
-    rating = rows[1].find("td").find("a").find("img").get("data-src")
+    # rating = rows[1].find("td").find("a").find("img").get("data-src")
     generation = rows[5].find("td").text
     illustrator = rows[7].find("td").text
     weakness = rows[9].find_all("td")[2].find("a").find("img").get("alt")
 
     # Create dictionary with card info
     card_extra_details = {
-        "rating": rating,
         "generation": generation,
         "illustrator": illustrator,
         "weakness": weakness,
@@ -245,7 +243,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         - Cell 9 columns: `stage`, `retreat_cost`, `ability_name`, `ability_effect`,
           `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
           `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-        - Extra details columns: `Rating`, `Generation`, `Illustrator`, `Weakness`
+        - Extra details columns: `Generation`, `Illustrator`, `Weakness`
 
     Notes
     -----

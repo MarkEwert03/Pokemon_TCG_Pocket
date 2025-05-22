@@ -7,9 +7,8 @@ from tcg_extract.utils import (
     parse_energy_cost,
     parse_retreat_cost,
     trim_after_second_parens,
+    DEFAULT_EMPTY,
 )
-
-DEFAULT_EMPTY = None
 
 
 def extract_move_info(
@@ -208,10 +207,10 @@ def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
 
     # Create dictionary with card info
     card_extra_details = {
-        "Rating": rating,
-        "Generation": generation,
-        "Illustrator": illustrator,
-        "Weakness": weakness,
+        "rating": rating,
+        "generation": generation,
+        "illustrator": illustrator,
+        "weakness": weakness,
     }
 
     return card_extra_details
@@ -242,14 +241,15 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     dict[str, str]
         Merges:
         - Basic columns: `number`, `name`, `image`, `rarity`,
-          `pack_name`, `type`, `HP`, `stage`, `pack_points`
+          `pack_name`, `type`, `HP`, `stage`, `pack_points`, `url`
         - Cell 9 columns: `stage`, `retreat_cost`, `ability_name`, `ability_effect`,
           `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
           `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
+        - Extra details columns: `Rating`, `Generation`, `Illustrator`, `Weakness`
 
     Notes
     -----
-    - Determines `is_trainer` by `type` in `{"Item","Supporter"}`.
+    - Determines `is_trainer` by `type` in `{"Item", "Supporter", "Pokemon Tool"}`.
     - Cleans whitespace via `clean_str()` at the end.
     """
     cells = card_html.find_all("td")
@@ -285,7 +285,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "HP": HP,
         "stage": stage,
         "pack_points": pack_points,
-        "url": card_full_url
+        "url": card_full_url,
     }
 
     # Merge data from cell 9 and full page

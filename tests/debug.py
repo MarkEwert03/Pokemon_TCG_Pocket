@@ -2,8 +2,9 @@ import argparse
 import json
 from collections import OrderedDict
 import bs4
-from tcg_extract.parser import extract_card
+from tcg_extract.utils import COLUMNS
 from tcg_extract.io import fetch_html_table
+from tcg_extract.parser import extract_card
 
 
 def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> dict[str, str]:
@@ -86,29 +87,7 @@ def main():
     # Get HTML table from url
     card = debug_card_extract(args.pokemon_id)
 
-    column_order = [
-        "number",
-        "name",
-        "rarity",
-        "stage",
-        "HP",
-        "type",
-        "ability_name",
-        "ability_effect",
-        "move1_name",
-        "move1_cost",
-        "move1_damage",
-        "move1_effect",
-        "move2_name",
-        "move2_cost",
-        "move2_damage",
-        "move2_effect",
-        "retreat_cost",
-        "pack_name",
-        "pack_points",
-        "image",
-    ]
-    ordered_card = OrderedDict((key, card.get(key, "N/A")) for key in column_order)
+    ordered_card = OrderedDict((key, card.get(key, "N/A")) for key in COLUMNS)
     print(json.dumps(ordered_card, indent=2, ensure_ascii=False))
 
 

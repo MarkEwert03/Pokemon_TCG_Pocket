@@ -1,5 +1,34 @@
 import re
 
+DEFAULT_EMPTY = None
+
+COLUMNS = [
+    "number",
+    "name",
+    "rarity",
+    "stage",
+    "HP",
+    "type",
+    "weakness",
+    "retreat_cost",
+    "generation",
+    "illustrator",
+    "pack_name",
+    "pack_points",
+    "ability_name",
+    "ability_effect",
+    "move1_name",
+    "move1_cost",
+    "move1_damage",
+    "move1_effect",
+    "move2_name",
+    "move2_cost",
+    "move2_damage",
+    "move2_effect",
+    "image",
+    "url",
+]
+
 ENERGY_SYMBOLS = {
     "Colorless": "*️⃣",
     "Grass": "🟢",

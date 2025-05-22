@@ -1,6 +1,7 @@
 import csv
 import requests
 from bs4 import BeautifulSoup, element
+from tcg_extract.utils import COLUMNS
 
 def fetch_html_table() -> element.Tag:
     """
@@ -52,33 +53,10 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
         cards_data (list): A list full of dictionaries containing cleaned card attributes.
         output_file (str): The path to save the created csv to.
     """
-    # Specify the ordering of the columns
-    column_names = [
-        "number",
-        "name",
-        "rarity",
-        "stage",
-        "HP",
-        "type",
-        "ability_name",
-        "ability_effect",
-        "move1_name",
-        "move1_cost",
-        "move1_damage",
-        "move1_effect",
-        "move2_name",
-        "move2_cost",
-        "move2_damage",
-        "move2_effect",
-        "retreat_cost",
-        "pack_name",
-        "pack_points",
-        "image",
-    ]
 
     # Iterate through list and write each dict as a new row
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=column_names)
+        writer = csv.DictWriter(file, fieldnames=COLUMNS)
         writer.writeheader()
         for card in cards_data:
             writer.writerow(card)

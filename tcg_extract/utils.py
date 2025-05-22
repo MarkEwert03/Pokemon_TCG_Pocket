@@ -84,10 +84,19 @@ def parse_energy_cost(energy_str: str) -> str:
         '???'
     """
     parts = energy_str.rsplit(" ", 1)
-    if len(parts) == 2 and parts[1].isdigit():
-        type_name, count = parts[0], int(parts[1])
-    else:
-        type_name, count = energy_str, 1
+    match len(parts):
+        case 0:
+            return ""
+        case 1:
+            type_name = energy_str
+            count = 1
+        case 2:
+            type_name = parts[0]
+            count = int(parts[1]) if parts[1].isdigit() else 1
+        case _:
+            raise ValueError(
+                f"energy_str was <{energy_str}> and should be of the form <ENERGY COUNT>"
+            )
 
     symbol = ENERGY_SYMBOLS.get(type_name, "?")
     return symbol * count
@@ -113,6 +122,7 @@ def parse_retreat_cost(retreat_cost_img: str) -> int:
     -1
     """
     return RETREAT_COSTS.get(retreat_cost_img, -1)
+
 
 def trim_after_second_parens(s: str) -> str:
     """
@@ -144,9 +154,9 @@ def trim_after_second_parens(s: str) -> str:
         '(Only one)'
     """
     # Find all positions of opening parentheses
-    matches = list(re.finditer(r'\(', s))
+    matches = list(re.finditer(r"\(", s))
     if len(matches) <= 1:
         return s  # Keep original if only one or none
 
     # Cut string just before the second opening parenthesis
-    return s[:matches[1].start()].strip()
+    return s[: matches[1].start()].strip()

@@ -203,7 +203,7 @@ def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str
 
     # Get metadata with soup operations
     # rating = rows[1].find("td").find("a").find("img").get("data-src")
-    generation = rows[5].find("td").text
+    generation = rows[5].find("td").text.split(" ")[-1]
     illustrator = rows[7].find("td").text
     weakness = (
         DEFAULT_EMPTY if is_trainer else rows[9].find_all("td")[2].find("a").find("img").get("alt")

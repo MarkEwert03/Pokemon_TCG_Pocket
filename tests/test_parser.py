@@ -105,7 +105,7 @@ def test_extract_card_raw_from_html():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Narumi Sato"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "35"
@@ -164,7 +164,7 @@ def test_extract_card_pokemon_one_attack():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Narumi Sato"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "35"
@@ -194,7 +194,7 @@ def test_extract_card_pokemon_two_attacks():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "3"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "PLANETA CG Works"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "500"
@@ -224,7 +224,7 @@ def test_extract_card_pokemon_move_desc_no_dmg():
     assert card["type"] == "Fire"
     assert card["weakness"] == "Lightning"
     assert card["retreat_cost"] == "2"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "PLANETA Tsuji"
     assert card["pack_name"] == "Genetic Apex (A1) Charizard"
     assert card["pack_points"] == "500"
@@ -257,7 +257,7 @@ def test_extract_card_pokemon_dynamic_dmg():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "2"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Eri Yamaki"
     assert card["pack_name"] == "Genetic Apex (A1) Any"
     assert card["pack_points"] == "70"
@@ -287,7 +287,7 @@ def test_extract_card_pokemon_ability():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Shin Nagasawa"
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
     assert card["pack_points"] == "150"
@@ -320,7 +320,7 @@ def test_extract_card_fossil():
     assert card["type"] == "Item"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Toyste Beach"
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
     assert card["pack_points"] == "35"
@@ -353,7 +353,7 @@ def test_extract_card_supporter():
     assert card["type"] == "Supporter"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "kirisAki"
     assert card["pack_name"] == "Genetic Apex (A1) Charizard"
     assert card["pack_points"] == "70"
@@ -383,7 +383,7 @@ def test_extract_card_full_art_supporter():
     assert card["type"] == "Supporter"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["generation"] == "Gen 1"
+    assert card["generation"] == "1"
     assert card["illustrator"] == "Souichirou Gunjima"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["pack_points"] == "1250"
@@ -413,7 +413,7 @@ def test_extract_card_tool():
     assert card["type"] == "Pokemon Tool"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
-    assert card["generation"] == "Gen 2"
+    assert card["generation"] == "2"
     assert card["illustrator"] == "Toyste Beach"
     assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
     assert card["pack_points"] == "70"

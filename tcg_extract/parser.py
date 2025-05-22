@@ -84,7 +84,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
         - Optional `[Ability]` block
         - Up to two `<div class="align">` attack blocks
     is_trainer : bool
-        If `True`, this is a Trainer/Item card (no Stage/moves) so
+        If `True`, this is a Trainer/Item/Tool card (no Stage/moves) so
         its full description goes into `ability_effect`.
 
     Returns
@@ -172,7 +172,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     return cell9_data
 
 
-def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
+def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str, str | None]:
     """
     Parse additional details from the cards full page.
 
@@ -180,6 +180,9 @@ def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
     ----------
     card_full_url : str
         The url linking to the cards full page
+    is_trainer : bool
+        If `True`, this is a Trainer/Item/Tool card (no Stage/moves) so
+        its full description goes into `ability_effect`.
 
     Returns
     -------
@@ -202,7 +205,9 @@ def extract_extra_card_details(card_full_url: str) -> dict[str, str | None]:
     # rating = rows[1].find("td").find("a").find("img").get("data-src")
     generation = rows[5].find("td").text
     illustrator = rows[7].find("td").text
-    weakness = rows[9].find_all("td")[2].find("a").find("img").get("alt")
+    weakness = (
+        DEFAULT_EMPTY if is_trainer else rows[9].find_all("td")[2].find("a").find("img").get("alt")
+    )
 
     # Create dictionary with card info
     card_extra_details = {
@@ -264,13 +269,15 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     stage = cells[7].text
     pack_points = cells[8].text.replace(",", "").replace("Pts", "")
 
-    # Cell 9 contains retreat cost, effect, and moves data
+    # Flag to determine if card is pokemon or not
     is_trainer = clean_str(type) in ["Item", "Supporter", "Pokemon Tool"]
+
+    # Cell 9 contains retreat cost, effect, and moves data
     cell9 = extract_cell9(cells[9], is_trainer=is_trainer)
 
     # Extract more information from the individual card pages
     card_full_url = cells[2].find("a").get("href")
-    extra_card_details = extract_extra_card_details(card_full_url)
+    extra_card_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
 
     # Create dictionary with raw data
     card = {

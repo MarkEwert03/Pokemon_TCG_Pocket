@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
+from time import sleep
 from tcg_extract.parser import extract_card
 from tcg_extract.io import fetch_html_table, write_to_csv
 
@@ -48,9 +49,10 @@ def main():
             row = extract_card(card_html)
             print(f"  Extracted card <{row['number']}>")
             cards_data.append(row)
+            sleep(0.5)
         except Exception as e:
             print("!!!!!!!!!!!!")
-            print(f"ERROR FOR CARD <{row['number']}>")
+            print(f"ERROR FOR CARD")
             print(e)
             print("!!!!!!!!!!!!")
         

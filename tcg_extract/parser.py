@@ -318,6 +318,7 @@ def fix_edge_cases(card: dict[str, str | None]):
     MISSING_WEAKNESSES = {
         "P-A 053": "Lightning",  # Floatzel
         "P-A 056": "Fighting",  # Ekans
+        "A1a 048": "Grass",  # Stonjourner
     }
 
     # Specific fixes for fields in main table

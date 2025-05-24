@@ -246,7 +246,7 @@ def fix_edge_cases(card: dict[str, str | None]):
     - Uses lookup dictionaries for illustrator, generation, and weakness patches.
     - This function modifies `card` in-place and does not return anything.
     """
-    MISSING_ILLUSTRATORS = {
+    FIXED_ILLUSTRATORS = {
         "P-A 053": "Shin Nagasawa",  # Floatzel
         "P-A 056": "Krgc",  # Ekans
         "A2b 002": "",  # Kakuna
@@ -310,15 +310,23 @@ def fix_edge_cases(card: dict[str, str | None]):
         "P-A 070": "",  # Alolan Ninetales
     }
 
-    MISSING_GENERATIONS = {
+    FIXED_GENERATIONS = {
         "P-A 053": "4",  # Floatzel
         "P-A 056": "1",  # Ekans
     }
 
-    MISSING_WEAKNESSES = {
-        "P-A 053": "Lightning",  # Floatzel
-        "P-A 056": "Fighting",  # Ekans
-        "A1a 048": "Grass",  # Stonjourner
+    # M = Missing, I = Incorrect
+    FIXED_WEAKNESSES = {
+        "P-A 053": "Lightning",  # Floatzel (M)
+        "P-A 056": "Fighting",  # Ekans (M)
+        "A1a 048": "Grass",  # Stonjourner (I)
+        "P-A 028": "Water",  # Volcarona (I)
+        "P-A 037": "Darkness",  # Cresselia ex (I)
+        "P-A 038": "Darkness",  # Misdreavus (I)
+        "A1 169": "Fighting",  # Nidoran M (I)
+        "A1 170": "Fighting",  # Nidorino (I)
+        "A1 171": "Fighting",  # Nidoking (I)
+        "A1 241": "Fighting",  # Nidoking (I)
     }
 
     # Specific fixes for fields in main table
@@ -333,9 +341,9 @@ def fix_edge_cases(card: dict[str, str | None]):
 
     # General lookups for missing values on extra details page
     for field, lookup in [
-        ("illustrator", MISSING_ILLUSTRATORS),
-        ("generation", MISSING_GENERATIONS),
-        ("weakness", MISSING_WEAKNESSES),
+        ("illustrator", FIXED_ILLUSTRATORS),
+        ("generation", FIXED_GENERATIONS),
+        ("weakness", FIXED_WEAKNESSES),
     ]:
         val = lookup.get(card["number"])
         if val:

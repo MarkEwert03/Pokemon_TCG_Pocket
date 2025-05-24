@@ -225,6 +225,32 @@ def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str
     return card_extra_details
 
 
+def fix_edge_cases(card: dict[str, str | None]):
+    """Fixes final misc issues of card dict before."""
+    match card["number"]:
+        case "A1a 057": # Pidgey
+            # Missing energy cost for Flap
+            card["move1_cost"] = "*️⃣"
+            
+        case "A1 183": # Dratini
+            # Dratini's Ram should do 40 dmg not 70
+            card["move1_damage"] = "40"
+            
+        case "P-A 053": # Floatzel
+            # Missing information on full page
+            card["generation"] = "4"
+            card["illustrator"] = "Shin Nagasawa"
+            card["weakness"] = "Lightning"
+            
+        case "P-A 056": #Ekans
+            # Missing information on full page
+            card["generation"] = "1"
+            card["illustrator"] = "Krgc"
+            card["weakness"] = "Fighting"
+
+    # Mutates card in-place, so no need to return
+
+
 def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     """
     Convert a `<tr>` row into a full card-info dict.
@@ -281,22 +307,10 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Cell 9 contains retreat cost, effect, and moves data
     cell9 = extract_cell9(cells[9], is_trainer=is_trainer)
 
+    # Extract more information from the individual card pages
     card_full_url = cells[2].find("a").get("href")
-    # Edge case for P-A 053 (Floatzel) and P-A 056 (Ekans)
-    if number == "P-A 053":
-        card_extra_details = {
-            "generation": "4",
-            "illustrator": "Shin Nagasawa",
-            "weakness": "Lightning",
-        }
-    elif number == "P-A 056":
-        card_extra_details = {
-            "generation": "1",
-            "illustrator": "Krgc",
-            "weakness": "Fighting",
-        }
-    else:
-        # Extract more information from the individual card pages
+    card_extra_details = {}
+    if number not in ["P-A 053", "P-A 056"]: # account for missing tables on extra details page
         card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
 
     # Create dictionary with raw data
@@ -320,12 +334,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
 
-    # Edge cases:
-    # Missing energy cost for A1a 057 (Pidgey)
-    if card["number"] == "A1a 057":
-        card["move1_cost"] = "*️⃣"
-    # Incorrect damage for A1 183 (Dratini)
-    if card["number"] == "A1 183":
-        card["move1_damage"] = "40"
+    # Fix final misc things that are card specific
+    fix_edge_cases(card)
 
     return card

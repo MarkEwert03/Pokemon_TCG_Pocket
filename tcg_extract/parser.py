@@ -226,27 +226,119 @@ def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str
 
 
 def fix_edge_cases(card: dict[str, str | None]):
-    """Fixes final misc issues of card dict before."""
+    """
+    Applies manual overrides to correct known card-specific data issues.
+
+    This function mutates the `card` dictionary in-place to fix edge cases
+    where data is missing or incorrect on the original source page. These include:
+    - Missing move costs
+    - Incorrect damage values
+    - Missing illustrator, generation, or weakness fields
+
+    Parameters
+    ----------
+    card : dict[str, str | None]
+        A single card dictionary as returned by `extract_card()`
+
+    Notes
+    -----
+    - Fixes are hardcoded using pattern matching on `card["number"]`.
+    - Uses lookup dictionaries for illustrator, generation, and weakness patches.
+    - This function modifies `card` in-place and does not return anything.
+    """
+    MISSING_ILLUSTRATORS = {
+        "P-A 053": "Shin Nagasawa",  # Floatzel
+        "P-A 056": "Krgc",  # Ekans
+        "A2b 002": "",  # Kakuna
+        "A2b 005": "",  # Sprigatito
+        "A2b 006": "",  # Floragato
+        "A2b 007": "",  # Meowscarada
+        "A2b 008": "",  # Charmander
+        "A2b 014": "",  # Tentacool
+        "A2b 018": "",  # Wiglett
+        "A2b 020": "",  # Dondozo
+        "A2b 021": "",  # Tatsugiri
+        "A2b 023": "",  # Voltorb
+        "A2b 025": "",  # Pachirisu
+        "A2b 040": "",  # Hitmonlee
+        "A2b 041": "",  # Hitmonchan
+        "A2b 047": "",  # Paldean Wooper
+        "A2b 049": "",  # Spiritomb
+        "A2b 068": "",  # Cyclizar
+        "A2b 070": "",  # Pokemon Center Lady
+        "A2b 071": "",  # Red
+        "A2b 073": "",  # Meowscarada
+        "A2b 074": "",  # Buizel
+        "A2b 075": "",  # Tatsugiri
+        "A2b 076": "",  # Grafaiai
+        "A2b 089": "",  # Pokemon Center Lady
+        "A2b 090": "",  # Red
+        "A2b 095": "",  # Bibarel ex
+        "A2b 096": "",  # Giratina ex
+        "A2b 103": "",  # Pachirisu
+        "A3 009": "",  # Rowlet
+        "A3 045": "",  # Popplio
+        "A3 073": "",  # Lunatone
+        "A3 079": "",  # Ribombee
+        "A3 093": "",  # Drilbur
+        "A3 103": "",  # Mudsdale
+        "A3 130": "",  # Delcatty
+        "A3 135": "",  # Toucannon
+        "A3 148": "",  # Acerola
+        "A3 155": "",  # Lillie
+        "A3 157": "",  # Morelull
+        "A3 158": "",  # Tsareena
+        "A3 162": "",  # Alolan Vulpix
+        "A3 165": "",  # Oricorio
+        "A3 167": "",  # Cutiefly
+        "A3 168": "",  # Comfey
+        "A3 171": "",  # Cosmog
+        "A3 172": "",  # Rockruff
+        "A3 174": "",  # Minior
+        "A3 178": "",  # Bewear
+        "A3 179": "",  # Komala
+        "A3 190": "",  # Acerola
+        "A3 197": "",  # Lillie
+        "A3 203": "",  # Alolan Raichu ex
+        "A3 228": "",  # Jigglypuff
+        "A3 229": "",  # Wigglytuff
+        "P-A 046": "",  # Gible
+        "P-A 047": "",  # Staraptor
+        "P-A 049": "",  # Snorlax
+        "P-A 052": "",  # Sprigatito
+        "P-A 060": "",  # Exeggcute
+        "P-A 070": "",  # Alolan Ninetales
+    }
+
+    MISSING_GENERATIONS = {
+        "P-A 053": "4",  # Floatzel
+        "P-A 056": "1",  # Ekans
+    }
+
+    MISSING_WEAKNESSES = {
+        "P-A 053": "Lightning",  # Floatzel
+        "P-A 056": "Fighting",  # Ekans
+    }
+
+    # Specific fixes for fields in main table
     match card["number"]:
-        case "A1a 057": # Pidgey
+        case "A1a 057":  # Pidgey
             # Missing energy cost for Flap
             card["move1_cost"] = "*️⃣"
-            
-        case "A1 183": # Dratini
+
+        case "A1 183":  # Dratini
             # Dratini's Ram should do 40 dmg not 70
             card["move1_damage"] = "40"
-            
-        case "P-A 053": # Floatzel
-            # Missing information on full page
-            card["generation"] = "4"
-            card["illustrator"] = "Shin Nagasawa"
-            card["weakness"] = "Lightning"
-            
-        case "P-A 056": #Ekans
-            # Missing information on full page
-            card["generation"] = "1"
-            card["illustrator"] = "Krgc"
-            card["weakness"] = "Fighting"
+
+    # General lookups for missing values on extra details page
+    for field, lookup in [
+        ("illustrator", MISSING_ILLUSTRATORS),
+        ("generation", MISSING_GENERATIONS),
+        ("weakness", MISSING_WEAKNESSES),
+    ]:
+        val = lookup.get(card["number"])
+        if val:
+            card[field] = val
 
     # Mutates card in-place, so no need to return
 
@@ -310,7 +402,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Extract more information from the individual card pages
     card_full_url = cells[2].find("a").get("href")
     card_extra_details = {}
-    if number not in ["P-A 053", "P-A 056"]: # account for missing tables on extra details page
+    if number not in ["P-A 053", "P-A 056"]:  # account for missing tables on extra details page
         card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
 
     # Create dictionary with raw data

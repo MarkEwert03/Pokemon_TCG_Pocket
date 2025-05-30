@@ -423,7 +423,11 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
 
     # Extract more information from the individual card pages
     card_full_url = cells[2].find("a").get("href")
-    card_extra_details = {}
+    card_extra_details = {
+        "generation": DEFAULT_EMPTY,
+        "illustrator": DEFAULT_EMPTY,
+        "weakness": DEFAULT_EMPTY,
+    }
     try:
         card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
     except requests.exceptions.HTTPError:

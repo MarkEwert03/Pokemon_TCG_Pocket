@@ -64,13 +64,17 @@ def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
 
     If final output is empty, returns empty_val parameter.
 
-    Args:
-        string (str): Raw string to be cleaned.
-        empty_vap (str): The value to replace empty strings
-            (optional defaults to `''`)
+    Parameters
+    ----------
+        string : str
+            Raw string to be cleaned.
+        empty_vap : str
+            The value to replace empty strings (optional defaults to `''`)
 
-    Returns:
-        output (str): Cleaned string with normalized spacing.
+    Returns
+    -------
+        output : str
+            Cleaned string with normalized spacing.
 
     Examples:
         >>> clean_str("   Hello   World   ")
@@ -96,13 +100,17 @@ def parse_energy_cost(energy_str: str) -> str:
     """
     Convert an energy descriptor like "Fire 2" into repeated symbols.
 
-    Args:
-        energy_str (str): a string of the form "<Type> <count>", e.g. "Darkness 2",
-                          or just "<Type>" (implying count=1).
+    Parameters
+    ----------
+        energy_str : str
+            a string of the form "<Type> <count>", e.g. "Darkness 2",
+            or just "<Type>" (implying count=1).
 
-    Returns:
-        A string consisting of `count` copies of the corresponding symbol
-        from ENERGY_SYMBOLS, or "?" if the type isn't in the dict.
+    Returns
+    -------
+        symbols : str
+            A string consisting of `count` copies of the corresponding symbol
+            from ENERGY_SYMBOLS, or "?" if the type isn't in the dict.
 
     Examples:
         >>> parse_energy_cost("Darkness 2")
@@ -135,12 +143,14 @@ def parse_retreat_cost(retreat_cost_img: str) -> int:
     """
     Maps a retreat cost image URL to its corresponding numeric retreat cost.
 
-    Parameters:
-        retreat_cost_img (str):
+    Parameters
+    ----------
+        retreat_cost_img : str
             The full URL of the retreat cost icon image (e.g., from an <img> tag's "data-src" attribute).
 
-    Returns:
-        out (int):
+    Returns
+    -------
+        cost : int
             The numeric retreat cost (0-4) if the URL is recognized,
             or -1 if the image is not found in the known RETREAT_COSTS mapping.
 
@@ -161,12 +171,16 @@ def trim_after_second_parens(s: str) -> str:
     that appears after the second set of parentheses in a string, while preserving
     the core phrase up to and including the first set of parentheses.
 
-    Args:
-        s (str): Input string that may contain multiple sets of parentheses.
+    Parameters
+    ----------
+        s : str
+            Input string that may contain multiple sets of parentheses.
 
-    Returns:
-        str: The trimmed string, or the original string if there are fewer than two
-             opening parentheses.
+    Returns
+    -------
+        new_s : str
+            The trimmed string, or the original string if there are fewer than two
+            opening parentheses.
 
     Examples:
         >>> trim_after_second_parens("Genetic Apex (A1) Mewtwo")

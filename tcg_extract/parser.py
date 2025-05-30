@@ -403,9 +403,11 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     type = cells[5].find("img")["alt"].split("-")[-1]  # last word is the type
     HP = cells[6].text
     stage = cells[7].text
-    pack_points = cells[8].text.replace(",", "").replace("Pts", "")
+    pack_points = (
+        cells[8].text.replace(",", "").replace("Pts", "") if rarity != "Promo" else DEFAULT_EMPTY
+    )
 
-    # Flag to determine if card is pokemon or not
+    # Flag to determine if card is trainer card or not
     is_trainer = clean_str(type) in ["Item", "Supporter", "Pokemon Tool"]
 
     # Cell 9 contains retreat cost, effect, and moves data

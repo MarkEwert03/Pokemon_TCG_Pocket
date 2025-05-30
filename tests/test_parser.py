@@ -311,7 +311,7 @@ def test_extract_card_pokemon_ability():
 def test_extract_card_pokemon_dragon_weakness():
     """Testing `A1 183` (Dratini)"""
     card = debug_card_extract("A1 183", html=TABLE_HTML)
-    
+
     assert card["number"] == "A1 183"
     assert card["name"] == "Dratini"
     assert card["rarity"] == "◇"
@@ -336,7 +336,6 @@ def test_extract_card_pokemon_dragon_weakness():
     assert card["move2_effect"] == DEFAULT_EMPTY
     assert card["image"] == "https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476184"
-
 
 
 def test_extract_card_fossil():
@@ -464,3 +463,32 @@ def test_extract_card_tool():
     assert card["image"] == "https://img.game8.co/4162476/1cdd88829801e39c73f40dc50816b558.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/518821"
 
+
+def test_extract_card_promo_item():
+    """Testing `P-A 005` (Poke Ball)"""
+    card = debug_card_extract("P-A 005", html=TABLE_HTML)
+
+    assert card["number"] == "P-A 005"
+    assert card["name"] == "Poke Ball"
+    assert card["rarity"] == "Promo"
+    assert card["stage"] == DEFAULT_EMPTY
+    assert card["HP"] == DEFAULT_EMPTY
+    assert card["type"] == "Item"
+    assert card["weakness"] == DEFAULT_EMPTY
+    assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "Ryo Ueda"
+    assert card["pack_name"] == "Promo Promo-A"
+    assert card["pack_points"] == DEFAULT_EMPTY
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == "Put 1 random Basic Pokemon from your deck into your hand."
+    assert card["move1_name"] == DEFAULT_EMPTY
+    assert card["move1_cost"] == DEFAULT_EMPTY
+    assert card["move1_damage"] == DEFAULT_EMPTY
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/3998351/d2ca1646332bd0640346f06449f4d942.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476292"

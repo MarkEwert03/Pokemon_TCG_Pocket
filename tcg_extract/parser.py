@@ -311,11 +311,14 @@ def fix_edge_cases(card: dict[str, str | None]):
     }
 
     FIXED_GENERATIONS = {
+        "A1a 065": "9",  # Mythical Slab
+        "A1a 066": "9",  # Budding Expeditioner
+        "A1a 080": "9",  # Budding Expeditioner
         "P-A 053": "4",  # Floatzel
         "P-A 056": "1",  # Ekans
     }
 
-    # M = Missing, I = Incorrect
+    # M = Missing Page, I = Incorrect
     FIXED_WEAKNESSES = {
         "P-A 053": "Lightning",  # Floatzel (M)
         "P-A 056": "Fighting",  # Ekans (M)
@@ -411,8 +414,10 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Extract more information from the individual card pages
     card_full_url = cells[2].find("a").get("href")
     card_extra_details = {}
-    if number not in ["P-A 053", "P-A 056"]:  # account for missing tables on extra details page
+    try:
         card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
+    except:
+        print(f"Page {card_full_url} caused an error.")
 
     # Create dictionary with raw data
     card = {

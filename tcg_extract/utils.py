@@ -1,7 +1,9 @@
 import re
 
+# Default value to fill dict and csvs for missing / not applicable field
 DEFAULT_EMPTY = None
 
+# Ordered list of all columns each card should have
 COLUMNS = [
     "number",
     "name",
@@ -11,6 +13,7 @@ COLUMNS = [
     "type",
     "weakness",
     "retreat_cost",
+    "ultra_beast",
     "generation",
     "illustrator",
     "pack_name",
@@ -29,6 +32,7 @@ COLUMNS = [
     "url",
 ]
 
+# Map between text types and move cost symbols
 ENERGY_SYMBOLS = {
     "Colorless": "*️⃣",
     "Grass": "🟢",
@@ -42,6 +46,7 @@ ENERGY_SYMBOLS = {
     "Dragon": "🟠",
 }
 
+# Map between url links to retreat cost images and numeric costs
 RETREAT_COSTS = {
     "https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show": 0,
     "https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show": 1,
@@ -51,8 +56,6 @@ RETREAT_COSTS = {
     "https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show": 3,
     "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,
 }
-
-DEFAULT_EMPTY = None
 
 
 def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:

@@ -94,7 +94,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
 
         - `stage`
         - `retreat_cost` (numeric cost gotten from `parse_retreat_cost`)
-        - `ultra_beast` (string truth value gotten from `extract_move_info`)
+        - `ultra_beast` (string truth value gotten from move info divs)
         - `ability_name`, `ability_effect`
         - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
         - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
@@ -103,7 +103,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     cell9_data = {
         "stage": DEFAULT_EMPTY,
         "retreat_cost": DEFAULT_EMPTY,
-        "ultra_beast": "Yes",
+        "ultra_beast": "No",
         "ability_name": DEFAULT_EMPTY,
         "ability_effect": DEFAULT_EMPTY,
         "move1_name": DEFAULT_EMPTY,
@@ -388,10 +388,11 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         Merges:
         - Basic columns: `number`, `name`, `image`, `rarity`,
           `pack_name`, `type`, `HP`, `stage`, `pack_points`, `url`
-        - Cell 9 columns: `stage`, `retreat_cost`, `ability_name`, `ability_effect`,
+        - Cell 9 columns: `stage`, `retreat_cost`, `ultra_beast`
+          `ability_name`, `ability_effect`,
           `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
           `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-        - Extra details columns: `Generation`, `Illustrator`, `Weakness`
+        - Extra details columns: `generation`, `illustrator`, `weakness`
 
     Notes
     -----

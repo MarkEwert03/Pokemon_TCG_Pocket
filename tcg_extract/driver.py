@@ -51,10 +51,7 @@ def main():
             cards_data.append(row)
             sleep(0.5)
         except Exception as e:
-            print("!!!!!!!!!!!!")
-            print(f"ERROR FOR CARD")
-            print(e)
-            print("!!!!!!!!!!!!")
+            print(f"!! ERROR FOR CARD !!")
         
 
     # Export the parsed data to CSV

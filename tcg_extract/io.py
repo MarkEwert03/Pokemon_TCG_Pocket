@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup, element
 from tcg_extract.utils import COLUMNS
 
+
 def fetch_html_table() -> element.Tag:
     """
     Fetch the Pokémon TCG Pocket "Complete Card Dex" table from a Game8 archive page.
@@ -22,7 +23,7 @@ def fetch_html_table() -> element.Tag:
         If no `<table>` is found in the fetched HTML.
     """
     url = "https://game8.co/games/Pokemon-TCG-Pocket/archives/482685"
-    
+
     # Download page
     response = requests.get(url)
     response.raise_for_status()
@@ -40,7 +41,7 @@ def fetch_html_table() -> element.Tag:
         )
 
     return table
-    
+
 
 def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
     """

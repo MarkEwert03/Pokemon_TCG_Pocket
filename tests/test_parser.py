@@ -105,6 +105,7 @@ def test_extract_card_raw_from_html():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Narumi Sato"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
@@ -135,6 +136,7 @@ def test_extract_card_pokemon_one_attack():
         "type",
         "weakness",
         "retreat_cost",
+        "ultra_beast",
         "generation",
         "illustrator",
         "pack_name",
@@ -164,6 +166,7 @@ def test_extract_card_pokemon_one_attack():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Narumi Sato"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
@@ -194,6 +197,7 @@ def test_extract_card_pokemon_two_attacks():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "3"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "PLANETA CG Works"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
@@ -224,6 +228,7 @@ def test_extract_card_pokemon_move_desc_no_dmg():
     assert card["type"] == "Fire"
     assert card["weakness"] == "Lightning"
     assert card["retreat_cost"] == "2"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "PLANETA Tsuji"
     assert card["pack_name"] == "Genetic Apex (A1) Charizard"
@@ -257,6 +262,7 @@ def test_extract_card_pokemon_dynamic_dmg():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "2"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Eri Yamaki"
     assert card["pack_name"] == "Genetic Apex (A1) Any"
@@ -287,6 +293,7 @@ def test_extract_card_pokemon_ability():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Shin Nagasawa"
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
@@ -320,6 +327,7 @@ def test_extract_card_pokemon_dragon_weakness():
     assert card["type"] == "Dragon"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Ayaka Yoshida"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
@@ -337,6 +345,7 @@ def test_extract_card_pokemon_dragon_weakness():
     assert card["image"] == "https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476184"
 
+
 def test_extract_card_pokemon_ultra_beast():
     """Testing `A3a 006` (Buzzwole ex)"""
     card = debug_card_extract("A3a 006", html=TABLE_HTML)
@@ -349,6 +358,7 @@ def test_extract_card_pokemon_ultra_beast():
     assert card["type"] == "Grass"
     assert card["weakness"] == "Fire"
     assert card["retreat_cost"] == "2"
+    assert card["ultra_beast"] == "Yes"
     assert card["generation"] == "7"
     assert card["illustrator"] == "PLANETA Mochizuki"
     assert card["pack_name"] == "Extradimensional Crisis (A3a) Buzzwole"
@@ -367,7 +377,6 @@ def test_extract_card_pokemon_ultra_beast():
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/523189"
 
 
-
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""
     card = debug_card_extract("A1 216", html=TABLE_HTML)
@@ -380,6 +389,7 @@ def test_extract_card_fossil():
     assert card["type"] == "Item"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Toyste Beach"
     assert card["pack_name"] == "Genetic Apex (A1) Pikachu"
@@ -413,6 +423,7 @@ def test_extract_card_supporter():
     assert card["type"] == "Supporter"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "kirisAki"
     assert card["pack_name"] == "Genetic Apex (A1) Charizard"
@@ -443,6 +454,7 @@ def test_extract_card_full_art_supporter():
     assert card["type"] == "Supporter"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Souichirou Gunjima"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
@@ -473,6 +485,7 @@ def test_extract_card_tool():
     assert card["type"] == "Pokemon Tool"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "2"
     assert card["illustrator"] == "Toyste Beach"
     assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
@@ -506,6 +519,7 @@ def test_extract_card_promo_item():
     assert card["type"] == "Item"
     assert card["weakness"] == DEFAULT_EMPTY
     assert card["retreat_cost"] == DEFAULT_EMPTY
+    assert card["ultra_beast"] == "No"
     assert card["generation"] == "1"
     assert card["illustrator"] == "Ryo Ueda"
     assert card["pack_name"] == "Promo Promo-A"

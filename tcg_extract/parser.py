@@ -166,7 +166,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
         if clean_str(div.text) == "Ultra Beast":
             cell9_data["ultra_beast"] = "Yes"
             continue
-        
+
         j = move_start_index + i  # will be 1 or 2 depending on ability
         next_div = move_divs[i + 1] if i + 1 < len(move_divs) else None
         name, cost, dmg, effect = extract_move_info(div, next_div)
@@ -256,65 +256,65 @@ def fix_edge_cases(card: dict[str, str | None]):
     FIXED_ILLUSTRATORS = {
         "P-A 053": "Shin Nagasawa",  # Floatzel
         "P-A 056": "Krgc",  # Ekans
-        "A2b 002": "",  # Kakuna
-        "A2b 005": "",  # Sprigatito
-        "A2b 006": "",  # Floragato
-        "A2b 007": "",  # Meowscarada
-        "A2b 008": "",  # Charmander
-        "A2b 014": "",  # Tentacool
-        "A2b 018": "",  # Wiglett
-        "A2b 020": "",  # Dondozo
-        "A2b 021": "",  # Tatsugiri
-        "A2b 023": "",  # Voltorb
-        "A2b 025": "",  # Pachirisu
-        "A2b 040": "",  # Hitmonlee
-        "A2b 041": "",  # Hitmonchan
-        "A2b 047": "",  # Paldean Wooper
-        "A2b 049": "",  # Spiritomb
-        "A2b 068": "",  # Cyclizar
-        "A2b 070": "",  # Pokemon Center Lady
-        "A2b 071": "",  # Red
-        "A2b 073": "",  # Meowscarada
-        "A2b 074": "",  # Buizel
-        "A2b 075": "",  # Tatsugiri
-        "A2b 076": "",  # Grafaiai
-        "A2b 089": "",  # Pokemon Center Lady
-        "A2b 090": "",  # Red
-        "A2b 095": "",  # Bibarel ex
-        "A2b 096": "",  # Giratina ex
-        "A2b 103": "",  # Pachirisu
-        "A3 009": "",  # Rowlet
-        "A3 045": "",  # Popplio
-        "A3 073": "",  # Lunatone
-        "A3 079": "",  # Ribombee
-        "A3 093": "",  # Drilbur
-        "A3 103": "",  # Mudsdale
-        "A3 130": "",  # Delcatty
-        "A3 135": "",  # Toucannon
-        "A3 148": "",  # Acerola
-        "A3 155": "",  # Lillie
-        "A3 157": "",  # Morelull
-        "A3 158": "",  # Tsareena
-        "A3 162": "",  # Alolan Vulpix
-        "A3 165": "",  # Oricorio
-        "A3 167": "",  # Cutiefly
-        "A3 168": "",  # Comfey
-        "A3 171": "",  # Cosmog
-        "A3 172": "",  # Rockruff
-        "A3 174": "",  # Minior
-        "A3 178": "",  # Bewear
-        "A3 179": "",  # Komala
-        "A3 190": "",  # Acerola
-        "A3 197": "",  # Lillie
-        "A3 203": "",  # Alolan Raichu ex
-        "A3 228": "",  # Jigglypuff
-        "A3 229": "",  # Wigglytuff
-        "P-A 046": "",  # Gible
-        "P-A 047": "",  # Staraptor
-        "P-A 049": "",  # Snorlax
-        "P-A 052": "",  # Sprigatito
-        "P-A 060": "",  # Exeggcute
-        "P-A 070": "",  # Alolan Ninetales
+        # "A2b 002": "",  # Kakuna
+        # "A2b 005": "",  # Sprigatito
+        # "A2b 006": "",  # Floragato
+        # "A2b 007": "",  # Meowscarada
+        # "A2b 008": "",  # Charmander
+        # "A2b 014": "",  # Tentacool
+        # "A2b 018": "",  # Wiglett
+        # "A2b 020": "",  # Dondozo
+        # "A2b 021": "",  # Tatsugiri
+        # "A2b 023": "",  # Voltorb
+        # "A2b 025": "",  # Pachirisu
+        # "A2b 040": "",  # Hitmonlee
+        # "A2b 041": "",  # Hitmonchan
+        # "A2b 047": "",  # Paldean Wooper
+        # "A2b 049": "",  # Spiritomb
+        # "A2b 068": "",  # Cyclizar
+        # "A2b 070": "",  # Pokemon Center Lady
+        # "A2b 071": "",  # Red
+        # "A2b 073": "",  # Meowscarada
+        # "A2b 074": "",  # Buizel
+        # "A2b 075": "",  # Tatsugiri
+        # "A2b 076": "",  # Grafaiai
+        # "A2b 089": "",  # Pokemon Center Lady
+        # "A2b 090": "",  # Red
+        # "A2b 095": "",  # Bibarel ex
+        # "A2b 096": "",  # Giratina ex
+        # "A2b 103": "",  # Pachirisu
+        # "A3 009": "",  # Rowlet
+        # "A3 045": "",  # Popplio
+        # "A3 073": "",  # Lunatone
+        # "A3 079": "",  # Ribombee
+        # "A3 093": "",  # Drilbur
+        # "A3 103": "",  # Mudsdale
+        # "A3 130": "",  # Delcatty
+        # "A3 135": "",  # Toucannon
+        # "A3 148": "",  # Acerola
+        # "A3 155": "",  # Lillie
+        # "A3 157": "",  # Morelull
+        # "A3 158": "",  # Tsareena
+        # "A3 162": "",  # Alolan Vulpix
+        # "A3 165": "",  # Oricorio
+        # "A3 167": "",  # Cutiefly
+        # "A3 168": "",  # Comfey
+        # "A3 171": "",  # Cosmog
+        # "A3 172": "",  # Rockruff
+        # "A3 174": "",  # Minior
+        # "A3 178": "",  # Bewear
+        # "A3 179": "",  # Komala
+        # "A3 190": "",  # Acerola
+        # "A3 197": "",  # Lillie
+        # "A3 203": "",  # Alolan Raichu ex
+        # "A3 228": "",  # Jigglypuff
+        # "A3 229": "",  # Wigglytuff
+        # "P-A 046": "",  # Gible
+        # "P-A 047": "",  # Staraptor
+        # "P-A 049": "",  # Snorlax
+        # "P-A 052": "",  # Sprigatito
+        # "P-A 060": "",  # Exeggcute
+        # "P-A 070": "",  # Alolan Ninetales
     }
 
     FIXED_GENERATIONS = {
@@ -327,27 +327,27 @@ def fix_edge_cases(card: dict[str, str | None]):
 
     # M = Missing Page, I = Incorrect
     FIXED_WEAKNESSES = {
-        "P-A 053": "Lightning",  # Floatzel (M)
-        "P-A 056": "Fighting",  # Ekans (M)
-        "A1a 048": "Grass",  # Stonjourner (I)
-        "P-A 028": "Water",  # Volcarona (I)
-        "P-A 037": "Darkness",  # Cresselia ex (I)
-        "P-A 038": "Darkness",  # Misdreavus (I)
         "A1 169": "Fighting",  # Nidoran M (I)
         "A1 170": "Fighting",  # Nidorino (I)
         "A1 171": "Fighting",  # Nidoking (I)
         "A1 241": "Fighting",  # Nidoking (I)
+        "A1a 048": "Grass",  # Stonjourner (I)
+        "P-A 028": "Water",  # Volcarona (I)
+        "P-A 037": "Darkness",  # Cresselia ex (I)
+        "P-A 038": "Darkness",  # Misdreavus (I)
+        "P-A 053": "Lightning",  # Floatzel (M)
+        "P-A 056": "Fighting",  # Ekans (M)
     }
 
     # Specific fixes for fields in main table
     match card["number"]:
-        case "A1a 057":  # Pidgey
-            # Missing energy cost for Flap
-            card["move1_cost"] = "*️⃣"
-
         case "A1 183":  # Dratini
             # Dratini's Ram should do 40 dmg not 70
             card["move1_damage"] = "40"
+
+        case "A1a 057":  # Pidgey
+            # Missing energy cost for Flap
+            card["move1_cost"] = "*️⃣"
 
     # General lookups for missing values on extra details page
     for field, lookup in [

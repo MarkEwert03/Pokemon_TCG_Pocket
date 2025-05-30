@@ -337,6 +337,36 @@ def test_extract_card_pokemon_dragon_weakness():
     assert card["image"] == "https://img.game8.co/3998335/06a6057b224d2d3f3a15dbd309fb417f.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476184"
 
+def test_extract_card_pokemon_ultra_beast():
+    """Testing `A3a 006` (Buzzwole ex)"""
+    card = debug_card_extract("A3a 006", html=TABLE_HTML)
+
+    assert card["number"] == "A3a 006"
+    assert card["name"] == "Buzzwole ex"
+    assert card["rarity"] == "◇◇◇◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "140"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "2"
+    assert card["generation"] == "7"
+    assert card["illustrator"] == "PLANETA Mochizuki"
+    assert card["pack_name"] == "Extradimensional Crisis (A3a) Buzzwole"
+    assert card["pack_points"] == "500"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Punch"
+    assert card["move1_cost"] == "*️⃣*️⃣"
+    assert card["move1_damage"] == "30"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == "Big Beat"
+    assert card["move2_cost"] == "🟢🟢*️⃣"
+    assert card["move2_damage"] == "120"
+    assert card["move2_effect"] == "During your next turn, this Pokemon can't use Big Beat."
+    assert card["image"] == "https://img.game8.co/4182084/8447d4eeae5e378215eec9ba6c7be9b7.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/523189"
+
+
 
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""

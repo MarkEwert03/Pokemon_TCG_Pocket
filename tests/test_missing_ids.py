@@ -9,6 +9,7 @@ PACK_MAX_IDS = {
     "A2a": "096",  # Gold Arceus
     "A2b": "111",  # Gold Poke Ball
     "A3": "239",  # Gold Solgaleo
+    "A3a": "103",  # Gold Nihilego
     "P-A": "073",  # Toucannon
 }
 

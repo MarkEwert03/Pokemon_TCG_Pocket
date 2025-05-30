@@ -92,8 +92,9 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     dict[str, str | None]
         Flat mapping with default DEFAULT_EMPTY:
 
-        - `stage`: e.g. `"Stage 2"`
-        - `retreat_cost`: numeric cost from `parse_retreat_cost`
+        - `stage`
+        - `retreat_cost` (numeric cost gotten from `parse_retreat_cost`)
+        - `ultra_beast` (string truth value gotten from `extract_move_info`)
         - `ability_name`, `ability_effect`
         - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
         - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
@@ -102,6 +103,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     cell9_data = {
         "stage": DEFAULT_EMPTY,
         "retreat_cost": DEFAULT_EMPTY,
+        "ultra_beast": "Yes",
         "ability_name": DEFAULT_EMPTY,
         "ability_effect": DEFAULT_EMPTY,
         "move1_name": DEFAULT_EMPTY,
@@ -160,6 +162,11 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     move_start_index = 2 if ability_span else 1  # shift moves if ability is present
 
     for i, div in enumerate(move_divs):
+        # Immediately check for Ultra beats to stop future div out of range
+        if clean_str(div.text) == "Ultra Beast":
+            cell9_data["ultra_beast"] = "Yes"
+            continue
+        
         j = move_start_index + i  # will be 1 or 2 depending on ability
         next_div = move_divs[i + 1] if i + 1 < len(move_divs) else None
         name, cost, dmg, effect = extract_move_info(div, next_div)

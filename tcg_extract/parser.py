@@ -426,8 +426,11 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     card_extra_details = {}
     try:
         card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
-    except:
+    except requests.exceptions.HTTPError:
         print(f"Page {card_full_url} caused an error.")
+    except AttributeError:
+        # Page probably doesn't contain table
+        pass
 
     # Create dictionary with raw data
     card = {

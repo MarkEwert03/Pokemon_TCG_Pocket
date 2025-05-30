@@ -46,12 +46,13 @@ def main():
     # Iterate over each <tr> element representing all metadata for one card
     for card_html in card_tr_elements:
         try:
+            id = card_html.find_all("td")[1].text
             row = extract_card(card_html)
-            print(f"  Extracted card <{row['number']}>")
+            print(f"  Extracted card <{id}>")
             cards_data.append(row)
-            sleep(0.5)
+            sleep(0.3)
         except Exception as e:
-            print(f"!! ERROR FOR CARD !!")
+            print(f"! ERROR FOR CARD <{id}> !")
         
 
     # Export the parsed data to CSV

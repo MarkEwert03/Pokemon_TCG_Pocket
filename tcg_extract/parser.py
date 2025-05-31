@@ -348,6 +348,10 @@ def fix_edge_cases(card: dict[str, str | None]):
         case "A1a 057":  # Pidgey
             # Missing energy cost for Flap
             card["move1_cost"] = "*️⃣"
+            
+        case "A2 047":  # Wash Rotom
+            # Wash Rotom's Wave Splash should do 30 dmg not 39
+            card["move1_damage"] = "30"
 
     # General lookups for missing values on extra details page
     for field, lookup in [

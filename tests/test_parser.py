@@ -373,7 +373,7 @@ def test_extract_card_pokemon_ultra_beast():
     assert card["move2_cost"] == "🟢🟢*️⃣"
     assert card["move2_damage"] == "120"
     assert card["move2_effect"] == "During your next turn, this Pokemon can't use Big Beat."
-    assert card["image"] == "https://img.game8.co/4182084/8447d4eeae5e378215eec9ba6c7be9b7.png/show"
+    assert card["image"] == "https://img.game8.co/4185088/48191f53a1f16dd41c7995e2f2277e83.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/523189"
 
 

@@ -62,12 +62,9 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
         }
     """
-    if html is None:
-        # Pipeline input data directly from page
-        pokemon_table = fetch_html_table()
-    else:
-        # Use cached HTML table
-        pokemon_table = html
+    
+    # Pipeline input data directly from page if html is None
+    pokemon_table = fetch_html_table() if html is None else html
 
     cards_html = pokemon_table.find("tbody").find_all("tr")
 

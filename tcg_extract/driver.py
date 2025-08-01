@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
-from time import sleep
-from tcg_extract.parser import extract_card
-from tcg_extract.io import fetch_html_table, write_to_csv
+from tcg_extract.io import get_pack_url_pages, extract_pack, write_to_csv
 
 
 # Raw data found at
@@ -23,37 +21,23 @@ def main():
     # Define project root as two levels up from this file
     driver_file = Path(__file__).resolve()
     PROJ_ROOT = driver_file.parent.parent
-    
+
     # Define input/output folders using absolute paths
     data_dir = PROJ_ROOT / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Define output path
     output_file = data_dir / "full.csv"
-    
-    # Pipeline input data directly from page
-    print(f"Fetching HTML Table...")
-    pokemon_table = fetch_html_table()
 
-    # Extract all <tr> elements of the <tbody>
-    card_tr_elements = pokemon_table.find("tbody").find_all("tr")
-    if not card_tr_elements:
-        raise ValueError("No <tr> elements found int <tbody>")
-
-    # Create list to store dict of cleaned card data
+    # List to hold all cards
     cards_data = []
 
-    # Iterate over each <tr> element representing all metadata for one card
-    for card_html in card_tr_elements:
-        try:
-            id = card_html.find_all("td")[1].text
-            row = extract_card(card_html)
-            print(f"  Extracted card <{id}>")
-            cards_data.append(row)
-            sleep(0.3)
-        except Exception as e:
-            print(f"! ERROR FOR CARD <{id}> !")
-        
+    pack_urls = get_pack_url_pages()
+
+    # Go through all pages and extract all cards from each pack
+    for pack_url in pack_urls:
+        pack_data = extract_pack(pack_url)
+        cards_data.extend(pack_data)
 
     # Export the parsed data to CSV
     write_to_csv(cards_data, output_file)

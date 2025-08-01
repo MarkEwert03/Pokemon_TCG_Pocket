@@ -69,15 +69,15 @@ def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
 
     Parameters
     ----------
-        string : str
-            Raw string to be cleaned.
-        empty_vap : str
-            The value to replace empty strings (optional defaults to `''`)
+    string : str
+        Raw string to be cleaned.
+    empty_vap : str
+        The value to replace empty strings (optional defaults to `''`)
 
     Returns
     -------
-        output : str
-            Cleaned string with normalized spacing.
+    output : str
+        Cleaned string with normalized spacing.
 
     Examples:
         >>> clean_str("   Hello   World   ")

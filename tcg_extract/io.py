@@ -2,10 +2,10 @@ import csv
 import requests
 from bs4 import BeautifulSoup, element
 from tcg_extract.parser import extract_card
-from tcg_extract.utils import COLUMNS
+from tcg_extract.utils import COLUMNS, clean_str
 
 
-def fetch_html_table(page_url: str, table_class: str) -> element.Tag:
+def fetch_html_table(page_url: str, page_type: str = "") -> element.Tag:
     """
     Fetch the HTML table from the given URL. This table should either be:
     - The table on the [Pokémon TCG Pocket main page](https://game8.co/games/Pokemon-TCG-Pocket/archives/482685) which contains links to each pack page
@@ -15,8 +15,10 @@ def fetch_html_table(page_url: str, table_class: str) -> element.Tag:
     ----------
     page_url : str
         The URL for the Game8 page containing the table of card information.
-    table_class : str
-        The class of the table to look for and return
+    table_type : str
+        The type of page containing tables. It is one of:
+        - 'main' for the initial page with the table of packs
+        - 'pack' for each pack page with the tables of cards
 
     Returns
     -------
@@ -38,29 +40,57 @@ def fetch_html_table(page_url: str, table_class: str) -> element.Tag:
     soup = BeautifulSoup(response.text, "lxml")
 
     # Locate the table we want
-    # "table.a-table.table--fixed.flexible-cell"
-    table = soup.find("table", {"class": table_class})
+    if page_type == "main":
+        table = soup.find("table", {"class": "a-table a-table table--fixed"})
+    elif page_type == "pack":
+        tables = soup.find_all("table", class_=["a-table", "table--fixed", "flexible-cell"])
+        # Find the correct table
+        table = None
+        for t in tables:
+            thead = t.find("thead")
+            if not thead:
+                continue
+
+            first_row = thead.find("tr")
+            if not first_row:
+                continue
+
+            first_cell = first_row.find(["th", "td"])
+            if not first_cell:
+                continue
+
+            # The table with card info has first cell with a checkmark
+            if first_cell.get_text(strip=True) == "✔":
+                table = t
+                break
+    else:
+        raise ValueError("Please use on of ['main', 'mode'] for `page_type`")
+
     if table is None:
-        raise RuntimeError(f"Could not find the card-dex table with `{table_class}`")
+        raise RuntimeError(
+            f"Could not find the card-dex table with `{page_type}` on page {page_url}"
+        )
 
     return table
 
 
-def get_pack_url_pages() -> list[str]:
+def get_pack_names_and_urls() -> dict[str, str]:
     """
     Looks through the [Pokémon TCG Pocket main page](https://game8.co/games/Pokemon-TCG-Pocket/archives/482685) to extract the urls for each of the packs.
 
     Returns
     -------
-    pack_urls : list[str]
-        A list of the urls for each of the pack pages (containing the big pokemon table)
+    pack_names_urls : dict[str, str]
+        A dict for all the packs where:
+        - the key is the pack ID (like A1 or A3b)
+        - the value is the url of the pack pages (containing the big pokemon table)
     """
     MAIN_URL = "https://game8.co/games/Pokemon-TCG-Pocket/archives/482685"
     # Download main page
-    pack_pages_tables = fetch_html_table(MAIN_URL, "a-table a-table table--fixed")
+    pack_pages_tables = fetch_html_table(MAIN_URL, page_type="main")
 
     # List to store pack urls to return
-    pack_urls = []
+    pack_names_urls = {}
 
     for row in pack_pages_tables.find_all("tr"):
         first_cell = row.find("td")
@@ -68,11 +98,18 @@ def get_pack_url_pages() -> list[str]:
         if not first_cell:
             continue
 
-        a_tag = first_cell.find("a", class_="a-link")
-        pack_url = a_tag["href"]
-        pack_urls.append(pack_url)
+        pack_raw_name = clean_str(first_cell.text)
+        pack_id = pack_raw_name[pack_raw_name.find("(") + 1 : pack_raw_name.rfind(")")]
+        # Edge case for promo ID
+        pack_id = "P-A" if pack_id == "Promo-" else pack_id
 
-    return pack_urls
+        # Find <a-link> containing the href (pack url)
+        a_tag = first_cell.find("a", class_="a-link")
+        pack_url = "https://game8.co" + a_tag["href"]
+        # Add key-value pair to dict
+        pack_names_urls[pack_id] = pack_url
+
+    return pack_names_urls
 
 
 def extract_pack(pack_url: str) -> list[dict]:
@@ -91,7 +128,7 @@ def extract_pack(pack_url: str) -> list[dict]:
     """
     # Pipeline input data directly from page
     print(f"Fetching HTML Table from {pack_url}")
-    pokemon_table = fetch_html_table()
+    pokemon_table = fetch_html_table(page_url=pack_url, page_type="pack")
 
     # Extract all <tr> elements of the <tbody>
     card_tr_elements = pokemon_table.find("tbody").find_all("tr")

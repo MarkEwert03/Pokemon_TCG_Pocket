@@ -1,11 +1,14 @@
 from bs4 import BeautifulSoup
 from tests.debug import debug_card_extract
-from tcg_extract.io import fetch_html_table
+from tcg_extract.io import fetch_html_table, get_pack_names_and_urls
 from tcg_extract.parser import extract_card
 from tcg_extract.parser import DEFAULT_EMPTY
 
 
-TABLE_HTML = fetch_html_table()
+PACK_NAMES_URLS = get_pack_names_and_urls()
+PACK_NAMES_HTML = {
+    key_id: fetch_html_table(url, page_type="pack") for key_id, url in PACK_NAMES_URLS.items()
+}
 
 
 def test_extract_card_raw_from_html():
@@ -155,7 +158,7 @@ def test_extract_card_pokemon_one_attack():
         "url",
     }
 
-    card = debug_card_extract("A1 001", html=TABLE_HTML)
+    card = debug_card_extract("A1 001", html=PACK_NAMES_HTML["A1"])
 
     assert set(card.keys()) == expected_keys
     assert card["number"] == "A1 001"
@@ -187,7 +190,7 @@ def test_extract_card_pokemon_one_attack():
 
 def test_extract_card_pokemon_two_attacks():
     """Testing `A1 004` (Venusaur ex)"""
-    card = debug_card_extract("A1 004", html=TABLE_HTML)
+    card = debug_card_extract("A1 004", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 004"
     assert card["name"] == "Venusaur ex"
@@ -218,7 +221,7 @@ def test_extract_card_pokemon_two_attacks():
 
 def test_extract_card_pokemon_move_desc_no_dmg():
     """Testing `A1 047` (Moltres ex)"""
-    card = debug_card_extract("A1 047", html=TABLE_HTML)
+    card = debug_card_extract("A1 047", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 047"
     assert card["name"] == "Moltres ex"
@@ -252,7 +255,7 @@ def test_extract_card_pokemon_move_desc_no_dmg():
 
 def test_extract_card_pokemon_dynamic_dmg():
     """Testing `A1 026` (Pinsir)"""
-    card = debug_card_extract("A1 026", html=TABLE_HTML)
+    card = debug_card_extract("A1 026", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 026"
     assert card["name"] == "Pinsir"
@@ -283,7 +286,7 @@ def test_extract_card_pokemon_dynamic_dmg():
 
 def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""
-    card = debug_card_extract("A1 007", html=TABLE_HTML)
+    card = debug_card_extract("A1 007", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 007"
     assert card["name"] == "Butterfree"
@@ -317,7 +320,7 @@ def test_extract_card_pokemon_ability():
 
 def test_extract_card_pokemon_dragon_weakness():
     """Testing `A1 183` (Dratini)"""
-    card = debug_card_extract("A1 183", html=TABLE_HTML)
+    card = debug_card_extract("A1 183", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 183"
     assert card["name"] == "Dratini"
@@ -348,7 +351,7 @@ def test_extract_card_pokemon_dragon_weakness():
 
 def test_extract_card_pokemon_ultra_beast():
     """Testing `A3a 006` (Buzzwole ex)"""
-    card = debug_card_extract("A3a 006", html=TABLE_HTML)
+    card = debug_card_extract("A3a 006", html=PACK_NAMES_HTML["A3a"])
 
     assert card["number"] == "A3a 006"
     assert card["name"] == "Buzzwole ex"
@@ -379,7 +382,7 @@ def test_extract_card_pokemon_ultra_beast():
 
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""
-    card = debug_card_extract("A1 216", html=TABLE_HTML)
+    card = debug_card_extract("A1 216", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 216"
     assert card["name"] == "Helix Fossil"
@@ -413,7 +416,7 @@ def test_extract_card_fossil():
 
 def test_extract_card_supporter():
     """Testing `A1 219` (Erika)"""
-    card = debug_card_extract("A1 219", html=TABLE_HTML)
+    card = debug_card_extract("A1 219", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 219"
     assert card["name"] == "Erika"
@@ -444,7 +447,7 @@ def test_extract_card_supporter():
 
 def test_extract_card_full_art_supporter():
     """Testing `A1 269` (Full Art Koga)"""
-    card = debug_card_extract("A1 269", html=TABLE_HTML)
+    card = debug_card_extract("A1 269", html=PACK_NAMES_HTML["A1"])
 
     assert card["number"] == "A1 269"
     assert card["name"] == "Koga"
@@ -475,7 +478,7 @@ def test_extract_card_full_art_supporter():
 
 def test_extract_card_tool():
     """Testing `A3 146` (Poison Barb)"""
-    card = debug_card_extract("A3 146", html=TABLE_HTML)
+    card = debug_card_extract("A3 146", html=PACK_NAMES_HTML["A3"])
 
     assert card["number"] == "A3 146"
     assert card["name"] == "Poison Barb"
@@ -509,7 +512,7 @@ def test_extract_card_tool():
 
 def test_extract_card_promo_item():
     """Testing `P-A 005` (Poke Ball)"""
-    card = debug_card_extract("P-A 005", html=TABLE_HTML)
+    card = debug_card_extract("P-A 005", html=PACK_NAMES_HTML["P-A"])
 
     assert card["number"] == "P-A 005"
     assert card["name"] == "Poke Ball"

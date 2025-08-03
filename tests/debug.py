@@ -3,7 +3,7 @@ import json
 from collections import OrderedDict
 import bs4
 from tcg_extract.utils import COLUMNS
-from tcg_extract.io import fetch_html_table
+from tcg_extract.io import fetch_html_table, get_pack_names_and_urls
 from tcg_extract.parser import extract_card
 
 
@@ -62,11 +62,16 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
         }
     """
-    
-    # Pipeline input data directly from page if html is None
-    pokemon_table = fetch_html_table() if html is None else html
 
-    cards_html = pokemon_table.find("tbody").find_all("tr")
+    # Pipeline input data directly from page if html is None
+    if html == None:
+        pack_names_urls = get_pack_names_and_urls()
+        short_id = pokemon_id.split(" ")[0]
+        pokemon_table = fetch_html_table(pack_names_urls[short_id], page_type="pack")
+    else:
+        pokemon_table = html
+
+    cards_html = pokemon_table.find_all("tr")
 
     for row in cards_html:
         bold = row.find("b", class_="a-bold")

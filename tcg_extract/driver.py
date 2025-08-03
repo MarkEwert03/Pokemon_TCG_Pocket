@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
-from tcg_extract.io import get_pack_url_pages, extract_pack, write_to_csv
+from tcg_extract.io import get_pack_names_and_urls, extract_pack, write_to_csv
 
 
 # Raw data found at
@@ -32,10 +32,10 @@ def main():
     # List to hold all cards
     cards_data = []
 
-    pack_urls = get_pack_url_pages()
+    pack_names_urls = get_pack_names_and_urls()
 
     # Go through all pages and extract all cards from each pack
-    for pack_url in pack_urls:
+    for pack_url in pack_names_urls.values():
         pack_data = extract_pack(pack_url)
         cards_data.extend(pack_data)
 

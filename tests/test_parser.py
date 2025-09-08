@@ -127,7 +127,7 @@ def test_extract_card_raw_from_html():
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
 
 
-def test_extract_card_pokemon_one_attack():
+def test_extract_card_pokemon_A1():
     """Testing `A1 001` (Bulbasaur)"""
 
     expected_keys = {
@@ -186,6 +186,288 @@ def test_extract_card_pokemon_one_attack():
     assert card["move2_effect"] == DEFAULT_EMPTY
     assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
     assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
+
+
+def test_extract_card_pokemon_A1a():
+    """Testing `A1a 001` (Exeggcute)"""
+    card = debug_card_extract("A1a 001", html=PACK_NAMES_HTML["A1a"])
+
+    assert card["number"] == "A1a 001"
+    assert card["name"] == "Exeggcute"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "50"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "Yuka Morii"
+    assert card["pack_name"] == "Mythical Island (A1a) Mew"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Growth Spurt"
+    assert card["move1_cost"] == "*️⃣"
+    assert card["move1_damage"] == DEFAULT_EMPTY
+    assert (
+        card["move1_effect"]
+        == "Take a Grass Energy from your Energy Zone and attach it to this Pokemon."
+    )
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4069624/d4b6fcce5983d28beec6928d031f6461.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/491414"
+
+
+def test_extract_card_pokemon_A2():
+    """Testing `A2 001` (Oddish)"""
+    card = debug_card_extract("A2 001", html=PACK_NAMES_HTML["A2"])
+
+    assert card["number"] == "A2 001"
+    assert card["name"] == "Oddish"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "60"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "Asako Ito"
+    assert card["pack_name"] == "Space-Time Smackdown (A2) Any"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Blot"
+    assert card["move1_cost"] == "🟢"
+    assert card["move1_damage"] == "10"
+    assert card["move1_effect"] == "Heal 10 damage from this Pokemon."
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4093086/441a7888acceba424ca0fe8125d4316b.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/496840"
+
+
+def test_extract_card_pokemon_A2a():
+    """Testing `A2a 001` (Heracross)"""
+    card = debug_card_extract("A2a 001", html=PACK_NAMES_HTML["A2a"])
+
+    assert card["number"] == "A2a 001"
+    assert card["name"] == "Heracross"
+    assert card["rarity"] == "◇◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "100"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "2"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "2"
+    assert card["illustrator"] == "Satoshi Shirai"
+    assert card["pack_name"] == "Triumphant Light (A2a) Arceus"
+    assert card["pack_points"] == "70"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Single-Horn Throw"
+    assert card["move1_cost"] == "🟢*️⃣*️⃣"
+    assert card["move1_damage"] == "50+"
+    assert card["move1_effect"] == "Flip 2 coins. If both of them are heads, this attack does 70 more damage."
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4119841/2b261fc69fa6bb81b9abfc97d555473a.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/502148"
+
+
+def test_extract_card_pokemon_A2b():
+    """Testing `A2b 001` (Weedle)"""
+    card = debug_card_extract("A2b 001", html=PACK_NAMES_HTML["A2b"])
+
+    assert card["number"] == "A2b 001"
+    assert card["name"] == "Weedle"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "50"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "Akira Komayama"
+    assert card["pack_name"] == "Shining Revelry (A2b) Shiny Charizard"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Multiply"
+    assert card["move1_cost"] == "🟢"
+    assert card["move1_damage"] == DEFAULT_EMPTY
+    assert card["move1_effect"] == "Put 1 random Weedle from your deck onto your Bench."
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4140126/4478b32e0e5d8842906cc3e51fac9816.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/507212"
+
+
+def test_extract_card_pokemon_A3():
+    """Testing `A3 001` (Exeggcute)"""
+    card = debug_card_extract("A3 001", html=PACK_NAMES_HTML["A3"])
+
+    assert card["number"] == "A3 001"
+    assert card["name"] == "Exeggcute"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "60"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "HYOGONOSUKE"
+    assert card["pack_name"] == "Celestial Guardians (A3) Lunala"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Rolling Tackle"
+    assert card["move1_cost"] == "🟢*️⃣"
+    assert card["move1_damage"] == "30"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4179666/9871f7c36774fa238910635a74a289e7.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/518856"
+
+
+def test_extract_card_pokemon_A3a():
+    """Testing `A3a 001` (Petilil)"""
+    card = debug_card_extract("A3a 001", html=PACK_NAMES_HTML["A3a"])
+
+    assert card["number"] == "A3a 001"
+    assert card["name"] == "Petilil"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "60"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "5"
+    assert card["illustrator"] == "sui"
+    assert card["pack_name"] == "Extradimensional Crisis (A3a) Buzzwole"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Seed Bomb"
+    assert card["move1_cost"] == "🟢"
+    assert card["move1_damage"] == "20"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4185091/913adf46181b59c8d43bda99bafacd81.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/524061"
+
+
+def test_extract_card_pokemon_A3b():
+    """Testing `A3b 001` (Tropius)"""
+    card = debug_card_extract("A3b 001", html=PACK_NAMES_HTML["A3a"])
+
+    assert card["number"] == "A3b 001"
+    assert card["name"] == "Tropius"
+    assert card["rarity"] == "◇◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "100"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "2"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "5"
+    assert card["illustrator"] == "Oswaldo KATO"
+    assert card["pack_name"] == "Eevee Grove (A3b) Eevee"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Cutting Wind"
+    assert card["move1_cost"] == "*️⃣*️⃣*️⃣"
+    assert card["move1_damage"] == "60"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4212605/4a8a4ddd84850e564de898fdc29df2aa.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/531867"
+
+
+def test_extract_card_pokemon_A4():
+    """Testing `A4 001` (Oddish)"""
+    card = debug_card_extract("A4 001", html=PACK_NAMES_HTML["A4"])
+
+    assert card["number"] == "A4 001"
+    assert card["name"] == "Oddish"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "50"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Fire"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "1"
+    assert card["illustrator"] == "ryoma uratsuka"
+    assert card["pack_name"] == "Wisdom of Sea and Sky (A4) Lugia"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Poison Powder"
+    assert card["move1_cost"] == "🟢"
+    assert card["move1_damage"] == "10"
+    assert card["move1_effect"] == "Your opponent's Active Pokemon is now Poisoned."
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4234694/0a900738d4f4ded496f3b15dca5d1e23.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/539913"
+
+
+def test_extract_card_pokemon_A4a():
+    """Testing `A4a 001` (Hoppip)"""
+    card = debug_card_extract("A4a 001", html=PACK_NAMES_HTML["A4a"])
+
+    assert card["number"] == "A4a 001"
+    assert card["name"] == "Hoppip"
+    assert card["rarity"] == "◇"
+    assert card["stage"] == "Basic"
+    assert card["HP"] == "50"
+    assert card["type"] == "Grass"
+    assert card["weakness"] == "Lightning"
+    assert card["retreat_cost"] == "1"
+    assert card["ultra_beast"] == "No"
+    assert card["generation"] == "2"
+    assert card["illustrator"] == "Kyoko Umemoto"
+    assert card["pack_name"] == "Secluded Springs (A4a) Suicune"
+    assert card["pack_points"] == "35"
+    assert card["ability_name"] == DEFAULT_EMPTY
+    assert card["ability_effect"] == DEFAULT_EMPTY
+    assert card["move1_name"] == "Splash"
+    assert card["move1_cost"] == "*️⃣"
+    assert card["move1_damage"] == "10"
+    assert card["move1_effect"] == DEFAULT_EMPTY
+    assert card["move2_name"] == DEFAULT_EMPTY
+    assert card["move2_cost"] == DEFAULT_EMPTY
+    assert card["move2_damage"] == DEFAULT_EMPTY
+    assert card["move2_effect"] == DEFAULT_EMPTY
+    assert card["image"] == "https://img.game8.co/4270297/3c59c8a6f28f6e09c70d66a9c711ef2e.png/show"
+    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/546447"
 
 
 def test_extract_card_pokemon_two_attacks():

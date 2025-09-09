@@ -3,22 +3,32 @@ import json
 import os
 import re
 import requests
-import random
 
 GAMECO_PREFIX = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
 
+# 1689 cards total
 STARTING_URLS = {
-    "A1": {"url_ext": 476002, "num_cards_in_pack": 286},  # Bulbasaur
-    "A1a": {"url_ext": 491414, "num_cards_in_pack": 86},  # Exeggcute
-    "A2": {"url_ext": 496840, "num_cards_in_pack": 207},  # Oddish
-    "A2a": {"url_ext": 502148, "num_cards_in_pack": 96},  # Heracross
-    "A2b": {"url_ext": 507212, "num_cards_in_pack": 111},  # Weedle
-    "A3": {"url_ext": 518856, "num_cards_in_pack": 239},  # Exeggcute
-    "A3a": {"url_ext": 524061, "num_cards_in_pack": 103},  # Petilil
-    "A3b": {"url_ext": 531867, "num_cards_in_pack": 107},  # Tropius
-    "A4": {"url_ext": 539913, "num_cards_in_pack": 241},  # Oddish
-    "A4a": {"url_ext": 546447, "num_cards_in_pack": 105},  # Hoppip
-    "P-A": {"url_ext": 476288, "num_cards_in_pack": 108},  # Potion
+    "A1": {"url_ext": 476002, "num_cards": 286},  # Bulbasaur (001)
+    "A1a": {"url_ext": 491414, "num_cards": 86},  # Exeggcute (001)
+    "A2": {"url_ext": 496840, "num_cards": 207},  # Oddish (001)
+    "A2a": {"url_ext": 502148, "num_cards": 96},  # Heracross (001)
+    "A2b": {"url_ext": 507212, "num_cards": 111},  # Weedle (001)
+    "A3": {"url_ext": 518856, "num_cards": 239},  # Exeggcute (001)
+    "A3a": {"url_ext": 524061, "num_cards": 103},  # Petilil (001)
+    "A3b": {"url_ext": 531867, "num_cards": 107},  # Tropius (001)
+    "A4": {"url_ext": 539913, "num_cards": 241},  # Oddish (001)
+    "A4a": {"url_ext": 546447, "num_cards": 105},  # Hoppip (001)
+    "P-A": {"url_ext": 476288, "num_cards": 108},  # Potion (001)
+    "A1a_missing": {"url_ext": 491502, "num_cards": 3},  # Pokemon Flute (064)
+    "A2_missing": {"url_ext": 496678, "num_cards": 201},  # Tangela (004)
+    "A2a_missing": {"url_ext": 502147, "num_cards": 94},  # Burmy (002)
+    "A2b_missing": {"url_ext": 507211, "num_cards": 109},  # Kakuna (002)
+    "A3_missing": {"url_ext": 518817, "num_cards": 67},  # Big Malasada (142)
+    "A3a_missing": {"url_ext": 523189, "num_cards": 77},  # Buzzwole (006)
+    "A3b_missing": {"url_ext": 530267, "num_cards": 79},  # Leafeon (002)
+    "A4_missing": {"url_ext": 538910, "num_cards": 226},  # Chickorita (008)
+    "A4a_missing": {"url_ext": 545809, "num_cards": 68},  # Slugma (008)
+    "P-A_missing": {"url_ext": 494595, "num_cards": 100},  # Pokedex (008)
 }
 
 
@@ -64,20 +74,15 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         print(f"Error parsing HTML: {e}")
         return {}
 
-    title_pattern = r"^.* Card - .* \| .*$"
     card_id_pattern = r"\b((A|B)\d(a|b)?|P-A) \d{3}\b"
-    if re.match(title_pattern, title):
-        html_first_line = response.text.partition("\n")[0]
-        id_match = re.search(card_id_pattern, html_first_line)
-        if id_match:
-            card_id = id_match.group()
-            url_ext = int(url.split("/")[-1])
-            return {card_id: url_ext}
-        else:
-            print(f"Could not find card id: {url}")
-            return {}
+    html_first_line = response.text.partition("\n")[0]
+    id_match = re.search(card_id_pattern, html_first_line)
+    if id_match:
+        card_id = id_match.group()
+        url_ext = int(url.split("/")[-1])
+        return {card_id: url_ext}
     else:
-        print(f"Not a card page: {url}")
+        print(f"Could not find card id: {url}")
         return {}
 
 
@@ -149,48 +154,11 @@ def update_page_mappings():
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
-        # for value in STARTING_URLS.values():
-        #     range_start = value["url_ext"]
-        #     range_end = range_start + value["num_cards_in_pack"]
-        #     for ext in range(range_start, range_end):
-        #         handle_ext(ext, page_mappings)
-
-        for ext in [
-            507270,
-            507271,
-            531954,
-            531955,
-            531956,
-            531957,
-            531958,
-            531959,
-            531960,
-            531961,
-            531962,
-            540140,
-            540141,
-            540142,
-            540143,
-            540144,
-            540145,
-            540146,
-            540147,
-            546530,
-            546531,
-            546532,
-            546533,
-            546534,
-            546535,
-            476288,
-            476289,
-            476290,
-            476291,
-            476292,
-            476293,
-            476294,
-            476295,
-        ]:
-            handle_ext(ext, page_mappings)
+        for value in STARTING_URLS.values():
+            range_start = value["url_ext"]
+            range_end = range_start + value["num_cards"]
+            for ext in range(range_start, range_end + 1):
+                handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -208,5 +176,39 @@ def update_page_mappings():
         json.dump(sorted_page_mappings, f, indent=4)
 
 
+def find_missing_cards():
+    """
+    Uses `STARTING_URLS` to determine cards still missing from `page_mappings.json`
+    """
+    json_path = os.path.join(os.path.dirname(__file__), "..", "data", "page_mappings.json")
+    with open(json_path, "r") as f:
+        page_mappings = json.load(f)
+        card_codes = page_mappings.keys()
+
+        # Parse IDs into a dict: {pack: set(card_numbers)}
+        pack_cards = {}
+        for id_str in card_codes:
+            match = re.match(r"^(A\d[a-b]?|P-A) (\d{3})$", id_str)
+            if match:
+                pack = match.group(1)
+                card_num = int(match.group(2))
+                pack_cards.setdefault(pack, set()).add(card_num)
+
+        # Find missing cards for each pack
+        missing_cards = {}
+        for pack, info in STARTING_URLS.items():
+            expected = set(range(1, info["num_cards"] + 1))
+            actual = pack_cards.get(pack, set())
+            missing = sorted(expected - actual)
+            if missing:
+                missing_cards[pack] = missing
+
+        missing_cards = dict(sorted(missing_cards.items()))
+        for pack, missing in missing_cards.items():
+            if not "missing" in pack.split("_"):
+                print(f"{pack} missing cards: {', '.join(f'{num:03d}' for num in missing)}")
+
+
 if __name__ == "__main__":
     update_page_mappings()
+    # find_missing_cards()

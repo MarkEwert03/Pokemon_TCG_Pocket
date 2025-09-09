@@ -65,7 +65,7 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         return {}
 
     title_pattern = r"^.* Card - .* \| .*$"
-    card_id_pattern = r"A\d[a,b]? \d\d\d"
+    card_id_pattern = r"\b((A|B)\d(a|b)?|P-A) \d{3}\b"
     if re.match(title_pattern, title):
         html_first_line = response.text.partition("\n")[0]
         id_match = re.search(card_id_pattern, html_first_line)
@@ -81,16 +81,16 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         return {}
 
 
-def handle_ext(ext: int, page_mappings : dict):
+def handle_ext(ext: int, page_mappings: dict):
     """
     Determines how to hendle the 6 digit url extention.
-    
+
     - If `ext` already exists in `page_mappings`, the lookup is skipped.
     - If `ext` is in `"BAD_EXTS`, the lookup is also skipped
     - Otherwise we attempt to go to the `game8.co/.../ext` page
       - If something goes wrong, `ext` is added to `BAD_EXTS`
       - Otherwise we add `{"<CARD_ID>": ext}` to page mappings
-    
+
     Parameters
     ----------
     ext : int
@@ -149,12 +149,48 @@ def update_page_mappings():
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
-        # TODO Incorperate STARTING_URLS into range
-        for value in STARTING_URLS.values():
-            range_start = value["url_ext"]
-            range_end = range_start + value["num_cards_in_pack"]
-            for ext in range(range_start, range_end):
-                handle_ext(ext, page_mappings)
+        # for value in STARTING_URLS.values():
+        #     range_start = value["url_ext"]
+        #     range_end = range_start + value["num_cards_in_pack"]
+        #     for ext in range(range_start, range_end):
+        #         handle_ext(ext, page_mappings)
+
+        for ext in [
+            507270,
+            507271,
+            531954,
+            531955,
+            531956,
+            531957,
+            531958,
+            531959,
+            531960,
+            531961,
+            531962,
+            540140,
+            540141,
+            540142,
+            540143,
+            540144,
+            540145,
+            540146,
+            540147,
+            546530,
+            546531,
+            546532,
+            546533,
+            546534,
+            546535,
+            476288,
+            476289,
+            476290,
+            476291,
+            476292,
+            476293,
+            476294,
+            476295,
+        ]:
+            handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):

@@ -90,25 +90,25 @@ def handle_ext(ext: int, page_mappings: dict):
     """
     Determines how to hendle the 6 digit url extention.
 
-    - If `ext` already exists in `page_mappings`, the lookup is skipped.
+    - If `ext` already exists in `GOOD_EXTS`, the lookup is skipped.
     - If `ext` is in `"BAD_EXTS`, the lookup is also skipped
     - Otherwise we attempt to go to the `game8.co/.../ext` page
       - If something goes wrong, `ext` is added to `BAD_EXTS`
-      - Otherwise we add `{"<CARD_ID>": ext}` to page mappings
+      - Otherwise we add `{"<CARD_ID>": ext}` to `GOOD_EXTS`
 
     Parameters
     ----------
     ext : int
         The 6 digit extention at the end of a `https://game8.co/games/Pokemon-TCG-Pocket/archives/` url
     page_mappings : dict
-        The dictionary housing the `"<CARD ID>": "<URL_EXT>"` pairs and the `"BAD_EXTS"` list
+        The dictionary housing the `"<CARD ID>": "<URL_EXT>"` pairs in `"GOOD_EXTS"` and the `"BAD_EXTS"` list
     """
-    if ext in page_mappings.values():
+    if ext in page_mappings["GOOD_EXTS"].values():
         print(f"{ext} already in page_mappings.json.")
         return
-
-    if ext in page_mappings["BAD_EXTS"]:
-        print(f"{ext} is a bad ext.")
+    elif ext in page_mappings["BAD_EXTS"]:
+        # print(f"{ext} is a bad ext.")
+        pass
     else:
         full_url = GAMECO_PREFIX + str(ext)
         current_page_mapping = extract_single_card_page(full_url)
@@ -117,8 +117,8 @@ def handle_ext(ext: int, page_mappings: dict):
         if not current_page_mapping:
             page_mappings["BAD_EXTS"] += [ext]
             return
-        # Append new page data to page_exts
-        page_mappings |= current_page_mapping
+        # Append new page data to "GOOD_EXTS"
+        page_mappings["GOOD_EXTS"] |= current_page_mapping
         print(f"{current_page_mapping} added!")
 
 
@@ -151,6 +151,8 @@ def update_page_mappings():
     # Read existing JSON data
     with open(json_path, "r") as f:
         page_mappings = json.load(f)
+        if not "GOOD_EXTS" in page_mappings:
+            page_mappings["GOOD_EXTS"] = {}
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
@@ -159,6 +161,7 @@ def update_page_mappings():
             range_end = range_start + value["num_cards"]
             for ext in range(range_start, range_end + 1):
                 handle_ext(ext, page_mappings)
+
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -171,9 +174,10 @@ def update_page_mappings():
 
     # Write the updated data back to the file
     page_mappings["BAD_EXTS"] = sorted(page_mappings["BAD_EXTS"])
-    sorted_page_mappings = dict(sorted(page_mappings.items(), key=sort_key))
+    good_exts = dict(sorted(page_mappings["GOOD_EXTS"].items(), key=sort_key))
+    page_mappings["GOOD_EXTS"] = good_exts
     with open(json_path, "w") as f:
-        json.dump(sorted_page_mappings, f, indent=4)
+        json.dump(page_mappings, f, indent=4)
 
 
 def find_missing_cards():

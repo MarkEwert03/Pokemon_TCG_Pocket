@@ -99,7 +99,7 @@ def handle_ext(ext: int, page_mappings : dict):
         The dictionary housing the `"<CARD ID>": "<URL_EXT>"` pairs and the `"BAD_EXTS"` list
     """
     if ext in page_mappings.values():
-        print(f"{ext} already in page_exts.json.")
+        print(f"{ext} already in page_mappings.json.")
         return
 
     if ext in page_mappings["BAD_EXTS"]:
@@ -117,7 +117,7 @@ def handle_ext(ext: int, page_mappings : dict):
         print(f"{current_page_mapping} added!")
 
 
-def update_page_info():
+def update_page_mappings():
     """
     Updates `/data/page_exts.json` with new page data.
 
@@ -150,8 +150,11 @@ def update_page_info():
             page_mappings["BAD_EXTS"] = []
 
         # TODO Incorperate STARTING_URLS into range
-        for ext in range(476000, 476005):
-            handle_ext(ext, page_mappings)
+        for value in STARTING_URLS.values():
+            range_start = value["url_ext"]
+            range_end = range_start + value["num_cards_in_pack"]
+            for ext in range(range_start, range_end):
+                handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -164,10 +167,10 @@ def update_page_info():
 
     # Write the updated data back to the file
     page_mappings["BAD_EXTS"] = sorted(page_mappings["BAD_EXTS"])
-    sorted_page_exts = dict(sorted(page_mappings.items(), key=sort_key))
+    sorted_page_mappings = dict(sorted(page_mappings.items(), key=sort_key))
     with open(json_path, "w") as f:
-        json.dump(sorted_page_exts, f, indent=4)
+        json.dump(sorted_page_mappings, f, indent=4)
 
 
 if __name__ == "__main__":
-    update_page_info()
+    update_page_mappings()

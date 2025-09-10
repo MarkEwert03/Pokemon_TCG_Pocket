@@ -82,7 +82,8 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         url_ext = int(url.split("/")[-1])
         return {card_id: url_ext}
     else:
-        cleaned_title = title.split("|")[0].strip()
+        # remove both '|' symbols
+        cleaned_title = title.split("|")[0].split("\uff5c")[0].strip()
         return {cleaned_title: -1}
 
 
@@ -186,7 +187,7 @@ def update_page_mappings():
         #     for ext in range(range_start, range_end + 1):
         #         handle_ext(ext, page_mappings)
 
-        for ext in range(480000, 485000):
+        for ext in range(475000, 485000):
             handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict

@@ -27,8 +27,11 @@ STARTING_URLS = {
     "A3a_missing": {"url_ext": 523189, "num_cards": 77},  # Buzzwole (006)
     "A3b_missing": {"url_ext": 530267, "num_cards": 79},  # Leafeon (002)
     "A4_missing": {"url_ext": 538910, "num_cards": 226},  # Chickorita (008)
+    "A4_2_missing": {"url_ext": 540160, "num_cards": 30},  # Squirt Bottle (152)
     "A4a_missing": {"url_ext": 545809, "num_cards": 68},  # Slugma (008)
     "P-A_missing": {"url_ext": 494595, "num_cards": 100},  # Pokedex (008)
+    "P-A_2_missing": {"url_ext": 487357, "num_cards": 10},  # Mewtwo (010)
+    "P-A_3_missing": {"url_ext": 486640, "num_cards": 200},  # Venusaur (018)
 }
 
 
@@ -145,6 +148,11 @@ def handle_ext(ext: int, page_mappings: dict):
     return
 
 
+def include_edge_cases(page_mappings: dict):
+    page_mappings["GOOD_EXTS"]["A4 084"] = 540163 # Unown (GUARD)
+    page_mappings["GOOD_EXTS"]["A4 085"] = 540162 # Unown (POWER)
+    page_mappings["GOOD_EXTS"]["A4 152"] = 540160 # Unown (POWER)
+
 def update_page_mappings():
     """
     Updates `/data/page_exts.json` with new page data.
@@ -245,5 +253,5 @@ def find_missing_cards():
 
 
 if __name__ == "__main__":
-    update_page_mappings()
-    # find_missing_cards()
+    # update_page_mappings()
+    find_missing_cards()

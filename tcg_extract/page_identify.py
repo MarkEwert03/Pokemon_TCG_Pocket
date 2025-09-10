@@ -82,8 +82,8 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         url_ext = int(url.split("/")[-1])
         return {card_id: url_ext}
     else:
-        cleaned_title = title.split("|")[0]
-        return {title: -1}
+        cleaned_title = title.split("|")[0].strip()
+        return {cleaned_title: -1}
 
 
 def handle_ext(ext: int, page_mappings: dict):
@@ -110,17 +110,18 @@ def handle_ext(ext: int, page_mappings: dict):
         ]
         print(f"{ext} is a good ext. ({pack_code})")
         return
-    
+
     # page was not a card page (it didn't have an card in title ID)
-    if ext in page_mappings["WRONG_EXTS"].keys():
-        print(f"{ext} is not a card page.")
+    if str(ext) in page_mappings["WRONG_EXTS"]:
+        page_title = page_mappings["WRONG_EXTS"][str(ext)]
+        print(f"{ext} is not a card page. ({page_title})")
         return
-    
+
     # page caused an error
     if ext in page_mappings["BAD_EXTS"]:
         # print(f"{ext} is a bad ext.")
         return
-    
+
     full_url = GAMECO_PREFIX + str(ext)
     current_page_mapping = extract_single_card_page(full_url)
     # If page_data is empty, then we had an error with the page,
@@ -128,7 +129,7 @@ def handle_ext(ext: int, page_mappings: dict):
     if not current_page_mapping:
         page_mappings["BAD_EXTS"] += [ext]
         return
-    
+
     # Append incorrect page ext and title to "WRONG_EXTS"
     if list(current_page_mapping.values())[0] == -1:
         # wrong_page_mapping = {dddddd : page_title}
@@ -136,7 +137,7 @@ def handle_ext(ext: int, page_mappings: dict):
         print(f"Encountered non-card page:\n  {wrong_page_mapping}")
         page_mappings["WRONG_EXTS"] |= wrong_page_mapping
         return
-    
+
     # Append new page data to "GOOD_EXTS"
     page_mappings["GOOD_EXTS"] |= current_page_mapping
     print(f"{current_page_mapping} added!")
@@ -185,7 +186,7 @@ def update_page_mappings():
         #     for ext in range(range_start, range_end + 1):
         #         handle_ext(ext, page_mappings)
 
-        for ext in range(476000, 480000):
+        for ext in range(480000, 485000):
             handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
@@ -197,8 +198,11 @@ def update_page_mappings():
         code, number = key.split()
         return (code, int(number))
 
-    # Write the updated data back to the file
+    # Sort and write the updated data back to the file
     page_mappings["BAD_EXTS"] = sorted(page_mappings["BAD_EXTS"])
+    page_mappings["WRONG_EXTS"] = dict(
+        sorted(page_mappings["WRONG_EXTS"].items(), key=lambda kv: int(kv[0]))
+    )
     good_exts = dict(sorted(page_mappings["GOOD_EXTS"].items(), key=sort_key))
     page_mappings["GOOD_EXTS"] = good_exts
     with open(json_path, "w") as f:

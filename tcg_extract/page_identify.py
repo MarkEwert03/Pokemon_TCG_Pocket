@@ -60,7 +60,7 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
             response.raise_for_status()
             page_html = response.text
         except requests.RequestException as e:
-            print(f"Error fetching URL: {e}")
+            print(f"Error 404: {url}")
             return {}
 
     try:
@@ -181,14 +181,14 @@ def update_page_mappings():
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
-        # for value in STARTING_URLS.values():
-        #     range_start = value["url_ext"]
-        #     range_end = range_start + value["num_cards"]
-        #     for ext in range(range_start, range_end + 1):
-        #         handle_ext(ext, page_mappings)
+        for value in STARTING_URLS.values():
+            range_start = value["url_ext"]
+            range_end = range_start + value["num_cards"]
+            for ext in range(range_start, range_end + 1):
+                handle_ext(ext, page_mappings)
 
-        for ext in range(475000, 485000):
-            handle_ext(ext, page_mappings)
+        # for ext in range(475000, 485000):
+        #     handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -222,7 +222,8 @@ def find_missing_cards():
         # Parse IDs into a dict: {pack: set(card_numbers)}
         pack_cards = {}
         for id_str in card_codes:
-            match = re.match(r"^(A\d[a-b]?|P-A) (\d{3})$", id_str)
+            card_id_pattern = r"^(A\d[a-b]?|P-A) (\d{3})$"
+            match = re.match(card_id_pattern, id_str)
             if match:
                 pack = match.group(1)
                 card_num = int(match.group(2))

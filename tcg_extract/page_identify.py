@@ -182,9 +182,9 @@ def update_page_mappings():
             page_mappings["BAD_EXTS"] = []
 
         for value in STARTING_URLS.values():
-            range_start = value["url_ext"]
-            range_end = range_start + value["num_cards"]
-            for ext in range(range_start, range_end + 1):
+            range_start = value["url_ext"] - value["num_cards"]
+            range_end = value["url_ext"] + value["num_cards"]
+            for ext in range(range_start - 1, range_end + 1):
                 handle_ext(ext, page_mappings)
 
         # for ext in range(475000, 485000):
@@ -217,7 +217,7 @@ def find_missing_cards():
     json_path = os.path.join(os.path.dirname(__file__), "..", "data", "page_mappings.json")
     with open(json_path, "r") as f:
         page_mappings = json.load(f)
-        card_codes = page_mappings.keys()
+        card_codes = page_mappings["GOOD_EXTS"].keys()
 
         # Parse IDs into a dict: {pack: set(card_numbers)}
         pack_cards = {}

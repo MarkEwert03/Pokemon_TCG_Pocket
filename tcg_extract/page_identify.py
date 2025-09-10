@@ -82,8 +82,8 @@ def extract_single_card_page(url: str, page_html: str = None) -> dict[str, int]:
         url_ext = int(url.split("/")[-1])
         return {card_id: url_ext}
     else:
-        print(f"Could not find card id: {url}")
-        return {}
+        cleaned_title = title.split("|")[0]
+        return {title: -1}
 
 
 def handle_ext(ext: int, page_mappings: dict):
@@ -103,23 +103,44 @@ def handle_ext(ext: int, page_mappings: dict):
     page_mappings : dict
         The dictionary housing the `"<CARD ID>": "<URL_EXT>"` pairs in `"GOOD_EXTS"` and the `"BAD_EXTS"` list
     """
+    # we've already added this card page to the dict
     if ext in page_mappings["GOOD_EXTS"].values():
-        print(f"{ext} already in page_mappings.json.")
+        pack_code = list(page_mappings["GOOD_EXTS"].keys())[
+            list(page_mappings["GOOD_EXTS"].values()).index(ext)
+        ]
+        print(f"{ext} is a good ext. ({pack_code})")
         return
-    elif ext in page_mappings["BAD_EXTS"]:
+    
+    # page was not a card page (it didn't have an card in title ID)
+    if ext in page_mappings["WRONG_EXTS"].keys():
+        print(f"{ext} is not a card page.")
+        return
+    
+    # page caused an error
+    if ext in page_mappings["BAD_EXTS"]:
         # print(f"{ext} is a bad ext.")
-        pass
-    else:
-        full_url = GAMECO_PREFIX + str(ext)
-        current_page_mapping = extract_single_card_page(full_url)
-        # If page_data is empty, then we had an error with the page,
-        #   so add ext to the list of bad exts
-        if not current_page_mapping:
-            page_mappings["BAD_EXTS"] += [ext]
-            return
-        # Append new page data to "GOOD_EXTS"
-        page_mappings["GOOD_EXTS"] |= current_page_mapping
-        print(f"{current_page_mapping} added!")
+        return
+    
+    full_url = GAMECO_PREFIX + str(ext)
+    current_page_mapping = extract_single_card_page(full_url)
+    # If page_data is empty, then we had an error with the page,
+    #   so add ext to the list of bad exts
+    if not current_page_mapping:
+        page_mappings["BAD_EXTS"] += [ext]
+        return
+    
+    # Append incorrect page ext and title to "WRONG_EXTS"
+    if list(current_page_mapping.values())[0] == -1:
+        # wrong_page_mapping = {dddddd : page_title}
+        wrong_page_mapping = {ext: list(current_page_mapping.keys())[0]}
+        print(f"Encountered non-card page:\n  {wrong_page_mapping}")
+        page_mappings["WRONG_EXTS"] |= wrong_page_mapping
+        return
+    
+    # Append new page data to "GOOD_EXTS"
+    page_mappings["GOOD_EXTS"] |= current_page_mapping
+    print(f"{current_page_mapping} added!")
+    return
 
 
 def update_page_mappings():
@@ -153,15 +174,19 @@ def update_page_mappings():
         page_mappings = json.load(f)
         if not "GOOD_EXTS" in page_mappings:
             page_mappings["GOOD_EXTS"] = {}
+        if not "WRONG_EXTS" in page_mappings:
+            page_mappings["WRONG_EXTS"] = {}
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
-        for value in STARTING_URLS.values():
-            range_start = value["url_ext"]
-            range_end = range_start + value["num_cards"]
-            for ext in range(range_start, range_end + 1):
-                handle_ext(ext, page_mappings)
+        # for value in STARTING_URLS.values():
+        #     range_start = value["url_ext"]
+        #     range_end = range_start + value["num_cards"]
+        #     for ext in range(range_start, range_end + 1):
+        #         handle_ext(ext, page_mappings)
 
+        for ext in range(476000, 480000):
+            handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):

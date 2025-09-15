@@ -1,9 +1,12 @@
 from bs4 import BeautifulSoup
+import argparse
 import json
+import matplotlib.pyplot as plt
 import os
+import pandas as pd
 import re
 import requests
-import argparse
+
 
 GAMECO_PREFIX = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
 
@@ -202,7 +205,6 @@ def update_page_mappings():
             for ext in range(range_start - 1, range_end + 1):
                 handle_ext(ext, page_mappings)
 
-
     # Helper sort function for the dict
     def sort_key(item):
         key = item[0]
@@ -257,10 +259,55 @@ def find_missing_cards():
                 print(f"{pack} missing cards: {', '.join(f'{num:03d}' for num in missing)}")
 
 
+def visualize_page_mappings():
+    json_path = os.path.join(os.path.dirname(__file__), "..", "data", "page_mappings.json")
+    with open(json_path) as f:
+        page_mappings = json.load(f)
+
+        rows = []
+
+        # GOOD_EXTS: ID : ext
+        for id_, ext in page_mappings.get("GOOD_EXTS", {}).items():
+            rows.append({"ext": int(ext), "category": "GOOD_EXTS", "id": id_, "title": None})
+
+        # WRONG_EXTS: ext : title
+        for ext, title in page_mappings.get("WRONG_EXTS", {}).items():
+            rows.append({"ext": int(ext), "category": "WRONG_EXTS", "id": None, "title": title})
+
+        # BAD_EXTS: list of ints
+        for ext in page_mappings.get("BAD_EXTS", []):
+            rows.append({"ext": int(ext), "category": "BAD_EXTS", "id": None, "title": None})
+
+        df = pd.DataFrame(rows)
+        
+        # scatterplot
+        # plt.figure(figsize=(10,5))
+        # plt.scatter(df["ext"], df["category"], alpha=0.5, s=10)
+        # plt.xlabel("ext")
+        # plt.ylabel("category")
+        # plt.title("Distribution of GOOD / WRONG / BAD exts")
+        # plt.show()
+        
+        # histogram
+        plt.figure(figsize=(10,5))
+        for cat, group in df.groupby("category"):
+            plt.hist(group["ext"], bins=100, alpha=0.5, label=cat)
+        plt.legend()
+        plt.xlabel("ext")
+        plt.ylabel("Count")
+        plt.title("Histogram of ext values per category")
+        plt.show()
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Update or find missing card page mappings.")
-    parser.add_argument("--update", action="store_true", help="Update page mappings JSON file.")
     parser.add_argument("--find", action="store_true", help="Find missing cards in page mappings.")
+    parser.add_argument("--update", action="store_true", help="Update page mappings JSON file.")
+    parser.add_argument(
+        "--visualize",
+        action="store_true",
+        help="Create a plot showing distribution of cards found so far in page_mappings.json.",
+    )
 
     args = parser.parse_args()
 
@@ -268,5 +315,7 @@ if __name__ == "__main__":
         update_page_mappings()
     if args.find:
         find_missing_cards()
-    if not (args.update or args.find):
+    if args.visualize:
+        visualize_page_mappings()
+    if not (args.update or args.find or args.visualize):
         parser.print_help()

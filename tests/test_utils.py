@@ -1,5 +1,5 @@
 import pytest
-from tcg_extract.utils import (
+from tcg.utils import (
     clean_str,
     parse_energy_cost,
     parse_retreat_cost,

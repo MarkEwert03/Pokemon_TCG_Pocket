@@ -2,9 +2,9 @@ import argparse
 import json
 from collections import OrderedDict
 import bs4
-from tcg_extract.utils import COLUMNS
-from tcg_extract.io import fetch_html_table, get_pack_names_and_urls
-from tcg_extract.parser import extract_card
+from tcg.utils import COLUMNS
+from tcg.io import fetch_html_table, get_pack_names_and_urls
+from tcg.parser import extract_card
 
 
 def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> dict[str, str]:

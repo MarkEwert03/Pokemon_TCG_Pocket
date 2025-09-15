@@ -1,8 +1,8 @@
 import csv
 import requests
 from bs4 import BeautifulSoup, element
-from tcg_extract.parser import extract_card
-from tcg_extract.utils import COLUMNS, clean_str
+from tcg.parser import extract_card
+from tcg.utils import COLUMNS, clean_str
 
 
 def fetch_html_table(page_url: str, page_type: str = "") -> element.Tag:

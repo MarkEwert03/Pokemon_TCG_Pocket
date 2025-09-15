@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 from tests.debug import debug_card_extract
-from tcg_extract.io import fetch_html_table, get_pack_names_and_urls
-from tcg_extract.parser import extract_card
-from tcg_extract.parser import DEFAULT_EMPTY
+from tcg.io import fetch_html_table, get_pack_names_and_urls
+from tcg.parser import extract_card
+from tcg.parser import DEFAULT_EMPTY
 
 
 PACK_NAMES_URLS = get_pack_names_and_urls()

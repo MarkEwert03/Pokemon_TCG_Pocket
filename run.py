@@ -1,3 +1,3 @@
-from tcg_extract.driver import main
+from tcg.driver import main
 
 main()

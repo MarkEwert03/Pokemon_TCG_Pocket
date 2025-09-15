@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from pathlib import Path
-from tcg_extract.io import get_pack_names_and_urls, extract_pack, write_to_csv
+from tcg.io import get_pack_names_and_urls, extract_pack, write_to_csv
 
 
 # Raw data found at

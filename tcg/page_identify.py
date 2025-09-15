@@ -3,10 +3,12 @@ import json
 import os
 import re
 import requests
+import argparse
 
 GAMECO_PREFIX = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
 
 # 1689 cards total
+# As of 2025-09-01
 STARTING_URLS = {
     "A1": {"url_ext": 476002, "num_cards": 286},  # Bulbasaur (001)
     "A1a": {"url_ext": 491414, "num_cards": 86},  # Exeggcute (001)
@@ -19,19 +21,21 @@ STARTING_URLS = {
     "A4": {"url_ext": 539913, "num_cards": 241},  # Oddish (001)
     "A4a": {"url_ext": 546447, "num_cards": 105},  # Hoppip (001)
     "P-A": {"url_ext": 476288, "num_cards": 108},  # Potion (001)
-    "A1a_missing": {"url_ext": 491502, "num_cards": 3},  # Pokemon Flute (064)
-    "A2_missing": {"url_ext": 496678, "num_cards": 201},  # Tangela (004)
-    "A2a_missing": {"url_ext": 502147, "num_cards": 94},  # Burmy (002)
-    "A2b_missing": {"url_ext": 507211, "num_cards": 109},  # Kakuna (002)
-    "A3_missing": {"url_ext": 518817, "num_cards": 67},  # Big Malasada (142)
-    "A3a_missing": {"url_ext": 523189, "num_cards": 77},  # Buzzwole (006)
-    "A3b_missing": {"url_ext": 530267, "num_cards": 79},  # Leafeon (002)
-    "A4_missing": {"url_ext": 538910, "num_cards": 226},  # Chickorita (008)
-    "A4_2_missing": {"url_ext": 540160, "num_cards": 30},  # Squirt Bottle (152)
-    "A4a_missing": {"url_ext": 545809, "num_cards": 68},  # Slugma (008)
-    "P-A_missing": {"url_ext": 494595, "num_cards": 100},  # Pokedex (008)
-    "P-A_2_missing": {"url_ext": 487357, "num_cards": 10},  # Mewtwo (010)
-    "P-A_3_missing": {"url_ext": 486640, "num_cards": 200},  # Venusaur (018)
+}
+
+MISSING_PATCHES = {
+    "A1a": {"url_ext": 491502, "num_cards": 3},  # Pokemon Flute (064)
+    "A2": {"url_ext": 496678, "num_cards": 201},  # Tangela (004)
+    "A2a": {"url_ext": 502147, "num_cards": 94},  # Burmy (002)
+    "A2b": {"url_ext": 507211, "num_cards": 109},  # Kakuna (002)
+    "A3": {"url_ext": 518817, "num_cards": 67},  # Big Malasada (142)
+    "A3a": {"url_ext": 523189, "num_cards": 77},  # Buzzwole (006)
+    "A3b": {"url_ext": 530267, "num_cards": 79},  # Leafeon (002)
+    "A4": {"url_ext": 538910, "num_cards": 226},  # Chickorita (008)
+    "A4_2": {"url_ext": 540160, "num_cards": 30},  # Squirt Bottle (152)
+    "A4a": {"url_ext": 545809, "num_cards": 68},  # Slugma (008)
+    "P-A": {"url_ext": 494595, "num_cards": 100},  # Pokedex (008)
+    "P-A_2": {"url_ext": 486640, "num_cards": 200},  # Venusaur (018)
 }
 
 
@@ -148,11 +152,6 @@ def handle_ext(ext: int, page_mappings: dict):
     return
 
 
-def include_edge_cases(page_mappings: dict):
-    page_mappings["GOOD_EXTS"]["A4 084"] = 540163 # Unown (GUARD)
-    page_mappings["GOOD_EXTS"]["A4 085"] = 540162 # Unown (POWER)
-    page_mappings["GOOD_EXTS"]["A4 152"] = 540160 # Unown (POWER)
-
 def update_page_mappings():
     """
     Updates `/data/page_exts.json` with new page data.
@@ -189,14 +188,20 @@ def update_page_mappings():
         if not "BAD_EXTS" in page_mappings:
             page_mappings["BAD_EXTS"] = []
 
+        # Catch most of them by starting at card 001 and counting up through num_cards
         for value in STARTING_URLS.values():
+            range_start = value["url_ext"]
+            range_end = value["url_ext"] + value["num_cards"]
+            for ext in range(range_start, range_end + 1):
+                handle_ext(ext, page_mappings)
+
+        # Second pass through different missing matches in range [x0-n, x0+n]
+        for value in MISSING_PATCHES.values():
             range_start = value["url_ext"] - value["num_cards"]
             range_end = value["url_ext"] + value["num_cards"]
             for ext in range(range_start - 1, range_end + 1):
                 handle_ext(ext, page_mappings)
 
-        # for ext in range(475000, 485000):
-        #     handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -253,5 +258,15 @@ def find_missing_cards():
 
 
 if __name__ == "__main__":
-    # update_page_mappings()
-    find_missing_cards()
+    parser = argparse.ArgumentParser(description="Update or find missing card page mappings.")
+    parser.add_argument("--update", action="store_true", help="Update page mappings JSON file.")
+    parser.add_argument("--find", action="store_true", help="Find missing cards in page mappings.")
+
+    args = parser.parse_args()
+
+    if args.update:
+        update_page_mappings()
+    if args.find:
+        find_missing_cards()
+    if not (args.update or args.find):
+        parser.print_help()

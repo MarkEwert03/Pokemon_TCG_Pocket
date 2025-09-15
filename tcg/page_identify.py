@@ -192,18 +192,21 @@ def update_page_mappings():
             page_mappings["BAD_EXTS"] = []
 
         # Catch most of them by starting at card 001 and counting up through num_cards
-        for value in STARTING_URLS.values():
-            range_start = value["url_ext"]
-            range_end = value["url_ext"] + value["num_cards"]
-            for ext in range(range_start, range_end + 1):
-                handle_ext(ext, page_mappings)
+        # for value in STARTING_URLS.values():
+        #     range_start = value["url_ext"]
+        #     range_end = value["url_ext"] + value["num_cards"]
+        #     for ext in range(range_start, range_end + 1):
+        #         handle_ext(ext, page_mappings)
 
-        # Second pass through different missing matches in range [x0-n, x0+n]
-        for value in MISSING_PATCHES.values():
-            range_start = value["url_ext"] - value["num_cards"]
-            range_end = value["url_ext"] + value["num_cards"]
-            for ext in range(range_start - 1, range_end + 1):
-                handle_ext(ext, page_mappings)
+        # # Second pass through different missing matches in range [x0-n, x0+n]
+        # for value in MISSING_PATCHES.values():
+        #     range_start = value["url_ext"] - value["num_cards"]
+        #     range_end = value["url_ext"] + value["num_cards"]
+        #     for ext in range(range_start - 1, range_end + 1):
+        #         handle_ext(ext, page_mappings)
+                
+        for ext in range(490000, 495000):
+            handle_ext(ext, page_mappings)
 
     # Helper sort function for the dict
     def sort_key(item):

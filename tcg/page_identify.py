@@ -204,9 +204,25 @@ def update_page_mappings():
         #     range_end = value["url_ext"] + value["num_cards"]
         #     for ext in range(range_start - 1, range_end + 1):
         #         handle_ext(ext, page_mappings)
-                
+
         for ext in range(490000, 495000):
             handle_ext(ext, page_mappings)
+
+            # save every 1000 times
+            if ext % 1000 == 0:
+                save_page_mappings(page_mappings, filename="page_mappings_temp.json")
+
+        # Remove temp file
+        temp_path = json_path = os.path.join(
+            os.path.dirname(__file__), "..", "data", "page_mappings_temp.json"
+        )
+        os.remove(temp_path)
+        # Final save
+        save_page_mappings(page_mappings)
+
+
+def save_page_mappings(page_mappings, filename: str = "page_mappings.json"):
+    json_path = os.path.join(os.path.dirname(__file__), "..", "data", filename)
 
     # Helper sort function for the dict
     def sort_key(item):
@@ -282,23 +298,13 @@ def visualize_page_mappings():
             rows.append({"ext": int(ext), "category": "BAD_EXTS", "id": None, "title": None})
 
         df = pd.DataFrame(rows)
-        
+
         # scatterplot
-        # plt.figure(figsize=(10,5))
-        # plt.scatter(df["ext"], df["category"], alpha=0.5, s=10)
-        # plt.xlabel("ext")
-        # plt.ylabel("category")
-        # plt.title("Distribution of GOOD / WRONG / BAD exts")
-        # plt.show()
-        
-        # histogram
-        plt.figure(figsize=(10,5))
-        for cat, group in df.groupby("category"):
-            plt.hist(group["ext"], bins=100, alpha=0.5, label=cat)
-        plt.legend()
+        plt.figure(figsize=(10, 5))
+        plt.scatter(df["ext"], df["category"], alpha=0.5, s=10)
         plt.xlabel("ext")
-        plt.ylabel("Count")
-        plt.title("Histogram of ext values per category")
+        plt.ylabel("category")
+        plt.title("Distribution of GOOD / WRONG / BAD exts")
         plt.show()
 
 

@@ -9,6 +9,8 @@ import requests
 
 
 GAMECO_PREFIX = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
+START_EXT = 500000
+END_EXT = 1 + 505000
 
 # 1689 cards total
 # As of 2025-09-01
@@ -205,7 +207,7 @@ def update_page_mappings():
         #     for ext in range(range_start - 1, range_end + 1):
         #         handle_ext(ext, page_mappings)
 
-        for ext in range(490000, 495000):
+        for ext in range(START_EXT, END_EXT):
             handle_ext(ext, page_mappings)
 
             # save every 1000 times
@@ -216,7 +218,11 @@ def update_page_mappings():
         temp_path = json_path = os.path.join(
             os.path.dirname(__file__), "..", "data", "page_mappings_temp.json"
         )
-        os.remove(temp_path)
+        try:
+            os.remove(temp_path)
+        except FileNotFoundError:
+            pass
+        
         # Final save
         save_page_mappings(page_mappings)
 

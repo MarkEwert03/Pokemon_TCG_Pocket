@@ -1,13 +1,14 @@
 import argparse
 import json
+import os
 from collections import OrderedDict
-import bs4
-from tcg.utils import COLUMNS
-from tcg.io import fetch_html_table, get_pack_names_and_urls
+from tcg.utils import COLUMN_NAMES
+from tcg.io import fetch_html_table
 from tcg.parser import extract_card
 
+GAME8_BASE_LINK = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
 
-def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> dict[str, str]:
+def debug_card_extract(pokemon_id: str) -> dict[str, str]:
     """
     Extract metadata for a specific Pokémon card based on its ID.
 
@@ -16,24 +17,21 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
     and returns a dictionary of parsed card information.
 
     Args
-    ----------
+    ----
         pokemon_id : str
             The Pokémon card ID to search for (e.g., "A1 001").
-        html : bs4.element.Tag | None
-            Optional cached HTML table of cards.
-            If None, the HTML will be fetched from the source using `fetch_html_table()`.
 
     Returns
-    ----------
+    -------
         out : dict[str, str]
             A dictionary containing the extracted metadata fields for the card.
 
     Raises
-    ----------
+    ------
         Exception: If no matching card row is found for the given ID.
 
     Example
-    ----------
+    -------
         >>> debug_card_extract("A1 001")
         {
             "number": "A1 001",
@@ -62,29 +60,25 @@ def debug_card_extract(pokemon_id: str, html: bs4.element.Tag | None = None) -> 
             "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
         }
     """
+    json_path = os.path.join(os.path.dirname(
+        __file__), "..", "data", "page_mappings.json")
+    with open(json_path, "r", encoding="utf-8") as f:
+        page_mappings = json.load(f)
+        good_exts = page_mappings["GOOD_EXTS"]
+        try:
+            page_ext = good_exts[pokemon_id]
+            page_url = GAME8_BASE_LINK + str(page_ext)
+        except KeyError as e:
+            raise Exception(f"[!] No row found for Pokémon ID: {pokemon_id}")
 
-    # Pipeline input data directly from page if html is None
-    if html == None:
-        pack_names_urls = get_pack_names_and_urls()
-        short_id = pokemon_id.split(" ")[0]
-        pokemon_table = fetch_html_table(pack_names_urls[short_id], page_type="pack")
-    else:
-        pokemon_table = html
-
-    cards_html = pokemon_table.find_all("tr")
-
-    for row in cards_html:
-        bold = row.find("b", class_="a-bold")
-        if bold and bold.text.strip() == pokemon_id:
-            card = extract_card(row)
-            return card
-
-    raise Exception(f"[!] No row found for Pokémon ID: {pokemon_id}")
+        card = extract_card(page_url)
+        return card
 
 
 def main():
     """Runs main debug function by printing card dict."""
-    parser = argparse.ArgumentParser(description="Debug Pokémon card extraction.")
+    parser = argparse.ArgumentParser(
+        description="Debug Pokémon card extraction.")
     parser.add_argument(
         "pokemon_id", nargs="?", default="A1 001", help="Card ID to extract (e.g., 'A1 007')"
     )
@@ -93,7 +87,7 @@ def main():
     # Get HTML table from url
     card = debug_card_extract(args.pokemon_id)
 
-    ordered_card = OrderedDict((key, card.get(key, "N/A")) for key in COLUMNS)
+    ordered_card = OrderedDict((key, card.get(key, "N/A")) for key in COLUMN_NAMES)
     print(json.dumps(ordered_card, indent=2, ensure_ascii=False))
 
 

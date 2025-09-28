@@ -4,7 +4,7 @@ import re
 DEFAULT_EMPTY = None
 
 # Ordered list of all columns each card should have
-COLUMNS = [
+COLUMN_NAMES = [
     "number",
     "name",
     "rarity",

@@ -6,7 +6,6 @@ from tcg.utils import (
     clean_str,
     parse_energy_cost,
     parse_retreat_cost,
-    trim_after_second_parens,
     DEFAULT_EMPTY,
 )
 
@@ -179,17 +178,14 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     return cell9_data
 
 
-def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str, str | None]:
+def extract_card_details(page_response: requests.Response) -> dict[str, str | None]:
     """
     Parse additional details from the cards full page.
 
     Parameters
     ----------
-    card_full_url : str
+    page_response : requests.Response
         The url linking to the cards full page
-    is_trainer : bool
-        If `True`, this is a Trainer/Item/Tool card (no Stage/moves) so
-        its full description goes into `ability_effect`.
 
     Returns
     -------
@@ -199,37 +195,14 @@ def extract_extra_card_details(card_full_url: str, is_trainer: bool) -> dict[str
             - `illustrator`
             - `weakness`
     """
-    # Download page
-    response = requests.get(card_full_url)
-    response.raise_for_status()
-
     # Parse total HTML with BeautifulSoup
-    soup = BeautifulSoup(response.text, "lxml")
-    table = soup.select_one("table.a-table.table--fixed.a-table")
-    rows = table.find_all("tr")
+    soup = BeautifulSoup(page_response.text, "lxml")
+    table = soup.select("table.a-table.table--fixed.a-table")
+    
+    # TODO Uncomment
+    print(table)
 
-    # Get metadata with soup operations
-    # rating = rows[1].find("td").find("a").find("img").get("data-src")
-    gen_text = clean_str(rows[5].find("td").text, empty_val=DEFAULT_EMPTY)
-    generation = gen_text[-1] if gen_text is not DEFAULT_EMPTY else DEFAULT_EMPTY
-    illustrator = rows[7].find("td").text
-    try:
-        weakness = (
-            DEFAULT_EMPTY
-            if is_trainer
-            else rows[9].find_all("td")[2].find("a").find("img").get("alt")
-        )
-    except AttributeError:
-        weakness = DEFAULT_EMPTY
-
-    # Create dictionary with card info
-    card_extra_details = {
-        "generation": generation,
-        "illustrator": illustrator,
-        "weakness": weakness,
-    }
-
-    return card_extra_details
+    return {}
 
 
 def fix_edge_cases(card: dict[str, str | None]):
@@ -348,7 +321,7 @@ def fix_edge_cases(card: dict[str, str | None]):
         case "A1a 057":  # Pidgey
             # Missing energy cost for Flap
             card["move1_cost"] = "*️⃣"
-            
+
         case "A2 047":  # Wash Rotom
             # Wash Rotom's Wave Splash should do 30 dmg not 39
             card["move1_damage"] = "30"
@@ -366,102 +339,43 @@ def fix_edge_cases(card: dict[str, str | None]):
     # Mutates card in-place, so no need to return
 
 
-def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
+def extract_card(card_page_ext: str) -> dict[str, str | None]:
     """
-    Convert a `<tr>` row into a full card-info dict.
+    Extract the page info for a card.
 
     Parameters
     ----------
-    card_html : bs4.element.Tag
-        A `<tr>` containing exactly ten `<td>` cells in the known layout:
-
-            0) checkbox
-            1) number
-            2) name/image
-            3) rarity
-            4) pack,
-            5) type
-            6) HP
-            7) stage
-            8) points
-            9) moves/details.
+    card_page_url : str
+        The url to the detailed card page.
 
     Returns
     -------
-    dict[str, str]
-        Merges:
-        - Basic columns: `number`, `name`, `image`, `rarity`,
-          `pack_name`, `type`, `HP`, `stage`, `pack_points`, `url`
-        - Cell 9 columns: `stage`, `retreat_cost`, `ultra_beast`
-          `ability_name`, `ability_effect`,
-          `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
-          `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-        - Extra details columns: `generation`, `illustrator`, `weakness`
+    out : dict[str, str]
+        A dictionary containing all relevent information for the card. Has the following colums:
+        - `number`, `name`, `pack_name`
+        - `rarity`, `type`, `HP`, `stage`
+        - `pack_points`, `retreat_cost`, `ultra_beast`
+        - `ability_name`, `ability_effect`
+        - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
+        - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
+        - `generation`, `illustrator`, `weakness`
+        - `url`, `image`
 
     Notes
     -----
-    - Determines `is_trainer` by `type` in `{"Item", "Supporter", "Pokemon Tool"}`.
     - Cleans whitespace via `clean_str()` at the end.
     """
-    cells = card_html.find_all("td")
-    # cell_0 is checkmark (ignored)
-
-    # Extract card data from each cell
-    number = cells[1].text
-    name = cells[2].find("a").text
-    image = cells[2].find("img").get("data-src")
-    rarity = cells[3].text
-    pack = trim_after_second_parens(cells[4].text)
-    type = cells[5].find("img")["alt"].split("-")[-1]  # last word is the type
-    HP = cells[6].text
-    stage = cells[7].text
-    pack_points = (
-        cells[8].text.replace(",", "").replace("Pts", "") if rarity != "Promo" else DEFAULT_EMPTY
-    )
-
-    # Flag to determine if card is trainer card or not
-    is_trainer = clean_str(type) in ["Item", "Supporter", "Pokemon Tool"]
-
-    # Cell 9 contains retreat cost, effect, and moves data
-    cell9 = extract_cell9(cells[9], is_trainer=is_trainer)
-
-    # Extract more information from the individual card pages
-    card_full_url = cells[2].find("a").get("href")
-    card_extra_details = {
-        "generation": DEFAULT_EMPTY,
-        "illustrator": DEFAULT_EMPTY,
-        "weakness": DEFAULT_EMPTY,
-    }
-    try:
-        card_extra_details = extract_extra_card_details(card_full_url, is_trainer=is_trainer)
-    except requests.exceptions.HTTPError:
-        print(f"Page {card_full_url} caused an error.")
-    except AttributeError:
-        # Page probably doesn't contain table
-        pass
-
-    # Create dictionary with raw data
-    card = {
-        "number": number,
-        "name": name,
-        "image": image,
-        "rarity": rarity,
-        "pack_name": pack,
-        "type": type,
-        "HP": HP,
-        "stage": stage,
-        "pack_points": pack_points,
-        "url": card_full_url,
-    }
-
-    # Merge data from cell 9 and full page
-    card = card | cell9
-    card = card | card_extra_details
+    # Download the page from the given link
+    card_page_response = requests.get(card_page_ext)
+    card_page_response.raise_for_status()
+    
+    # Extract all card information from that page
+    card = extract_card_details(card_page_response)
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
 
     # Fix final misc things that are card specific
-    fix_edge_cases(card)
+    # fix_edge_cases(card)
 
     return card

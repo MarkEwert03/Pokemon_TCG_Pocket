@@ -222,7 +222,7 @@ def update_page_mappings():
             os.remove(temp_path)
         except FileNotFoundError:
             pass
-        
+
         # Final save
         save_page_mappings(page_mappings)
 

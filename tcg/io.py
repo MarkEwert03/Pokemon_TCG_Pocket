@@ -2,7 +2,7 @@ import csv
 import requests
 from bs4 import BeautifulSoup, element
 from tcg.parser import extract_card
-from tcg.utils import COLUMNS, clean_str
+from tcg.utils import COLUMN_NAMES, clean_str
 
 
 def fetch_html_table(page_url: str, page_type: str = "") -> element.Tag:
@@ -165,7 +165,7 @@ def write_to_csv(cards_data: list[dict[str, str]], output_file: str):
 
     # Iterate through list and write each dict as a new row
     with open(output_file, mode="w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=COLUMNS)
+        writer = csv.DictWriter(file, fieldnames=COLUMN_NAMES)
         writer.writeheader()
         for card in cards_data:
             writer.writerow(card)

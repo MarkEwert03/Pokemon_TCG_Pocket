@@ -190,7 +190,18 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     Returns
     -------
         result : dict
-            A dictionary containing extracted card information such as image link, pack name, generation, illustrator, stage, type, weakness, HP, retreat cost, and rarity.
+            A dictionary containing the following extracted card information:
+                - id
+                - name
+                - image (url to the card image)
+                - pack name
+                - generation
+                - illustrator
+                - stage, type
+                - weakness
+                - HP
+                - retreat cost
+                - rarity.
     """
     result = {}
 
@@ -260,6 +271,68 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     result["rarity"] = _icon_link_to_text(tds[2])
 
     return result
+
+
+def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str | None]:
+    """
+    Extracts moves and abilities information about a Pokémon TCG card from a given HTML table.
+
+    Parameters
+    ----------
+        table_general: bs4.Tag
+            A BeautifulSoup object representing the ability and move info table of a card.
+
+    Returns
+    -------
+        result : dict
+            A dictionary containing the following extracted card information:
+                - ability_name
+                - ability_effect
+                - move1_name
+                - move1_cost
+                - move1_damage
+                - move1_effect
+                - move2_name
+                - move2_cost
+                - move2_damage
+                - move2_effect
+    """
+    # First row: move name and cost (icons)
+    th = table_moves_abilities.find("th")
+    # Move name: after all icons, as text
+    move_name = th.get_text(separator=" ", strip=True)
+    # Move cost: get all icon alt texts
+    cost_alts = [parse_energy_cost(img.get("alt")) for img in th.find_all("img")]
+    move_cost = " ".join(cost_alts)
+    # Remove cost words from move_name
+    for alt in cost_alts:
+        move_name = move_name.replace(alt, "")
+    move_name = move_name.strip()
+
+    # Second row: damage and effect (if any)
+    td = table_moves_abilities.find("td")
+    damage = None
+    effect = None
+    if td:
+        # Try to find "Damage: NNN"
+        import re
+
+        m = re.search(r"Damage\s*:\s*([0-9X]+)", td.get_text())
+        damage = m.group(1) if m else None
+        # Effect: text after damage, if any
+        txt = td.get_text().split("Damage", 1)
+        if len(txt) > 1:
+            after_damage = txt[1]
+            # Remove ": <digits>" part
+            after_damage = re.sub(r":\s*[0-9X]+", "", after_damage, 1)
+            effect = after_damage.strip() or None
+
+    return {
+        f"move{1}_name": move_name,
+        f"move{1}_cost": move_cost,
+        f"move{1}_damage": damage,
+        f"move{1}_effect": effect,
+    }
 
 
 def fix_edge_cases(card: dict[str, str | None]):
@@ -408,7 +481,7 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     Returns
     -------
     out : dict[str, str]
-        A dictionary containing all relevent information for the card. Has the following colums:
+        A dictionary containing all relevent information for the card. Has the following attributes:
         - `id`, `name`, `pack_name`
         - `rarity`, `type`, `HP`, `stage`
         - `pack_points`, `retreat_cost`, `ultra_beast`
@@ -434,12 +507,15 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     card_url = card_page_response.url
     card["url"] = card_url
 
-    # Get all the tables we will need
-    tables = soup.select("table.a-table.table--fixed")
-
-    # Extract general innformation from table 0
-    table_general = tables[0]
+    # Extract general innformation from table 1
+    table_general = soup.select("table.a-table")[1]
     card = card | extract_general_info(table_general)
+
+    # Extract general innformation from table 3
+    table_moves_abilities = soup.select("table.a-table")[3]
+    # print(table_moves_abilities)
+    # quit()
+    card = card | extract_moves_and_abilities(table_moves_abilities)
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}

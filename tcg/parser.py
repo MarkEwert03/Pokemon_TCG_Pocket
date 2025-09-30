@@ -129,12 +129,72 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
                 - move2_damage
                 - move2_effect
     """
-    result = {}
-    # Collect rows
+    result = {
+        "ability_name": DEFAULT_EMPTY,
+        "ability_effect": DEFAULT_EMPTY,
+        "move1_name": DEFAULT_EMPTY,
+        "move1_cost": DEFAULT_EMPTY,
+        "move1_damage": DEFAULT_EMPTY,
+        "move1_effect": DEFAULT_EMPTY,
+        "move2_name": DEFAULT_EMPTY,
+        "move2_cost": DEFAULT_EMPTY,
+        "move2_damage": DEFAULT_EMPTY,
+        "move2_effect": DEFAULT_EMPTY,
+    }
+
     rows = table_moves_abilities.find_all("tr")
-    # We expect alternating TH row (header) then TD row (details)
-    move_index = 1
+    if not rows:
+        return result
+
+    # Utility: parse cost & name from a header <th>
+    def parse_move_header(th: bs4.Tag):
+        imgs = th.find_all("img")
+        raw_alts = [(img.get("alt") or "").strip() for img in imgs if (img.get("alt") or "").strip()]
+        # Filter out 'Ability'
+        cost_tokens_source = [a for a in raw_alts if a.lower() != "ability"]
+
+        # Expand or keep compressed tokens
+        cost_tokens = []
+        for token in cost_tokens_source:
+            cost_tokens.append(parse_energy_cost(token))
+
+        # Move (or ability) name: remove each original (compressed) token once
+        text_full = th.get_text(" ", strip=True)
+        name_candidate = text_full
+        for original in cost_tokens_source:
+            name_candidate = re.sub(r'\b' + re.escape(original) + r'\b', '', name_candidate, count=1)
+        # Also remove the literal word Ability if still present
+        name_candidate = re.sub(r'\bAbility\b', '', name_candidate, flags=re.I)
+        name_candidate = re.sub(r'\s+', ' ', name_candidate).strip()
+        return name_candidate or DEFAULT_EMPTY, cost_tokens
+
+    # Utility: parse damage/effect from a detail <td>
+    def parse_move_detail(td: bs4.Tag):
+        if not td:
+            return DEFAULT_EMPTY, DEFAULT_EMPTY
+        raw = td.get_text("\n", strip=True)
+
+        # Damage
+        dmg_match = re.search(r'Damage\s*:\s*([0-9Xx]+[+xX*]?)', raw)
+        damage = dmg_match.group(1) if dmg_match else DEFAULT_EMPTY
+
+        # Effect (bold 'Effect')
+        effect = DEFAULT_EMPTY
+        effect_b = td.find('b', string=re.compile(r'^\s*Effect\s*$', re.I))
+        if effect_b:
+            collected = ""
+            for sib in effect_b.next_siblings:
+                collected += (getattr(sib, "get_text", lambda *a, **k: str(sib))()).strip() + " "
+            collected = re.sub(r'^:\s*', '', collected.strip())
+            effect = collected or DEFAULT_EMPTY
+
+        return damage, effect
+
     i = 0
+    move_slot = 1
+    ability_consumed = False
+
+    # Pass through rows, looking at pairs (header TH row + following TD row)
     while i < len(rows):
         header_tr = rows[i]
         th = header_tr.find("th")
@@ -142,68 +202,48 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
             i += 1
             continue
 
-        # The next row should contain damage/effect
-        if i + 1 >= len(rows):
+        # Peek the next row for details (if exists)
+        detail_td = DEFAULT_EMPTY
+        if i + 1 < len(rows):
+            detail_td = rows[i + 1].find("td")
+
+        # Detect ability only if it's the first header and contains an Ability icon
+        is_first = (i == 0)
+        has_ability_icon = any(
+            (img.get("alt") or "").strip().lower() == "ability"
+            for img in th.find_all("img")
+        )
+
+        if is_first and has_ability_icon:
+            # Ability scenario
+            ability_name, _ = parse_move_header(th)
+            result["ability_name"] = ability_name
+            if detail_td:
+                effect_text = detail_td.get_text(" ", strip=True)
+                effect_text = re.sub(r'\s+', ' ', effect_text).strip()
+                result["ability_effect"] = effect_text or DEFAULT_EMPTY
+            ability_consumed = True
+            i += 2
+            continue
+
+        # Otherwise it's a move
+        if move_slot <= 2:  # only up to move2
+            move_name, cost_tokens = parse_move_header(th)
+            damage, effect = parse_move_detail(detail_td)
+            result[f"move{move_slot}_name"] = move_name
+            result[f"move{move_slot}_cost"] = "".join(cost_tokens) if cost_tokens else DEFAULT_EMPTY
+            result[f"move{move_slot}_damage"] = damage
+            result[f"move{move_slot}_effect"] = effect
+            move_slot += 1
+            i += 2
+            continue
+
+        # Fallback advance
+        i += 1
+
+        # If ability already consumed, spec says only one move follows; we can break early
+        if ability_consumed:
             break
-        data_tr = rows[i + 1]
-        td = data_tr.find("td")
-
-        # -------- Extract move name & cost --------
-        # Cost icons: all <img> in the header th
-        cost_imgs = th.find_all("img")
-        cost_tokens = []
-        for img in cost_imgs:
-            alt = (img.get("alt") or "").strip()
-            print(alt)
-            cost_tokens.append(parse_energy_cost(alt))
-        move_cost ="".join(cost_tokens) if cost_tokens else DEFAULT_EMPTY
-
-        # Move name text: take header text, remove icon alts
-        header_text = th.get_text(" ", strip=True)
-        # Remove each cost token once (safe approach: regex word boundary)
-        temp_name = header_text
-        for token in cost_tokens:
-            # Only remove leading occurrences; to avoid nuking similar substrings in the move name, be conservative
-            temp_name = re.sub(r"\b" + re.escape(token) + r"\b", "", temp_name, count=1)
-        move_name = re.sub(r"\s+", " ", temp_name).strip()
-
-        # -------- Extract damage & effect --------
-        move_damage = DEFAULT_EMPTY
-        move_effect = DEFAULT_EMPTY
-        if td:
-            raw_text = td.get_text("\n", strip=True)
-
-            # Damage: look for "Damage: <value>"
-            # Value pattern could be 40, 80, 30+, 50x, 20*, X, etc.
-            dmg_match = re.search(r"Damage\s*:\s*([0-9Xx]+[+xX*]?)", raw_text)
-            if dmg_match:
-                move_damage = dmg_match.group(1)
-
-            # Effect: look for bold 'Effect' tag, then text after colon
-            effect_b = td.find("b", string=re.compile(r"^\s*Effect\s*$", re.I))
-            if effect_b:
-                # The text node after the bold inside the same td
-                # Strategy: get everything from after this <b> tag to end inside td, then isolate after colon
-                effect_parent_text = ""
-                # Collect all following siblings (NavigableString / Tag)
-                for sib in effect_b.next_siblings:
-                    # Convert each sibling to text
-                    effect_parent_text += (
-                        getattr(sib, "get_text", lambda *a, **k: str(sib))()
-                    ).strip() + " "
-                effect_parent_text = effect_parent_text.strip()
-                # Remove leading ':' if present
-                effect_parent_text = re.sub(r"^:\s*", "", effect_parent_text)
-                move_effect = effect_parent_text or DEFAULT_EMPTY
-
-        # Assign into result
-        result[f"move{move_index}_name"] = move_name
-        result[f"move{move_index}_cost"] = move_cost
-        result[f"move{move_index}_damage"] = move_damage
-        result[f"move{move_index}_effect"] = move_effect
-
-        move_index += 1
-        i += 2  # Skip header+data rows
 
     return result
 
@@ -386,8 +426,6 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
 
     # Extract general innformation from table 3
     table_moves_abilities = soup.select("table.a-table")[3]
-    # print(table_moves_abilities)
-    # quit()
     card = card | extract_moves_and_abilities(table_moves_abilities)
 
     # Normalize spacing in all fields and replace empty string with empty

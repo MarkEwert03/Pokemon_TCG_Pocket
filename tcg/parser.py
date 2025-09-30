@@ -178,36 +178,6 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     return cell9_data
 
 
-def extract_name_id(header_text: str) -> dict[str, str | None]:
-    """
-    Extract card name and id from header text.
-
-    Parameters
-    ----------
-    header_text : str
-        The header text identifying the card.
-
-    Returns
-    -------
-        tuple: (name, id) or (None, None) if no match
-
-    Examples
-    --------
-    >>> extract_name_id('Bulbasaur (A1 001) Card Info')
-    ('Bulbasaur', 'A1 001')
-    """
-    # Pattern to match: name (id) Card Info
-    pattern = r"^(.+?)\s+\(([A-Za-z0-9]+\s+[0-9]+)\)\s+Card Info$"
-    match = re.match(pattern, header_text.strip())
-
-    if match:
-        name = match.group(1).strip()
-        id = match.group(2).strip()
-        return {"number": id, "name": name}
-
-    raise Exception(f"Could not get name/id.")
-
-
 def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     """
     Extracts general information about a Pokémon TCG card from a given HTML table.
@@ -226,8 +196,10 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
 
     # 1. Image link
     card_img = table_general.select_one("div.imageLink img")
-    if not card_img:
-        raise Exception(f"div.imageLink img not found.")
+    # id_name looks like ["A1", "001", "Bulbasaur"]
+    id_name = card_img.get("alt").split(" ")
+    result["number"] = " ".join(id_name[:2])
+    result["name"] = " ".join(id_name[2:])
     result["image"] = card_img.get("data-src") or card_img.get("src")
 
     rows = table_general.find_all("tr")
@@ -244,8 +216,8 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     pack_row = _get_value_after_header("Pack")
     # Join text, handle <br>, condense spaces
     pack_text = pack_row.get_text(separator=" ", strip=True)
-    pack_text = re.sub(r"\s+", " ", pack_text)
-    result["pack_name"] = pack_text
+    pack_text = re.sub(r"\s+", " ", pack_text).split("・")
+    result["pack_name"] = " & ".join(pack_text[1:])
 
     # 3. Generation
     gen_row = _get_value_after_header("Generation")
@@ -261,7 +233,7 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     result["illustrator"] = ill_text
 
     # Helper to take a TD with possible <img alt> and return alt or text
-    def _icon_or_text(td: bs4.element.Tag) -> str | None:
+    def _icon_link_to_text(td: bs4.element.Tag) -> str | None:
         img = td.find("img")
         if img and img.get("alt"):
             return img.get("alt").strip()
@@ -272,20 +244,20 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     stage_th = table_general.find("th", string=lambda s: s and "Stage" in s)
     row_below = stage_th.find_parent("tr").find_next_sibling("tr")
     tds = row_below.find_all("td")
-    if len(tds) >= 3:
-        result["stage"] = tds[0].get_text(strip=True)
-        result["type"] = _icon_or_text(tds[1])
-        result["weakness"] = _icon_or_text(tds[2])
+    # Extract from 3 cells in the row
+    result["stage"] = tds[0].get_text(strip=True)
+    result["type"] = parse_energy_cost(_icon_link_to_text(tds[1]))
+    result["weakness"] = parse_energy_cost(_icon_link_to_text(tds[2]))
 
-    # 6. HP / Retreat Cost / Rarity (assume header row then data row)
+    # 6. HP / Retreat Cost / Rarity
     hp_th = table_general.find("th", string=lambda s: s and "HP" in s)
     row_below = hp_th.find_parent("tr").find_next_sibling("tr")
     tds = row_below.find_all("td")
-    if len(tds) >= 3:
-        result["HP"] = tds[0].getText(strip=True)
-        retreat_cost_url = tds[1].select_one("a.a-link img").get("data-src")
-        result["retreat_cost"] = str(parse_retreat_cost(retreat_cost_url))
-        result["rarity"] = tds[2].getText(strip=True)
+    # Extract from 3 cells in the row
+    result["HP"] = tds[0].getText(strip=True)
+    retreat_cost_url = tds[1].select_one("a.a-link img").get("data-src")
+    result["retreat_cost"] = str(parse_retreat_cost(retreat_cost_url))
+    result["rarity"] = _icon_link_to_text(tds[2])
 
     return result
 
@@ -461,10 +433,6 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     soup = BeautifulSoup(card_page_response.text, "lxml")
     card_url = card_page_response.url
     card["url"] = card_url
-
-    # Extract card name and id
-    header = soup.select("h3.a-header--3")[0]
-    card = card | extract_name_id(header.text)
 
     # Get all the tables we will need
     tables = soup.select("table.a-table.table--fixed")

@@ -48,7 +48,7 @@ The file containing all the parsed and processed data is located at [`data/full.
 <summary>Click to expand column descriptions</summary>
 
 Columns include:
-- `number`
+- `id`
   - The card’s unique identifier combining set and index.
   - Examples: "A1 001", "A2b 107", "P-A 034"
 - `name`

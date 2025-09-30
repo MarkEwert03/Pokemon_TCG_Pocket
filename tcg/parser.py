@@ -194,11 +194,11 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     """
     result = {}
 
-    # 1. Image link
+    # 1. ID, Name, and Image link
     card_img = table_general.select_one("div.imageLink img")
     # id_name looks like ["A1", "001", "Bulbasaur"]
     id_name = card_img.get("alt").split(" ")
-    result["number"] = " ".join(id_name[:2])
+    result["id"] = " ".join(id_name[:2])
     result["name"] = " ".join(id_name[2:])
     result["image"] = card_img.get("data-src") or card_img.get("src")
 
@@ -279,7 +279,7 @@ def fix_edge_cases(card: dict[str, str | None]):
 
     Notes
     -----
-    - Fixes are hardcoded using pattern matching on `card["number"]`.
+    - Fixes are hardcoded using pattern matching on `card["id"]`.
     - Uses lookup dictionaries for illustrator, generation, and weakness patches.
     - This function modifies `card` in-place and does not return anything.
     """
@@ -370,7 +370,7 @@ def fix_edge_cases(card: dict[str, str | None]):
     }
 
     # Specific fixes for fields in main table
-    match card["number"]:
+    match card["id"]:
         case "A1 183":  # Dratini
             # Dratini's Ram should do 40 dmg not 70
             card["move1_damage"] = "40"
@@ -389,7 +389,7 @@ def fix_edge_cases(card: dict[str, str | None]):
         ("generation", FIXED_GENERATIONS),
         ("weakness", FIXED_WEAKNESSES),
     ]:
-        val = lookup.get(card["number"])
+        val = lookup.get(card["id"])
         if val:
             card[field] = val
 
@@ -409,7 +409,7 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     -------
     out : dict[str, str]
         A dictionary containing all relevent information for the card. Has the following colums:
-        - `number`, `name`, `pack_name`
+        - `id`, `name`, `pack_name`
         - `rarity`, `type`, `HP`, `stage`
         - `pack_points`, `retreat_cost`, `ultra_beast`
         - `ability_name`, `ability_effect`

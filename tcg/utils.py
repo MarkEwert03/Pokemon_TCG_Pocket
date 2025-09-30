@@ -1,7 +1,7 @@
 import re
 
 # Default value to fill dict and csvs for missing / not applicable field
-DEFAULT_EMPTY = None
+DEFAULT_EMPTY = "N/A"
 
 # Ordered list of all columns each card should have
 COLUMN_NAMES = [
@@ -34,7 +34,7 @@ COLUMN_NAMES = [
 
 # Map between text types and move cost symbols
 ENERGY_SYMBOLS = {
-    "Colorless": "*️⃣",
+    "Colorless": "✴️",
     "Grass": "🟢",
     "Fire": "🔴",
     "Water": "🔵",

@@ -10,174 +10,6 @@ from tcg.utils import (
 )
 
 
-def extract_move_info(
-    div: bs4.element.Tag, next_div: bs4.element.Tag | None
-) -> tuple[str, str, str, str]:
-    """
-    Extract a single attack's name, cost, damage and effect.
-
-    Parameters
-    ----------
-    div : bs4.element.Tag
-        A `<div class="align">` that wraps:
-        - A `<b>` containing the `attack name`.
-        - One or more `<img alt="Type N">` energy-cost icons.
-    next_div : bs4.element.Tag or None
-        The `next` `<div class="align">` tag (or `None`), used as a boundary
-        to stop gathering sibling text.
-
-    Returns
-    -------
-    tuple[str, str, str, str]
-        A 4-tuple:
-        - `name` (`str`): The attack's name.
-        - `cost_symbols` (`str`): Symbols (e.g. `"⚫⚫"`) from `parse_energy_cost`.
-        - `damage` (`str`): Numeric damage.
-        - `effect` (`str`): The textual effect
-    """
-
-    # Get Name
-    name_tag = div.find("b")
-    name = name_tag.text.strip() if name_tag else DEFAULT_EMPTY
-
-    cost_alts = [img["alt"] for img in div.find_all("img", alt=True)]
-    cost = "".join(parse_energy_cost(alt) for alt in cost_alts) or DEFAULT_EMPTY
-
-    # Gather all text siblings up to next_div
-    texts: list[str] = []
-    for sib in div.next_siblings:
-        if sib is next_div:
-            break
-        if isinstance(sib, bs4.element.Tag):
-            continue
-        t = sib.strip()
-        if t:
-            texts.append(t)
-
-    # Decide damage/effect
-    # Only allow digits, "x", and "+" to account for "50x" or "30+"
-    is_pokemon_numeric = bool(re.fullmatch(r"[0-9x+]+", texts[0]))
-    if texts and is_pokemon_numeric:
-        damage = texts[0]
-        effect = texts[1] if len(texts) > 1 else DEFAULT_EMPTY
-    elif texts:
-        damage = DEFAULT_EMPTY
-        effect = texts[0]
-    else:
-        damage = DEFAULT_EMPTY
-        effect = DEFAULT_EMPTY
-
-    return name, cost, damage, effect
-
-
-def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | None]:
-    """
-    Parse the details cell (`<td class="left">`) into flat fields.
-
-    Parameters
-    ----------
-    cell9 : bs4.element.Tag
-        The `<td class="left">` containing:
-        - A `Stage` label/value
-        - A `Retreat Cost` icon
-        - Optional `[Ability]` block
-        - Up to two `<div class="align">` attack blocks
-    is_trainer : bool
-        If `True`, this is a Trainer/Item/Tool card (no Stage/moves) so
-        its full description goes into `ability_effect`.
-
-    Returns
-    -------
-    dict[str, str | None]
-        Flat mapping with default DEFAULT_EMPTY:
-
-        - `stage`
-        - `retreat_cost` (numeric cost gotten from `parse_retreat_cost`)
-        - `ultra_beast` (string truth value gotten from move info divs)
-        - `ability_name`, `ability_effect`
-        - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
-        - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-    """
-    # Create dict with desired keys and default values
-    cell9_data = {
-        "stage": DEFAULT_EMPTY,
-        "retreat_cost": DEFAULT_EMPTY,
-        "ultra_beast": "No",
-        "ability_name": DEFAULT_EMPTY,
-        "ability_effect": DEFAULT_EMPTY,
-        "move1_name": DEFAULT_EMPTY,
-        "move1_cost": DEFAULT_EMPTY,
-        "move1_damage": DEFAULT_EMPTY,
-        "move1_effect": DEFAULT_EMPTY,
-        "move2_name": DEFAULT_EMPTY,
-        "move2_cost": DEFAULT_EMPTY,
-        "move2_damage": DEFAULT_EMPTY,
-        "move2_effect": DEFAULT_EMPTY,
-    }
-
-    # Handle case for trainer type first
-    if is_trainer:
-        # Trainer cards only have 1 description
-        # Put description in ability_effect
-        cell_text = clean_str(cell9.text)
-        trainer_desc = cell_text if cell_text[0] != "-" else cell_text[6:]
-        cell9_data["ability_effect"] = trainer_desc
-        return cell9_data
-
-    # --- Stage ---
-    stage_tag = cell9.find("b", string="Stage")
-    if stage_tag and stage_tag.next_sibling:
-        cell9_data["stage"] = clean_str(stage_tag.next_sibling.strip(":"))
-
-    # --- Retreat Cost ---
-    retreat_tag = cell9.find("b", string="Retreat Cost")
-    if retreat_tag:
-        # its parent <div> holds the <img> icons
-        retreat_div = retreat_tag.find_parent("div")
-        retreat_img = retreat_div.find("img").get("data-src")
-        cell9_data["retreat_cost"] = str(parse_retreat_cost(retreat_img))
-
-    # --- Ability (optional for the card) ---
-    ability_span = cell9.find("span", string="[Ability]")
-    if ability_span:
-        name = None
-        effect = None
-        sib = ability_span.next_sibling
-        while sib and (name is None or effect is None):
-            if isinstance(sib, str):
-                text = sib.strip()
-                if text:
-                    if name is None:
-                        name = text
-                    elif effect is None:
-                        effect = text
-            sib = sib.next_sibling
-
-        cell9_data["ability_name"] = name or "N/A"
-        cell9_data["ability_effect"] = effect or "N/A"
-
-    # --- Moves (up to 2) ---
-    move_divs = cell9.find_all("div", class_="align")[1:]  # skip first (retreat)
-    move_start_index = 2 if ability_span else 1  # shift moves if ability is present
-
-    for i, div in enumerate(move_divs):
-        # Immediately check for Ultra beats to stop future div out of range
-        if clean_str(div.text) == "Ultra Beast":
-            cell9_data["ultra_beast"] = "Yes"
-            continue
-
-        j = move_start_index + i  # will be 1 or 2 depending on ability
-        next_div = move_divs[i + 1] if i + 1 < len(move_divs) else None
-        name, cost, dmg, effect = extract_move_info(div, next_div)
-
-        cell9_data[f"move{j}_name"] = name
-        cell9_data[f"move{j}_cost"] = cost
-        cell9_data[f"move{j}_damage"] = dmg
-        cell9_data[f"move{j}_effect"] = effect
-
-    return cell9_data
-
-
 def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     """
     Extracts general information about a Pokémon TCG card from a given HTML table.
@@ -297,42 +129,83 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
                 - move2_damage
                 - move2_effect
     """
-    # First row: move name and cost (icons)
-    th = table_moves_abilities.find("th")
-    # Move name: after all icons, as text
-    move_name = th.get_text(separator=" ", strip=True)
-    # Move cost: get all icon alt texts
-    cost_alts = [parse_energy_cost(img.get("alt")) for img in th.find_all("img")]
-    move_cost = " ".join(cost_alts)
-    # Remove cost words from move_name
-    for alt in cost_alts:
-        move_name = move_name.replace(alt, "")
-    move_name = move_name.strip()
+    result = {}
+    # Collect rows
+    rows = table_moves_abilities.find_all("tr")
+    # We expect alternating TH row (header) then TD row (details)
+    move_index = 1
+    i = 0
+    while i < len(rows):
+        header_tr = rows[i]
+        th = header_tr.find("th")
+        if not th:
+            i += 1
+            continue
 
-    # Second row: damage and effect (if any)
-    td = table_moves_abilities.find("td")
-    damage = None
-    effect = None
-    if td:
-        # Try to find "Damage: NNN"
-        import re
+        # The next row should contain damage/effect
+        if i + 1 >= len(rows):
+            break
+        data_tr = rows[i + 1]
+        td = data_tr.find("td")
 
-        m = re.search(r"Damage\s*:\s*([0-9X]+)", td.get_text())
-        damage = m.group(1) if m else None
-        # Effect: text after damage, if any
-        txt = td.get_text().split("Damage", 1)
-        if len(txt) > 1:
-            after_damage = txt[1]
-            # Remove ": <digits>" part
-            after_damage = re.sub(r":\s*[0-9X]+", "", after_damage, 1)
-            effect = after_damage.strip() or None
+        # -------- Extract move name & cost --------
+        # Cost icons: all <img> in the header th
+        cost_imgs = th.find_all("img")
+        cost_tokens = []
+        for img in cost_imgs:
+            alt = (img.get("alt") or "").strip()
+            print(alt)
+            cost_tokens.append(parse_energy_cost(alt))
+        move_cost ="".join(cost_tokens) if cost_tokens else DEFAULT_EMPTY
 
-    return {
-        f"move{1}_name": move_name,
-        f"move{1}_cost": move_cost,
-        f"move{1}_damage": damage,
-        f"move{1}_effect": effect,
-    }
+        # Move name text: take header text, remove icon alts
+        header_text = th.get_text(" ", strip=True)
+        # Remove each cost token once (safe approach: regex word boundary)
+        temp_name = header_text
+        for token in cost_tokens:
+            # Only remove leading occurrences; to avoid nuking similar substrings in the move name, be conservative
+            temp_name = re.sub(r"\b" + re.escape(token) + r"\b", "", temp_name, count=1)
+        move_name = re.sub(r"\s+", " ", temp_name).strip()
+
+        # -------- Extract damage & effect --------
+        move_damage = DEFAULT_EMPTY
+        move_effect = DEFAULT_EMPTY
+        if td:
+            raw_text = td.get_text("\n", strip=True)
+
+            # Damage: look for "Damage: <value>"
+            # Value pattern could be 40, 80, 30+, 50x, 20*, X, etc.
+            dmg_match = re.search(r"Damage\s*:\s*([0-9Xx]+[+xX*]?)", raw_text)
+            if dmg_match:
+                move_damage = dmg_match.group(1)
+
+            # Effect: look for bold 'Effect' tag, then text after colon
+            effect_b = td.find("b", string=re.compile(r"^\s*Effect\s*$", re.I))
+            if effect_b:
+                # The text node after the bold inside the same td
+                # Strategy: get everything from after this <b> tag to end inside td, then isolate after colon
+                effect_parent_text = ""
+                # Collect all following siblings (NavigableString / Tag)
+                for sib in effect_b.next_siblings:
+                    # Convert each sibling to text
+                    effect_parent_text += (
+                        getattr(sib, "get_text", lambda *a, **k: str(sib))()
+                    ).strip() + " "
+                effect_parent_text = effect_parent_text.strip()
+                # Remove leading ':' if present
+                effect_parent_text = re.sub(r"^:\s*", "", effect_parent_text)
+                move_effect = effect_parent_text or DEFAULT_EMPTY
+
+        # Assign into result
+        result[f"move{move_index}_name"] = move_name
+        result[f"move{move_index}_cost"] = move_cost
+        result[f"move{move_index}_damage"] = move_damage
+        result[f"move{move_index}_effect"] = move_effect
+
+        move_index += 1
+        i += 2  # Skip header+data rows
+
+    return result
 
 
 def fix_edge_cases(card: dict[str, str | None]):

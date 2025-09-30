@@ -7,6 +7,7 @@ from tcg.utils import (
     parse_energy_cost,
     parse_retreat_cost,
     DEFAULT_EMPTY,
+    COLUMN_NAMES
 )
 
 
@@ -89,8 +90,9 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
     tds = row_below.find_all("td")
     # Extract from 3 cells in the row
     result["stage"] = tds[0].get_text(strip=True)
-    result["type"] = parse_energy_cost(_icon_link_to_text(tds[1]))
-    result["weakness"] = parse_energy_cost(_icon_link_to_text(tds[2]))
+    # surround with parse_energy_cost() to convert from english -> symbol
+    result["type"] = _icon_link_to_text(tds[1])
+    result["weakness"] = _icon_link_to_text(tds[2])
 
     # 6. HP / Retreat Cost / Rarity
     hp_th = table_general.find("th", string=lambda s: s and "HP" in s)
@@ -413,7 +415,7 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     card_page_response.raise_for_status()
 
     # Dictionary to store data
-    card = {}
+    card = dict.fromkeys(COLUMN_NAMES)
 
     # Parse total HTML with BeautifulSoup
     soup = BeautifulSoup(card_page_response.text, "lxml")
@@ -430,6 +432,9 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
+    
+    # TODO Add logic for ultra beasts
+    card["ultra_beast"] = "No"
 
     # Fix final misc things that are card specific
     # fix_edge_cases(card)

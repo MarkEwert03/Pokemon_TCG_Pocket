@@ -1,166 +1,21 @@
 from bs4 import BeautifulSoup
+import json
+import os
 from tests.debug import debug_card_extract
-from tcg.io import fetch_html_table, get_pack_names_and_urls
-from tcg.parser import extract_card
 from tcg.parser import DEFAULT_EMPTY
+from tcg.utils import COLUMN_NAMES
 
 
-PACK_NAMES_URLS = get_pack_names_and_urls()
-PACK_NAMES_HTML = {
-    key_id: fetch_html_table(url, page_type="pack") for key_id, url in PACK_NAMES_URLS.items()
-}
-
-
-def test_extract_card_raw_from_html():
-    """Testing `A1 001` (Bulbasaur)"""
-    html = """
-        <tr>
-            <td class="center"><input type="checkbox" id="checkbox1_1"></td>
-            <td class="center"><b class="a-bold">A1 001</b></td>
-
-            <td class="center">
-            <div class="imageLink js-archive-open-image-modal"
-                data-image-url="https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/original"
-                data-micromodal-trigger="js-archive-open-image-modal" data-archive-url><img
-                src="https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
-                class="a-img lazy lazy-non-square lazy-loaded"
-                alt="Pokemon TCG Pocket - A1 001 Bulbasaur"
-                data-src="https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
-                width="172"
-                style="height: 0; padding-bottom: calc(px*240/172); padding-bottom: calc(min(100%,172px)*240/172);"
-                data-loaded="true"><span class="imageLink__icon"></span></div> <a class="a-link"
-                href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476002">Bulbasaur</a>
-
-            </td>
-
-            <td class="center"><img
-                src="https://img.game8.co/3994728/d0cbe26800d9abdfccddbbfd5aeab3e5.png/show"
-                class="a-img lazy lazy-non-square lazy-loaded" alt="Pokemon TCG Pocket - ◇ rarity"
-                data-src="https://img.game8.co/3994728/d0cbe26800d9abdfccddbbfd5aeab3e5.png/show"
-                width="18"
-                style="height: 0; padding-bottom: calc(px*25/18); padding-bottom: calc(min(100%,18px)*25/18);"
-                data-loaded="true">
-            <hr class="a-table__line">◇
-            </td>
-
-            <td class="center"><img
-                src="https://img.game8.co/3999180/083249170af7215407df57bf9840bc3e.png/show"
-                class="a-img lazy lazy-loaded" alt="Pokemon TCG Pocket - Mewtwo Booster Pack"
-                data-src="https://img.game8.co/3999180/083249170af7215407df57bf9840bc3e.png/show"
-                width="50" height="50"
-                data-loaded="true"> <br> <b class="a-bold">Genetic Apex (A1)</b> <br> Mewtwo</td>
-
-            <td class="center"><img
-                src="https://img.game8.co/3994729/63b3ad9a73304c7fb7ca479cee7ed4c3.png/show"
-                class="a-img lazy lazy-loaded" alt="Pokemon TCG Pocket - Grass"
-                data-src="https://img.game8.co/3994729/63b3ad9a73304c7fb7ca479cee7ed4c3.png/show"
-                width="40" height="40"
-                data-loaded="true"></td>
-
-            <td class="center"> 70 </td>
-
-            <td class="center"> Basic </td>
-
-            <td class="center">35 Pts </td>
-            <td class="left">
-            <br> <b class="a-bold">Stage</b>: Basic <br>
-            <div class="align"> <b class="a-bold">Retreat Cost</b>: <img
-                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                class="a-img lazy"
-                alt="Pokemon TCG Pocket - Retreat Cost"
-                data-src="https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show"
-                width="20" height="20">
-            </div>
-            <hr class="a-table__line">
-
-            <div class="align"> <b class="a-bold">Vine Whip</b>
-
-                <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476531"><img
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                    class="a-img lazy"
-                    alt="Grass"
-                    data-src="https://img.game8.co/4018726/c2d96eaebb6cd06d6a53dfd48da5341c.png/show"
-                    width="15"
-                    height="15"></a>
-
-                <a class="a-link" href="https://game8.co/games/Pokemon-TCG-Pocket/archives/476389"><img
-                    src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                    class="a-img lazy"
-                    alt="Colorless"
-                    data-src="https://img.game8.co/4018721/a654c44596214b3bf38769c180602a16.png/show"
-                    width="15" height="15"></a>
-
-            </div>
-            40 <br>
-
-            </td>
-            <td class="left">Open Genetic Apex (A1) Mewtwo packs</td>
-        </tr>
-        """
-    row = BeautifulSoup(html, "lxml").find("tr")
-    card = extract_card(row)
-
-    assert card["id"] == "A1 001"
-    assert card["name"] == "Bulbasaur"
-    assert card["rarity"] == "◇"
-    assert card["stage"] == "Basic"
-    assert card["HP"] == "70"
-    assert card["type"] == "Grass"
-    assert card["weakness"] == "Fire"
-    assert card["retreat_cost"] == "1"
-    assert card["ultra_beast"] == "No"
-    assert card["generation"] == "1"
-    assert card["illustrator"] == "Narumi Sato"
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
-    assert card["pack_points"] == "35"
-    assert card["ability_name"] == DEFAULT_EMPTY
-    assert card["ability_effect"] == DEFAULT_EMPTY
-    assert card["move1_name"] == "Vine Whip"
-    assert card["move1_cost"] == "🟢*️⃣"
-    assert card["move1_damage"] == "40"
-    assert card["move1_effect"] == DEFAULT_EMPTY
-    assert card["move2_name"] == DEFAULT_EMPTY
-    assert card["move2_cost"] == DEFAULT_EMPTY
-    assert card["move2_damage"] == DEFAULT_EMPTY
-    assert card["move2_effect"] == DEFAULT_EMPTY
-    assert card["image"] == "https://img.game8.co/3998332/91c4f79b2b3b4206205bf69db8dd3d1e.png/show"
-    assert card["url"] == "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
-
+json_path = os.path.join(os.path.dirname(__file__), "..", "data", "page_mappings.json")
+with open(json_path) as f:
+        page_mappings = json.load(f)
 
 def test_extract_card_pokemon_A1():
     """Testing `A1 001` (Bulbasaur)"""
 
-    expected_keys = {
-        "id",
-        "name",
-        "rarity",
-        "stage",
-        "HP",
-        "type",
-        "weakness",
-        "retreat_cost",
-        "ultra_beast",
-        "generation",
-        "illustrator",
-        "pack_name",
-        "pack_points",
-        "ability_name",
-        "ability_effect",
-        "move1_name",
-        "move1_cost",
-        "move1_damage",
-        "move1_effect",
-        "move2_name",
-        "move2_cost",
-        "move2_damage",
-        "move2_effect",
-        "image",
-        "url",
-    }
+    card = debug_card_extract("A1 001")
 
-    card = debug_card_extract("A1 001", html=PACK_NAMES_HTML["A1"])
-
-    assert set(card.keys()) == expected_keys
+    assert set(card.keys()) == set(COLUMN_NAMES)
     assert card["id"] == "A1 001"
     assert card["name"] == "Bulbasaur"
     assert card["rarity"] == "◇"
@@ -190,7 +45,7 @@ def test_extract_card_pokemon_A1():
 
 def test_extract_card_pokemon_A1a():
     """Testing `A1a 001` (Exeggcute)"""
-    card = debug_card_extract("A1a 001", html=PACK_NAMES_HTML["A1a"])
+    card = debug_card_extract("A1a 001")
 
     assert card["id"] == "A1a 001"
     assert card["name"] == "Exeggcute"
@@ -224,7 +79,7 @@ def test_extract_card_pokemon_A1a():
 
 def test_extract_card_pokemon_A2():
     """Testing `A2 001` (Oddish)"""
-    card = debug_card_extract("A2 001", html=PACK_NAMES_HTML["A2"])
+    card = debug_card_extract("A2 001")
 
     assert card["id"] == "A2 001"
     assert card["name"] == "Oddish"
@@ -255,7 +110,7 @@ def test_extract_card_pokemon_A2():
 
 def test_extract_card_pokemon_A2a():
     """Testing `A2a 001` (Heracross)"""
-    card = debug_card_extract("A2a 001", html=PACK_NAMES_HTML["A2a"])
+    card = debug_card_extract("A2a 001")
 
     assert card["id"] == "A2a 001"
     assert card["name"] == "Heracross"
@@ -286,7 +141,7 @@ def test_extract_card_pokemon_A2a():
 
 def test_extract_card_pokemon_A2b():
     """Testing `A2b 001` (Weedle)"""
-    card = debug_card_extract("A2b 001", html=PACK_NAMES_HTML["A2b"])
+    card = debug_card_extract("A2b 001")
 
     assert card["id"] == "A2b 001"
     assert card["name"] == "Weedle"
@@ -317,7 +172,7 @@ def test_extract_card_pokemon_A2b():
 
 def test_extract_card_pokemon_A3():
     """Testing `A3 001` (Exeggcute)"""
-    card = debug_card_extract("A3 001", html=PACK_NAMES_HTML["A3"])
+    card = debug_card_extract("A3 001")
 
     assert card["id"] == "A3 001"
     assert card["name"] == "Exeggcute"
@@ -348,7 +203,7 @@ def test_extract_card_pokemon_A3():
 
 def test_extract_card_pokemon_A3a():
     """Testing `A3a 001` (Petilil)"""
-    card = debug_card_extract("A3a 001", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3a 001")
 
     assert card["id"] == "A3a 001"
     assert card["name"] == "Petilil"
@@ -379,7 +234,7 @@ def test_extract_card_pokemon_A3a():
 
 def test_extract_card_pokemon_A3b():
     """Testing `A3b 001` (Tropius)"""
-    card = debug_card_extract("A3b 001", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3b 001")
 
     assert card["id"] == "A3b 001"
     assert card["name"] == "Tropius"
@@ -410,7 +265,7 @@ def test_extract_card_pokemon_A3b():
 
 def test_extract_card_pokemon_A4():
     """Testing `A4 001` (Oddish)"""
-    card = debug_card_extract("A4 001", html=PACK_NAMES_HTML["A4"])
+    card = debug_card_extract("A4 001")
 
     assert card["id"] == "A4 001"
     assert card["name"] == "Oddish"
@@ -441,7 +296,7 @@ def test_extract_card_pokemon_A4():
 
 def test_extract_card_pokemon_A4a():
     """Testing `A4a 001` (Hoppip)"""
-    card = debug_card_extract("A4a 001", html=PACK_NAMES_HTML["A4a"])
+    card = debug_card_extract("A4a 001")
 
     assert card["id"] == "A4a 001"
     assert card["name"] == "Hoppip"
@@ -472,7 +327,7 @@ def test_extract_card_pokemon_A4a():
 
 def test_extract_card_pokemon_two_attacks():
     """Testing `A1 004` (Venusaur ex)"""
-    card = debug_card_extract("A1 004", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 004")
 
     assert card["id"] == "A1 004"
     assert card["name"] == "Venusaur ex"
@@ -503,7 +358,7 @@ def test_extract_card_pokemon_two_attacks():
 
 def test_extract_card_pokemon_move_desc_no_dmg():
     """Testing `A1 047` (Moltres ex)"""
-    card = debug_card_extract("A1 047", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 047")
 
     assert card["id"] == "A1 047"
     assert card["name"] == "Moltres ex"
@@ -537,7 +392,7 @@ def test_extract_card_pokemon_move_desc_no_dmg():
 
 def test_extract_card_pokemon_dynamic_dmg():
     """Testing `A1 026` (Pinsir)"""
-    card = debug_card_extract("A1 026", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 026")
 
     assert card["id"] == "A1 026"
     assert card["name"] == "Pinsir"
@@ -568,7 +423,7 @@ def test_extract_card_pokemon_dynamic_dmg():
 
 def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""
-    card = debug_card_extract("A1 007", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 007")
 
     assert card["id"] == "A1 007"
     assert card["name"] == "Butterfree"
@@ -602,7 +457,7 @@ def test_extract_card_pokemon_ability():
 
 def test_extract_card_pokemon_dragon_weakness():
     """Testing `A1 183` (Dratini)"""
-    card = debug_card_extract("A1 183", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 183")
 
     assert card["id"] == "A1 183"
     assert card["name"] == "Dratini"
@@ -633,7 +488,7 @@ def test_extract_card_pokemon_dragon_weakness():
 
 def test_extract_card_pokemon_ultra_beast():
     """Testing `A3a 006` (Buzzwole ex)"""
-    card = debug_card_extract("A3a 006", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3a 006")
 
     assert card["id"] == "A3a 006"
     assert card["name"] == "Buzzwole ex"
@@ -664,7 +519,7 @@ def test_extract_card_pokemon_ultra_beast():
 
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""
-    card = debug_card_extract("A1 216", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 216")
 
     assert card["id"] == "A1 216"
     assert card["name"] == "Helix Fossil"
@@ -698,7 +553,7 @@ def test_extract_card_fossil():
 
 def test_extract_card_supporter():
     """Testing `A1 219` (Erika)"""
-    card = debug_card_extract("A1 219", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 219")
 
     assert card["id"] == "A1 219"
     assert card["name"] == "Erika"
@@ -729,7 +584,7 @@ def test_extract_card_supporter():
 
 def test_extract_card_full_art_supporter():
     """Testing `A1 269` (Full Art Koga)"""
-    card = debug_card_extract("A1 269", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 269")
 
     assert card["id"] == "A1 269"
     assert card["name"] == "Koga"
@@ -760,7 +615,7 @@ def test_extract_card_full_art_supporter():
 
 def test_extract_card_tool():
     """Testing `A3 146` (Poison Barb)"""
-    card = debug_card_extract("A3 146", html=PACK_NAMES_HTML["A3"])
+    card = debug_card_extract("A3 146")
 
     assert card["id"] == "A3 146"
     assert card["name"] == "Poison Barb"
@@ -794,7 +649,7 @@ def test_extract_card_tool():
 
 def test_extract_card_promo_item():
     """Testing `P-A 005` (Poke Ball)"""
-    card = debug_card_extract("P-A 005", html=PACK_NAMES_HTML["P-A"])
+    card = debug_card_extract("P-A 005")
 
     assert card["id"] == "P-A 005"
     assert card["name"] == "Poke Ball"

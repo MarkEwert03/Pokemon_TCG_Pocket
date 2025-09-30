@@ -8,6 +8,7 @@ from tcg.parser import extract_card
 
 GAME8_BASE_LINK = "https://game8.co/games/Pokemon-TCG-Pocket/archives/"
 
+
 def debug_card_extract(pokemon_id: str) -> dict[str, str]:
     """
     Extract metadata for a specific Pokémon card based on its ID.
@@ -60,8 +61,7 @@ def debug_card_extract(pokemon_id: str) -> dict[str, str]:
             "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/476002"
         }
     """
-    json_path = os.path.join(os.path.dirname(
-        __file__), "..", "data", "page_mappings.json")
+    json_path = os.path.join(os.path.dirname(__file__), "..", "data", "page_mappings.json")
     with open(json_path, "r", encoding="utf-8") as f:
         page_mappings = json.load(f)
         good_exts = page_mappings["GOOD_EXTS"]
@@ -77,8 +77,7 @@ def debug_card_extract(pokemon_id: str) -> dict[str, str]:
 
 def main():
     """Runs main debug function by printing card dict."""
-    parser = argparse.ArgumentParser(
-        description="Debug Pokémon card extraction.")
+    parser = argparse.ArgumentParser(description="Debug Pokémon card extraction.")
     parser.add_argument(
         "pokemon_id", nargs="?", default="A1 001", help="Card ID to extract (e.g., 'A1 007')"
     )

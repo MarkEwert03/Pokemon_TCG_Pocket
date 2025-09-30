@@ -178,31 +178,116 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     return cell9_data
 
 
-def extract_card_details(page_response: requests.Response) -> dict[str, str | None]:
+def extract_name_id(header_text: str) -> dict[str, str | None]:
     """
-    Parse additional details from the cards full page.
+    Extract card name and id from header text.
 
     Parameters
     ----------
-    page_response : requests.Response
-        The url linking to the cards full page
+    header_text : str
+        The header text identifying the card.
 
     Returns
     -------
-    card_extra_details : dict[str, str | None]
-        Flat mapping of the fields with default DEFAULT_EMPTY:
-            - `generation`
-            - `illustrator`
-            - `weakness`
-    """
-    # Parse total HTML with BeautifulSoup
-    soup = BeautifulSoup(page_response.text, "lxml")
-    table = soup.select("table.a-table.table--fixed.a-table")
-    
-    # TODO Uncomment
-    print(table)
+        tuple: (name, id) or (None, None) if no match
 
-    return {}
+    Examples
+    --------
+    >>> extract_name_id('Bulbasaur (A1 001) Card Info')
+    ('Bulbasaur', 'A1 001')
+    """
+    # Pattern to match: name (id) Card Info
+    pattern = r"^(.+?)\s+\(([A-Za-z0-9]+\s+[0-9]+)\)\s+Card Info$"
+    match = re.match(pattern, header_text.strip())
+
+    if match:
+        name = match.group(1).strip()
+        id = match.group(2).strip()
+        return {"number": id, "name": name}
+
+    raise Exception(f"Could not get name/id.")
+
+
+def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
+    """
+    Extracts general information about a Pokémon TCG card from a given HTML table.
+
+    Parameters
+    ----------
+        table_general: bs4.Tag
+            A BeautifulSoup object representing the general info table of a card.
+
+    Returns
+    -------
+        result : dict
+            A dictionary containing extracted card information such as image link, pack name, generation, illustrator, stage, type, weakness, HP, retreat cost, and rarity.
+    """
+    result = {}
+
+    # 1. Image link
+    card_img = table_general.select_one("div.imageLink img")
+    if not card_img:
+        raise Exception(f"div.imageLink img not found.")
+    result["image"] = card_img.get("data-src") or card_img.get("src")
+
+    rows = table_general.find_all("tr")
+
+    # Helper to get the text of the row following a header row containing given label
+    def _get_value_after_header(label: str):
+        for i, r in enumerate(rows):
+            if r.find("th") and label in r.get_text(strip=True):
+                if i + 1 < len(rows):
+                    return rows[i + 1]
+        raise Exception("No row found ")
+
+    # 2. Pack name
+    pack_row = _get_value_after_header("Pack")
+    # Join text, handle <br>, condense spaces
+    pack_text = pack_row.get_text(separator=" ", strip=True)
+    pack_text = re.sub(r"\s+", " ", pack_text)
+    result["pack_name"] = pack_text
+
+    # 3. Generation
+    gen_row = _get_value_after_header("Generation")
+    gen_text = gen_row.get_text(" ", strip=True)
+    # Remove 'Gen ' prefix, keep numeric part
+    m = re.search(r"\d+", gen_text)
+    if m:
+        result["generation"] = m.group()
+
+    # 4. Illustrator
+    ill_row = _get_value_after_header("Illustrator")
+    ill_text = ill_row.get_text(" ", strip=True)
+    result["illustrator"] = ill_text
+
+    # Helper to take a TD with possible <img alt> and return alt or text
+    def _icon_or_text(td: bs4.element.Tag) -> str | None:
+        img = td.find("img")
+        if img and img.get("alt"):
+            return img.get("alt").strip()
+        text = td.get_text(strip=True)
+        return text or None
+
+    # 5. Stage | Type | Weakness
+    stage_th = table_general.find("th", string=lambda s: s and "Stage" in s)
+    row_below = stage_th.find_parent("tr").find_next_sibling("tr")
+    tds = row_below.find_all("td")
+    if len(tds) >= 3:
+        result["stage"] = tds[0].get_text(strip=True)
+        result["type"] = _icon_or_text(tds[1])
+        result["weakness"] = _icon_or_text(tds[2])
+
+    # 6. HP / Retreat Cost / Rarity (assume header row then data row)
+    hp_th = table_general.find("th", string=lambda s: s and "HP" in s)
+    row_below = hp_th.find_parent("tr").find_next_sibling("tr")
+    tds = row_below.find_all("td")
+    if len(tds) >= 3:
+        result["HP"] = tds[0].getText(strip=True)
+        retreat_cost_url = tds[1].select_one("a.a-link img").get("data-src")
+        result["retreat_cost"] = str(parse_retreat_cost(retreat_cost_url))
+        result["rarity"] = tds[2].getText(strip=True)
+
+    return result
 
 
 def fix_edge_cases(card: dict[str, str | None]):
@@ -339,7 +424,7 @@ def fix_edge_cases(card: dict[str, str | None]):
     # Mutates card in-place, so no need to return
 
 
-def extract_card(card_page_ext: str) -> dict[str, str | None]:
+def extract_card(card_page_url: str) -> dict[str, str | None]:
     """
     Extract the page info for a card.
 
@@ -366,11 +451,27 @@ def extract_card(card_page_ext: str) -> dict[str, str | None]:
     - Cleans whitespace via `clean_str()` at the end.
     """
     # Download the page from the given link
-    card_page_response = requests.get(card_page_ext)
+    card_page_response = requests.get(card_page_url)
     card_page_response.raise_for_status()
-    
-    # Extract all card information from that page
-    card = extract_card_details(card_page_response)
+
+    # Dictionary to store data
+    card = {}
+
+    # Parse total HTML with BeautifulSoup
+    soup = BeautifulSoup(card_page_response.text, "lxml")
+    card_url = card_page_response.url
+    card["url"] = card_url
+
+    # Extract card name and id
+    header = soup.select("h3.a-header--3")[0]
+    card = card | extract_name_id(header.text)
+
+    # Get all the tables we will need
+    tables = soup.select("table.a-table.table--fixed")
+
+    # Extract general innformation from table 0
+    table_general = tables[0]
+    card = card | extract_general_info(table_general)
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}

@@ -2,13 +2,65 @@ import bs4
 from bs4 import BeautifulSoup
 import re
 import requests
-from tcg.utils import (
-    clean_str,
-    parse_energy_cost,
-    parse_retreat_cost,
-    DEFAULT_EMPTY,
-    COLUMN_NAMES
-)
+from tcg.utils import clean_str, parse_energy_cost, parse_retreat_cost, DEFAULT_EMPTY, COLUMN_NAMES
+
+
+def extract_card(card_page_url: str) -> dict[str, str | None]:
+    """
+    Extract the page info for a card.
+
+    Parameters
+    ----------
+    card_page_url : str
+        The url to the detailed card page.
+
+    Returns
+    -------
+    out : dict[str, str]
+        A dictionary containing all relevent information for the card. Has the following attributes:
+        - `id`, `name`, `pack_name`
+        - `rarity`, `type`, `HP`, `stage`
+        - `pack_points`, `retreat_cost`, `ultra_beast`
+        - `ability_name`, `ability_effect`
+        - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
+        - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
+        - `generation`, `illustrator`, `weakness`
+        - `url`, `image`
+
+    Notes
+    -----
+    - Cleans whitespace via `clean_str()` at the end.
+    """
+    # Download the page from the given link
+    card_page_response = requests.get(card_page_url)
+    card_page_response.raise_for_status()
+
+    # Dictionary to store data
+    card = dict.fromkeys(COLUMN_NAMES)
+
+    # Parse total HTML with BeautifulSoup
+    soup = BeautifulSoup(card_page_response.text, "lxml")
+    card_url = card_page_response.url
+    card["url"] = card_url
+
+    # Extract general innformation from table 1
+    table_general = soup.select("table.a-table")[1]
+    card = card | extract_general_info(table_general)
+
+    # Extract general innformation from table 3
+    table_moves_abilities = soup.select("table.a-table")[3]
+    card = card | extract_moves_and_abilities(table_moves_abilities)
+
+    # Normalize spacing in all fields and replace empty string with empty
+    card = {k: clean_str(v) for k, v in card.items()}
+
+    # TODO Add logic for ultra beasts
+    card["ultra_beast"] = "No"
+
+    # Fix final misc things that are card specific
+    # fix_edge_cases(card)
+
+    return card
 
 
 def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
@@ -94,7 +146,7 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
         # surround with parse_energy_cost() to convert from english -> symbol
         result["type"] = _icon_link_to_text(tds[1])
         result["weakness"] = _icon_link_to_text(tds[2])
-        
+
     # 5. Category | Type | Rarity (supporters)
     category_th = table_general.find("th", string=lambda s: s and "Category" in s)
     if category_th:
@@ -163,7 +215,9 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
     # Utility: parse cost & name from a header <th>
     def parse_move_header(th: bs4.Tag):
         imgs = th.find_all("img")
-        raw_alts = [(img.get("alt") or "").strip() for img in imgs if (img.get("alt") or "").strip()]
+        raw_alts = [
+            (img.get("alt") or "").strip() for img in imgs if (img.get("alt") or "").strip()
+        ]
         # Filter out 'Ability'
         cost_tokens_source = [a for a in raw_alts if a.lower() != "ability"]
 
@@ -176,10 +230,12 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
         text_full = th.get_text(" ", strip=True)
         name_candidate = text_full
         for original in cost_tokens_source:
-            name_candidate = re.sub(r'\b' + re.escape(original) + r'\b', '', name_candidate, count=1)
+            name_candidate = re.sub(
+                r"\b" + re.escape(original) + r"\b", "", name_candidate, count=1
+            )
         # Also remove the literal word Ability if still present
-        name_candidate = re.sub(r'\bAbility\b', '', name_candidate, flags=re.I)
-        name_candidate = re.sub(r'\s+', ' ', name_candidate).strip()
+        name_candidate = re.sub(r"\bAbility\b", "", name_candidate, flags=re.I)
+        name_candidate = re.sub(r"\s+", " ", name_candidate).strip()
         return name_candidate or DEFAULT_EMPTY, cost_tokens
 
     # Utility: parse damage/effect from a detail <td>
@@ -189,17 +245,17 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
         raw = td.get_text("\n", strip=True)
 
         # Damage
-        dmg_match = re.search(r'Damage\s*:\s*([0-9Xx]+[+xX*]?)', raw)
+        dmg_match = re.search(r"Damage\s*:\s*([0-9Xx]+[+xX*]?)", raw)
         damage = dmg_match.group(1) if dmg_match else DEFAULT_EMPTY
 
         # Effect (bold 'Effect')
         effect = DEFAULT_EMPTY
-        effect_b = td.find('b', string=re.compile(r'^\s*Effect\s*$', re.I))
+        effect_b = td.find("b", string=re.compile(r"^\s*Effect\s*$", re.I))
         if effect_b:
             collected = ""
             for sib in effect_b.next_siblings:
                 collected += (getattr(sib, "get_text", lambda *a, **k: str(sib))()).strip() + " "
-            collected = re.sub(r'^:\s*', '', collected.strip())
+            collected = re.sub(r"^:\s*", "", collected.strip())
             effect = collected or DEFAULT_EMPTY
 
         return damage, effect
@@ -222,10 +278,9 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
             detail_td = rows[i + 1].find("td")
 
         # Detect ability only if it's the first header and contains an Ability icon
-        is_first = (i == 0)
+        is_first = i == 0
         has_ability_icon = any(
-            (img.get("alt") or "").strip().lower() == "ability"
-            for img in th.find_all("img")
+            (img.get("alt") or "").strip().lower() == "ability" for img in th.find_all("img")
         )
 
         if is_first and has_ability_icon:
@@ -234,7 +289,7 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
             result["ability_name"] = ability_name
             if detail_td:
                 effect_text = detail_td.get_text(" ", strip=True)
-                effect_text = re.sub(r'\s+', ' ', effect_text).strip()
+                effect_text = re.sub(r"\s+", " ", effect_text).strip()
                 result["ability_effect"] = effect_text or DEFAULT_EMPTY
             ability_consumed = True
             i += 2
@@ -394,61 +449,3 @@ def fix_edge_cases(card: dict[str, str | None]):
             card[field] = val
 
     # Mutates card in-place, so no need to return
-
-
-def extract_card(card_page_url: str) -> dict[str, str | None]:
-    """
-    Extract the page info for a card.
-
-    Parameters
-    ----------
-    card_page_url : str
-        The url to the detailed card page.
-
-    Returns
-    -------
-    out : dict[str, str]
-        A dictionary containing all relevent information for the card. Has the following attributes:
-        - `id`, `name`, `pack_name`
-        - `rarity`, `type`, `HP`, `stage`
-        - `pack_points`, `retreat_cost`, `ultra_beast`
-        - `ability_name`, `ability_effect`
-        - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
-        - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-        - `generation`, `illustrator`, `weakness`
-        - `url`, `image`
-
-    Notes
-    -----
-    - Cleans whitespace via `clean_str()` at the end.
-    """
-    # Download the page from the given link
-    card_page_response = requests.get(card_page_url)
-    card_page_response.raise_for_status()
-
-    # Dictionary to store data
-    card = dict.fromkeys(COLUMN_NAMES)
-
-    # Parse total HTML with BeautifulSoup
-    soup = BeautifulSoup(card_page_response.text, "lxml")
-    card_url = card_page_response.url
-    card["url"] = card_url
-
-    # Extract general innformation from table 1
-    table_general = soup.select("table.a-table")[1]
-    card = card | extract_general_info(table_general)
-
-    # Extract general innformation from table 3
-    table_moves_abilities = soup.select("table.a-table")[3]
-    card = card | extract_moves_and_abilities(table_moves_abilities)
-
-    # Normalize spacing in all fields and replace empty string with empty
-    card = {k: clean_str(v) for k, v in card.items()}
-    
-    # TODO Add logic for ultra beasts
-    card["ultra_beast"] = "No"
-
-    # Fix final misc things that are card specific
-    # fix_edge_cases(card)
-
-    return card

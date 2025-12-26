@@ -17,15 +17,16 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     Returns
     -------
     out : dict[str, str]
-        A dictionary containing all relevent information for the card. Has the following attributes:
+        A dictionary containing all relevent information for the card.
+        Has the following attributes that are defined in `utils/COLUMN_NAMES`:
         - `id`, `name`, `pack_name`
         - `rarity`, `type`, `HP`, `stage`
-        - `pack_points`, `retreat_cost`, `ultra_beast`
+        - `weakness`, `retreat_cost`, `EX`, `ultra_beast`
+        - `generation`, `illustrator`, `pack_points`
         - `ability_name`, `ability_effect`
         - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
         - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
-        - `generation`, `illustrator`, `weakness`
-        - `url`, `image`
+        - `image`, `url`
 
     Notes
     -----

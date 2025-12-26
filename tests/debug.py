@@ -83,7 +83,7 @@ def main():
     )
     args = parser.parse_args()
 
-    # Get HTML table from url
+    # Extract card info dict by looking up id from page_mappings.json
     card = debug_card_extract(args.pokemon_id)
 
     ordered_card = OrderedDict((key, card.get(key, "N/A")) for key in COLUMN_NAMES)

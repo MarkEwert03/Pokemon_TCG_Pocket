@@ -86,23 +86,35 @@ def extract_general_info(table_general: bs4.Tag) -> dict[str, str | None]:
 
     # 5. Stage | Type | Weakness
     stage_th = table_general.find("th", string=lambda s: s and "Stage" in s)
-    row_below = stage_th.find_parent("tr").find_next_sibling("tr")
-    tds = row_below.find_all("td")
-    # Extract from 3 cells in the row
-    result["stage"] = tds[0].get_text(strip=True)
-    # surround with parse_energy_cost() to convert from english -> symbol
-    result["type"] = _icon_link_to_text(tds[1])
-    result["weakness"] = _icon_link_to_text(tds[2])
+    if stage_th:
+        row_below = stage_th.find_parent("tr").find_next_sibling("tr")
+        tds = row_below.find_all("td")
+        # Extract from 3 cells in the row
+        result["stage"] = tds[0].get_text(strip=True)
+        # surround with parse_energy_cost() to convert from english -> symbol
+        result["type"] = _icon_link_to_text(tds[1])
+        result["weakness"] = _icon_link_to_text(tds[2])
+        
+    # 5. Category | Type | Rarity (supporters)
+    category_th = table_general.find("th", string=lambda s: s and "Category" in s)
+    if category_th:
+        row_below = category_th.find_parent("tr").find_next_sibling("tr")
+        tds = row_below.find_all("td")
+        # Extract from 3 cells in the row
+        result["stage"] = tds[0].get_text(strip=True)
+        result["type"] = _icon_link_to_text(tds[1])
+        result["rarity"] = _icon_link_to_text(tds[2])
 
     # 6. HP / Retreat Cost / Rarity
     hp_th = table_general.find("th", string=lambda s: s and "HP" in s)
-    row_below = hp_th.find_parent("tr").find_next_sibling("tr")
-    tds = row_below.find_all("td")
-    # Extract from 3 cells in the row
-    result["HP"] = tds[0].getText(strip=True)
-    retreat_cost_url = tds[1].select_one("a.a-link img").get("data-src")
-    result["retreat_cost"] = str(parse_retreat_cost(retreat_cost_url))
-    result["rarity"] = _icon_link_to_text(tds[2])
+    if hp_th:
+        row_below = hp_th.find_parent("tr").find_next_sibling("tr")
+        tds = row_below.find_all("td")
+        # Extract from 3 cells in the row
+        result["HP"] = tds[0].getText(strip=True)
+        retreat_cost_url = tds[1].select_one("a.a-link img").get("data-src")
+        result["retreat_cost"] = str(parse_retreat_cost(retreat_cost_url))
+        result["rarity"] = _icon_link_to_text(tds[2])
 
     return result
 

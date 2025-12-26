@@ -4,8 +4,7 @@ from tcg.utils import (
     parse_energy_cost,
     parse_retreat_cost,
     trim_after_second_parens,
-    ENERGY_SYMBOLS,
-    RETREAT_COSTS,
+    DEFAULT_EMPTY,
 )
 
 
@@ -17,7 +16,7 @@ from tcg.utils import (
         ("Line1\nLine2\t\tLine3", None, "Line1 Line2 Line3"),
         ("\t \n   \t", "N/A", "N/A"),  # collapses to empty → empty_val
         ("", None, None),  # truly empty string
-        (None, "-", None),  # None stays None (DEFAULT_EMPTY)
+        (None, DEFAULT_EMPTY, DEFAULT_EMPTY),  # None  goes to DEFAULT_EMPTY
         ("Already  clean", None, "Already clean"),
     ],
 )
@@ -32,12 +31,12 @@ def test_clean_str(raw, empty_val, expected):
 @pytest.mark.parametrize(
     "energy_str, expected",
     [
-        ("Darkness 2", ENERGY_SYMBOLS["Darkness"] * 2),
-        ("Fire", ENERGY_SYMBOLS["Fire"]),
-        ("Water 1", ENERGY_SYMBOLS["Water"]),  # explicit count == 1
-        ("Colorless 3", ENERGY_SYMBOLS["Colorless"] * 3),
-        ("Unknown 3", "?" * 3),  # unknown type, valid count
-        ("Grass X", ENERGY_SYMBOLS["Grass"]),  # second token isn’t a digit
+        ("Darkness 2", "⚫⚫"),
+        ("Fire", "🔴"),
+        ("Water 1", "🔵"),  # explicit count == 1
+        ("Colorless 3", "✴️✴️✴️"),
+        ("Unknown 3", "???"),  # unknown type, valid count
+        ("Grass X", "🟢"),  # second token isn’t a digit
     ],
 )
 def test_parse_energy_cost(energy_str, expected):
@@ -47,7 +46,10 @@ def test_parse_energy_cost(energy_str, expected):
 # ── parse_retreat_cost ─────────────────────────────────────────────────────────
 @pytest.mark.parametrize(
     "url, expected",
-    list(RETREAT_COSTS.items()) + [("https://invalid.com", -1)]
+    [
+        ("https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show", 1),
+        ("https://invalid.com", -1),
+    ],
 )
 def test_parse_retreat_cost(url, expected):
     assert parse_retreat_cost(url) == expected

@@ -4,6 +4,8 @@ import re
 import requests
 from tcg.utils import clean_str, parse_energy_cost, parse_retreat_cost, DEFAULT_EMPTY, COLUMN_NAMES
 
+ULTRA_BEAST_IDS = get_ultra_beast_ids()
+
 
 def extract_card(card_page_url: str) -> dict[str, str | None]:
     """
@@ -52,7 +54,7 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     table_moves_abilities = soup.select("table.a-table")[3]
     card = card | extract_moves_and_abilities(table_moves_abilities)
 
-    card["ultra_beast"] = str(set_ultra_beast(card["id"]))
+    card["ultra_beast"] = str(card["id"] in ULTRA_BEAST_IDS)
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
@@ -317,15 +319,22 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
     return result
 
 
-def set_ultra_beast(card_id: str) -> bool:
+def get_ultra_beast_ids() -> list[str]:
+    """
+    Fetch and return a list of Ultra Beast IDs from the Pokemon TCG Pocket game.
+    Scrapes the Game8 Pokemon TCG Pocket Ultra Beast guide page and extracts
+    the Ultra Beast IDs from the table.
+    Returns:
+        list[str]: A list of Ultra Beast ID strings.
+    """
+
     ULTRA_BEAST_URL = "https://game8.co/games/Pokemon-TCG-Pocket/archives/523131"
     ultra_beast_page = requests.get(ULTRA_BEAST_URL)
     ultra_beast_page.raise_for_status()
     soup = BeautifulSoup(ultra_beast_page.text, "lxml")
 
     ultra_beast_table = soup.select("table.a-table")[0]
-    target_ids = [row.find_all("td")[1].text for row in ultra_beast_table.find_all("tr")[1:]]
-    return card_id in target_ids
+    return [row.find_all("td")[1].text for row in ultra_beast_table.find_all("tr")[1:]]
 
 
 def fix_edge_cases(card: dict[str, str | None]):

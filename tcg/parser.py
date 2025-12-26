@@ -41,8 +41,8 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
 
     # Parse total HTML with BeautifulSoup
     soup = BeautifulSoup(card_page_response.text, "lxml")
-    card_url = card_page_response.url
-    card["url"] = card_url
+    # Resulting card dictionary includes url to reference
+    card["url"] = card_page_response.url
 
     # Extract general innformation from table 1
     table_general = soup.select("table.a-table")[1]
@@ -52,11 +52,10 @@ def extract_card(card_page_url: str) -> dict[str, str | None]:
     table_moves_abilities = soup.select("table.a-table")[3]
     card = card | extract_moves_and_abilities(table_moves_abilities)
 
+    card["ultra_beast"] = str(set_ultra_beast(card["id"]))
+
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
-
-    # TODO Add logic for ultra beasts
-    card["ultra_beast"] = "No"
 
     # Fix final misc things that are card specific
     # fix_edge_cases(card)
@@ -316,6 +315,17 @@ def extract_moves_and_abilities(table_moves_abilities: bs4.Tag) -> dict[str, str
             break
 
     return result
+
+
+def set_ultra_beast(card_id: str) -> bool:
+    ULTRA_BEAST_URL = "https://game8.co/games/Pokemon-TCG-Pocket/archives/523131"
+    ultra_beast_page = requests.get(ULTRA_BEAST_URL)
+    ultra_beast_page.raise_for_status()
+    soup = BeautifulSoup(ultra_beast_page.text, "lxml")
+
+    ultra_beast_table = soup.select("table.a-table")[0]
+    target_ids = [row.find_all("td")[1].text for row in ultra_beast_table.find_all("tr")[1:]]
+    return card_id in target_ids
 
 
 def fix_edge_cases(card: dict[str, str | None]):

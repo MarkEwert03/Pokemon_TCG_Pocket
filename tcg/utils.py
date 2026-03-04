@@ -34,7 +34,7 @@ COLUMNS = [
 
 # Map between text types and move cost symbols
 ENERGY_SYMBOLS = {
-    "Colorless": "*️⃣",
+    "Colorless": "🔘",
     "Grass": "🟢",
     "Fire": "🔴",
     "Water": "🔵",

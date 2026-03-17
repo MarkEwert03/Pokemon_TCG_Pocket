@@ -106,8 +106,10 @@ def clean_csv(df):
         "hp",
         "ex",
         "stage",
-        "rarity" "set",
-        "subset" "ability_name",
+        "rarity",
+        "set",
+        "subset",
+        "ability_name",
         "move1_name",
         "move1_cost",
         "move1_damage",
@@ -137,20 +139,30 @@ def clean_csv(df):
     # Clean up move_cost columns by converting energy text to symbols
     def energy_text_to_symbols(text):
         if text:
-            return "".join([utils.parse_energy_cost(x) for x in text.split(":")])
+            textlist = text.split(":") if ":" in text else text.split(";")
+            return "".join([utils.parse_energy_cost(x.strip()) for x in textlist])
         else:
             return ""
 
+    # Update move cost columns
     df["move1_cost"] = df["move1_cost"].apply(energy_text_to_symbols)
     df["move2_cost"] = df["move2_cost"].apply(energy_text_to_symbols)
+    df.loc[df["card_type"] == "Trainer", "move1_cost"] = ""
+    df.loc[df["card_type"] == "Trainer", "move2_cost"] = ""
+
+    # Update stage column
+    df.loc[df["card_type"] == "Trainer", "stage"] = ""
 
     # Return final cleaned df
     return df
 
 
 if __name__ == "__main__":
+    print("Starting json converstion!")
     df = flatten_pokemon_data(input_json_path)
     df.to_csv(flattend_csv_path, index=False, encoding="utf-8")
+    print(f"Flattened {len(df)} rows!")
 
     df = clean_csv(df)
     df.to_csv(cleaned_csv_path, index=False, encoding="utf-8")
+    print(f"Cleaned {len(df)} rows!")

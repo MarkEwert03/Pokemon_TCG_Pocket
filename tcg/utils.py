@@ -39,11 +39,15 @@ ENERGY_SYMBOLS = {
     "Fire": "🔴",
     "Water": "🔵",
     "Lightning": "🟡",
+    "Lighting": "🟡", # typo
     "Psychic": "🟣",
     "Fighting": "🟤",
+    "Fightring": "🟤",  # typo
+    "Fighitng": "🟤",  # typo
     "Darkness": "⚫",
     "Metal": "⚪",
     "Dragon": "🟠",
+    "Blank": "💭"
 }
 
 # Map between url links to retreat cost images and numeric costs

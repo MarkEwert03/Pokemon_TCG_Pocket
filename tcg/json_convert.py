@@ -153,6 +153,12 @@ def clean_csv(df):
     # Update stage column
     df.loc[df["card_type"] == "Trainer", "stage"] = ""
 
+    # Update pokemon_type column
+    df.loc[df["pokemon_type"] == "Tool", "pokemon_type"] = "Pokemon Tool"
+
+    # Misc corrections
+    df.loc[df["id"] == "A4 177", "hp"] = "60"
+
     # Return final cleaned df
     return df
 

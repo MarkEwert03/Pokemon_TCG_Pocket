@@ -1,3 +1,6 @@
+from functools import lru_cache
+
+import pytest
 from bs4 import BeautifulSoup
 from tests.debug import debug_card_extract
 from tcg.io import fetch_html_table, get_pack_names_and_urls
@@ -5,13 +8,24 @@ from tcg.parser import extract_card
 from tcg.parser import DEFAULT_EMPTY
 
 
-PACK_NAMES_URLS = get_pack_names_and_urls()
-PACK_NAMES_HTML = {
-    key_id: fetch_html_table(url, page_type="pack") for key_id, url in PACK_NAMES_URLS.items()
-}
+@lru_cache(maxsize=1)
+def _load_pack_html_map():
+    """Load pack HTML lazily so network is never touched at import time."""
+    try:
+        pack_names_urls = get_pack_names_and_urls()
+        return {
+            key_id: fetch_html_table(url, page_type="pack")
+            for key_id, url in pack_names_urls.items()
+        }
+    except Exception as exc:
+        pytest.skip(f"Network unavailable for parser integration tests: {exc}")
 
 
-def test_extract_card_raw_from_html():
+def get_pack_html(pack_key: str):
+    return _load_pack_html_map()[pack_key]
+
+
+def test_extract_card_raw_from_html(monkeypatch):
     """Testing `A1 001` (Bulbasaur)"""
     html = """
         <tr>
@@ -97,6 +111,19 @@ def test_extract_card_raw_from_html():
             <td class="left">Open Genetic Apex (A1) Mewtwo packs</td>
         </tr>
         """
+    def _mock_extra_details(card_full_url: str, is_trainer: bool):
+        return {
+            "weakness": "Fire",
+            "generation": "1",
+            "illustrator": "Narumi Sato",
+            "ultra_beast": "No",
+        }
+
+    monkeypatch.setattr(
+        "tcg.parser.extract_extra_card_details",
+        _mock_extra_details,
+    )
+
     row = BeautifulSoup(html, "lxml").find("tr")
     card = extract_card(row)
 
@@ -158,7 +185,7 @@ def test_extract_card_pokemon_A1():
         "url",
     }
 
-    card = debug_card_extract("A1 001", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 001", html=get_pack_html("A1"))
 
     assert set(card.keys()) == expected_keys
     assert card["number"] == "A1 001"
@@ -190,7 +217,7 @@ def test_extract_card_pokemon_A1():
 
 def test_extract_card_pokemon_A1a():
     """Testing `A1a 001` (Exeggcute)"""
-    card = debug_card_extract("A1a 001", html=PACK_NAMES_HTML["A1a"])
+    card = debug_card_extract("A1a 001", html=get_pack_html("A1a"))
 
     assert card["number"] == "A1a 001"
     assert card["name"] == "Exeggcute"
@@ -224,7 +251,7 @@ def test_extract_card_pokemon_A1a():
 
 def test_extract_card_pokemon_A2():
     """Testing `A2 001` (Oddish)"""
-    card = debug_card_extract("A2 001", html=PACK_NAMES_HTML["A2"])
+    card = debug_card_extract("A2 001", html=get_pack_html("A2"))
 
     assert card["number"] == "A2 001"
     assert card["name"] == "Oddish"
@@ -255,7 +282,7 @@ def test_extract_card_pokemon_A2():
 
 def test_extract_card_pokemon_A2a():
     """Testing `A2a 001` (Heracross)"""
-    card = debug_card_extract("A2a 001", html=PACK_NAMES_HTML["A2a"])
+    card = debug_card_extract("A2a 001", html=get_pack_html("A2a"))
 
     assert card["number"] == "A2a 001"
     assert card["name"] == "Heracross"
@@ -286,7 +313,7 @@ def test_extract_card_pokemon_A2a():
 
 def test_extract_card_pokemon_A2b():
     """Testing `A2b 001` (Weedle)"""
-    card = debug_card_extract("A2b 001", html=PACK_NAMES_HTML["A2b"])
+    card = debug_card_extract("A2b 001", html=get_pack_html("A2b"))
 
     assert card["number"] == "A2b 001"
     assert card["name"] == "Weedle"
@@ -317,7 +344,7 @@ def test_extract_card_pokemon_A2b():
 
 def test_extract_card_pokemon_A3():
     """Testing `A3 001` (Exeggcute)"""
-    card = debug_card_extract("A3 001", html=PACK_NAMES_HTML["A3"])
+    card = debug_card_extract("A3 001", html=get_pack_html("A3"))
 
     assert card["number"] == "A3 001"
     assert card["name"] == "Exeggcute"
@@ -348,7 +375,7 @@ def test_extract_card_pokemon_A3():
 
 def test_extract_card_pokemon_A3a():
     """Testing `A3a 001` (Petilil)"""
-    card = debug_card_extract("A3a 001", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3a 001", html=get_pack_html("A3a"))
 
     assert card["number"] == "A3a 001"
     assert card["name"] == "Petilil"
@@ -379,7 +406,7 @@ def test_extract_card_pokemon_A3a():
 
 def test_extract_card_pokemon_A3b():
     """Testing `A3b 001` (Tropius)"""
-    card = debug_card_extract("A3b 001", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3b 001", html=get_pack_html("A3a"))
 
     assert card["number"] == "A3b 001"
     assert card["name"] == "Tropius"
@@ -410,7 +437,7 @@ def test_extract_card_pokemon_A3b():
 
 def test_extract_card_pokemon_A4():
     """Testing `A4 001` (Oddish)"""
-    card = debug_card_extract("A4 001", html=PACK_NAMES_HTML["A4"])
+    card = debug_card_extract("A4 001", html=get_pack_html("A4"))
 
     assert card["number"] == "A4 001"
     assert card["name"] == "Oddish"
@@ -441,7 +468,7 @@ def test_extract_card_pokemon_A4():
 
 def test_extract_card_pokemon_A4a():
     """Testing `A4a 001` (Hoppip)"""
-    card = debug_card_extract("A4a 001", html=PACK_NAMES_HTML["A4a"])
+    card = debug_card_extract("A4a 001", html=get_pack_html("A4a"))
 
     assert card["number"] == "A4a 001"
     assert card["name"] == "Hoppip"
@@ -472,7 +499,7 @@ def test_extract_card_pokemon_A4a():
 
 def test_extract_card_pokemon_two_attacks():
     """Testing `A1 004` (Venusaur ex)"""
-    card = debug_card_extract("A1 004", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 004", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 004"
     assert card["name"] == "Venusaur ex"
@@ -503,7 +530,7 @@ def test_extract_card_pokemon_two_attacks():
 
 def test_extract_card_pokemon_move_desc_no_dmg():
     """Testing `A1 047` (Moltres ex)"""
-    card = debug_card_extract("A1 047", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 047", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 047"
     assert card["name"] == "Moltres ex"
@@ -537,7 +564,7 @@ def test_extract_card_pokemon_move_desc_no_dmg():
 
 def test_extract_card_pokemon_dynamic_dmg():
     """Testing `A1 026` (Pinsir)"""
-    card = debug_card_extract("A1 026", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 026", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 026"
     assert card["name"] == "Pinsir"
@@ -568,7 +595,7 @@ def test_extract_card_pokemon_dynamic_dmg():
 
 def test_extract_card_pokemon_ability():
     """Testing `A1 007` (Butterfree)"""
-    card = debug_card_extract("A1 007", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 007", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 007"
     assert card["name"] == "Butterfree"
@@ -602,7 +629,7 @@ def test_extract_card_pokemon_ability():
 
 def test_extract_card_pokemon_dragon_weakness():
     """Testing `A1 183` (Dratini)"""
-    card = debug_card_extract("A1 183", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 183", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 183"
     assert card["name"] == "Dratini"
@@ -633,7 +660,7 @@ def test_extract_card_pokemon_dragon_weakness():
 
 def test_extract_card_pokemon_ultra_beast():
     """Testing `A3a 006` (Buzzwole ex)"""
-    card = debug_card_extract("A3a 006", html=PACK_NAMES_HTML["A3a"])
+    card = debug_card_extract("A3a 006", html=get_pack_html("A3a"))
 
     assert card["number"] == "A3a 006"
     assert card["name"] == "Buzzwole ex"
@@ -664,7 +691,7 @@ def test_extract_card_pokemon_ultra_beast():
 
 def test_extract_card_fossil():
     """Testing `A1 216` (Helix Fossil)"""
-    card = debug_card_extract("A1 216", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 216", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 216"
     assert card["name"] == "Helix Fossil"
@@ -698,7 +725,7 @@ def test_extract_card_fossil():
 
 def test_extract_card_supporter():
     """Testing `A1 219` (Erika)"""
-    card = debug_card_extract("A1 219", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 219", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 219"
     assert card["name"] == "Erika"
@@ -729,7 +756,7 @@ def test_extract_card_supporter():
 
 def test_extract_card_full_art_supporter():
     """Testing `A1 269` (Full Art Koga)"""
-    card = debug_card_extract("A1 269", html=PACK_NAMES_HTML["A1"])
+    card = debug_card_extract("A1 269", html=get_pack_html("A1"))
 
     assert card["number"] == "A1 269"
     assert card["name"] == "Koga"
@@ -760,7 +787,7 @@ def test_extract_card_full_art_supporter():
 
 def test_extract_card_tool():
     """Testing `A3 146` (Poison Barb)"""
-    card = debug_card_extract("A3 146", html=PACK_NAMES_HTML["A3"])
+    card = debug_card_extract("A3 146", html=get_pack_html("A3"))
 
     assert card["number"] == "A3 146"
     assert card["name"] == "Poison Barb"
@@ -794,7 +821,7 @@ def test_extract_card_tool():
 
 def test_extract_card_promo_item():
     """Testing `P-A 005` (Poke Ball)"""
-    card = debug_card_extract("P-A 005", html=PACK_NAMES_HTML["P-A"])
+    card = debug_card_extract("P-A 005", html=get_pack_html("P-A"))
 
     assert card["number"] == "P-A 005"
     assert card["name"] == "Poke Ball"

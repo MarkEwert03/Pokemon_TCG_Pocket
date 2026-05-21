@@ -143,7 +143,7 @@ def test_extract_card_raw_from_html(monkeypatch):
     assert card["ability_name"] == DEFAULT_EMPTY
     assert card["ability_effect"] == DEFAULT_EMPTY
     assert card["move1_name"] == "Vine Whip"
-    assert card["move1_cost"] == "🟢*️⃣"
+    assert card["move1_cost"] == "🟢🔘"
     assert card["move1_damage"] == "40"
     assert card["move1_effect"] == DEFAULT_EMPTY
     assert card["move2_name"] == DEFAULT_EMPTY

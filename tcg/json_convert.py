@@ -2,7 +2,7 @@ import json
 import pandas as pd
 import utils
 
-input_json_path = "data/raw_from_web.json"
+input_json_path = "data/raw_from_web2.json"
 flattend_csv_path = "data/flattened_pokemon.csv"
 cleaned_csv_path = "data/cleaned_pokemon.csv"
 

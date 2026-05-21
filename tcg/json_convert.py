@@ -1,10 +1,14 @@
 import json
 import pandas as pd
 import utils
+import time
+import requests
+import os
 
-input_json_path = "data/raw_from_web2.json"
+input_json_path = "data/raw_from_web3.json"
 flattend_csv_path = "data/flattened_pokemon.csv"
 cleaned_csv_path = "data/cleaned_pokemon.csv"
+
 
 
 def flatten_pokemon_data(input_json_path, list_key="moves"):
@@ -63,6 +67,26 @@ def flatten_pokemon_data(input_json_path, list_key="moves"):
     # Return the DataFrame
     df = pd.DataFrame(flattened_list)
     return df
+
+
+def fetch_structural_mappings(updated_at: int = None):
+    """Fetch JSON from game8 structural mappings endpoint.
+
+    The endpoint expects an `updatedAt` Unix timestamp. If not provided,
+    this function uses the current epoch seconds.
+    """
+    if updated_at is None:
+        updated_at = int(time.time())
+
+    url = f"https://game8.co/api/tool_structural_mappings/551.json?updatedAt={updated_at}"
+    resp = requests.get(url)
+    resp.raise_for_status()
+    raw_json = resp.json()
+    os.makedirs("data", exist_ok=True)
+    with open("./data/RAWJSON.json", "w", encoding="utf-8") as f:
+        json.dump(raw_json, f, ensure_ascii=False, indent=2)
+
+    return raw_json
 
 
 def clean_csv(df):
@@ -164,6 +188,9 @@ def clean_csv(df):
 
 
 if __name__ == "__main__":
+    # print("Obtaining json.")
+    # fetch_structural_mappings(1777341550)
+
     print("Starting json converstion!")
     df = flatten_pokemon_data(input_json_path)
     df.to_csv(flattend_csv_path, index=False, encoding="utf-8")

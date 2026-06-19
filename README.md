@@ -2,6 +2,8 @@
 
 A small Python utility to parse HTML tables containing [Pokémon TCG (Trading Card Game) Pocket card data](https://game8.co/games/Pokemon-TCG-Pocket/archives/482685) and export them into a structured CSV format.
 
+Visualizations for the scraped dataset can be found in [analysis.ipynb](https://github.com/MarkEwert03/Pokemon_TCG_Pocket/blob/main/analysis.ipynb)
+
 ---
 
 ## 🚀 Features

@@ -7,10 +7,15 @@ filled in by `pipeline.py` after scraping.
 """
 
 import json
+import re
 from pathlib import Path
 
 from tcg.config import COLUMNS
 from tcg.utils import clean_str, energy_cost_to_symbols, is_trainer_type
+
+
+# Pack codes like "A1-M", "A4b", "P-A" appear in the junk entry's energy_cost
+_PACK_CODE = re.compile(r"^(?:[AB]\d+[a-z]?|P-[AB])(?:-[A-Z])?$")
 
 
 def load_raw_cards(path: Path) -> list[dict]:
@@ -33,6 +38,9 @@ def _convert_move(raw_move: dict) -> dict | None:
     damage = clean_str(raw_move.get("damage"))
     if damage and "%" in damage:
         return None
+    tokens = re.split(r"[:;]", raw_move.get("energy_cost") or "")
+    if any(_PACK_CODE.match(t.strip()) for t in tokens):
+        return None  # pull-rate junk whose "energy" is really a list of packs
 
     move = {
         "name": clean_str(raw_move.get("name")),

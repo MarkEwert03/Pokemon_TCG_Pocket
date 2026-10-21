@@ -23,7 +23,9 @@ def download_raw_json(dest: Path, updated_at: int | None = None) -> dict:
     The endpoint takes an `updatedAt` unix timestamp (defaults to now).
     """
     updated_at = updated_at or int(time.time())
-    resp = requests.get(JSON_URL, params={"updatedAt": updated_at}, headers=HEADERS, timeout=60)
+    resp = requests.get(
+        JSON_URL, params={"updatedAt": updated_at}, headers=HEADERS, timeout=60
+    )
     resp.raise_for_status()
     data = resp.json()
 

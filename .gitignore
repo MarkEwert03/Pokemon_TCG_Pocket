@@ -1,2 +1,6 @@
+.venv/
 __pycache__/
-data/raw
+.pytest_cache/
+# Cached game8 card pages (large, re-downloadable)
+data/cache/
+data/failed_pages.txt

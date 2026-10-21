@@ -5,7 +5,7 @@ import time
 import requests
 import os
 
-input_json_path = "data/raw_from_web3.json"
+input_json_path = "data/raw_from_web4.json"
 flattend_csv_path = "data/flattened_pokemon.csv"
 cleaned_csv_path = "data/cleaned_pokemon.csv"
 

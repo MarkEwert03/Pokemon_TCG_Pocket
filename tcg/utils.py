@@ -1,212 +1,120 @@
+"""Small, dependency-free helpers: string cleaning and energy-type handling."""
+
 import re
 
-# Default value to fill dict and csvs for missing / not applicable field
-DEFAULT_EMPTY = None
-
-# Ordered list of all columns each card should have
-COLUMNS = [
-    "number",
-    "name",
-    "rarity",
-    "stage",
-    "HP",
-    "type",
-    "weakness",
-    "retreat_cost",
-    "ultra_beast",
-    "generation",
-    "illustrator",
-    "pack_name",
-    "pack_points",
-    "ability_name",
-    "ability_effect",
-    "move1_name",
-    "move1_cost",
-    "move1_damage",
-    "move1_effect",
-    "move2_name",
-    "move2_cost",
-    "move2_damage",
-    "move2_effect",
-    "image",
-    "url",
+# The ten Pokémon TCG Pocket types (anything else on a card is a Trainer subtype)
+TYPE_NAMES = [
+    "Colorless",
+    "Grass",
+    "Fire",
+    "Water",
+    "Lightning",
+    "Psychic",
+    "Fighting",
+    "Darkness",
+    "Metal",
+    "Dragon",
 ]
 
-# Map between text types and move cost symbols
+# game8 typos seen in the wild -> real type name
+TYPE_ALIASES = {
+    "lighting": "Lightning",
+    "fightring": "Fighting",
+    "fighitng": "Fighting",
+}
+
+# Type name -> emoji used in the move*_cost columns
 ENERGY_SYMBOLS = {
     "Colorless": "🔘",
     "Grass": "🟢",
     "Fire": "🔴",
     "Water": "🔵",
     "Lightning": "🟡",
-    "Lighting": "🟡", # typo
     "Psychic": "🟣",
     "Fighting": "🟤",
-    "Fightring": "🟤",  # typo
-    "Fighitng": "🟤",  # typo
     "Darkness": "⚫",
     "Metal": "⚪",
     "Dragon": "🟠",
-    "Blank": "💭"
+    "Blank": "💭",
 }
-
-# Map between url links to retreat cost images and numeric costs
-RETREAT_COSTS = {
-    "https://img.game8.co/3998614/b92af68265b2e7623de5efdf8197a9bf.png/show": 0,
-    "https://img.game8.co/3994730/6e5546e2fbbc5a029ac79acf2b2b8042.png/show": 1,
-    "https://img.game8.co/4018721/a654c44596214b3bf38769c180602a16.png/show": 1,
-    "https://img.game8.co/3346529/3dd07276f0d15aef9ef1b5f294a8c94a.png/show": 1,  # only for P-A 051
-    "https://img.game8.co/3998538/eea8469456d6b7ea7a2daf2995087d00.png/show": 2,
-    "https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show": 3,
-    "https://img.game8.co/3998556/3831ed9a23dbc9db0da4254334165863.png/show": 4,
-}
+COLORLESS = ENERGY_SYMBOLS["Colorless"]
 
 
-def clean_str(string: str, empty_val: str = DEFAULT_EMPTY) -> str | None:
+def clean_str(value: str | None) -> str | None:
     """
-    Remove extra whitespace from a string.
+    Collapse all whitespace to single spaces and strip the ends.
+    Returns `None` for `None` or whitespace-only input.
 
-    Strips leading and trailing whitespace and collapses
-    multiple spaces, tabs, or newlines into a single space.
-
-    If final output is empty, returns empty_val parameter.
-
-    Parameters
-    ----------
-    string : str
-        Raw string to be cleaned.
-    empty_vap : str
-        The value to replace empty strings (optional defaults to `''`)
-
-    Returns
-    -------
-    output : str
-        Cleaned string with normalized spacing.
-
-    Examples:
-        >>> clean_str("   Hello   World   ")
-        'Hello World'
-        >>> clean_str("Line1\\nLine2\\t\\tLine3")
-        'Line1 Line2 Line3'
-        >>> clean_str("   Multiple    spaces   and\\nnewlines\\t")
-        'Multiple spaces and newlines'
-        >>> clean_str("\\t \\n   \\t", empty_val="N/A")
-        'N/A'
+    >>> clean_str("   Hello   World   ")
+    'Hello World'
+    >>> clean_str("\\t \\n ") is None
+    True
     """
-    if string is None:
-        return DEFAULT_EMPTY
+    if value is None:
+        return None
+    out = " ".join(str(value).split())
+    return out or None
 
-    output = " ".join(string.strip().split())
-    if output == "":
-        return empty_val
-    else:
-        return output
+
+def find_type_name(text: str | None) -> str | None:
+    """
+    Find a Pokémon type name inside arbitrary text (a link label, an image alt, ...).
+
+    >>> find_type_name("Pokemon TCG Pocket - Fire Type Icon")
+    'Fire'
+    >>> find_type_name("Lighting")
+    'Lightning'
+    >>> find_type_name("-") is None
+    True
+    """
+    if not text:
+        return None
+    low = text.lower()
+    for alias, real in TYPE_ALIASES.items():
+        if alias in low:
+            return real
+    for name in TYPE_NAMES:
+        if re.search(rf"\b{name.lower()}\b", low):
+            return name
+    return None
+
+
+def is_trainer_type(card_type: str | None) -> bool:
+    """A card is a Trainer (Item / Supporter / Pokemon Tool / ...) if its type isn't a Pokémon type."""
+    return card_type not in TYPE_NAMES
 
 
 def parse_energy_cost(energy_str: str) -> str:
     """
-    Convert an energy descriptor like "Fire 2" into repeated symbols.
+    Turn one energy descriptor like "Fire 2" into repeated emoji.
+    Unknown types become "?" so problems are visible in the CSV.
 
-    Parameters
-    ----------
-        energy_str : str
-            a string of the form "<Type> <count>", e.g. "Darkness 2",
-            or just "<Type>" (implying count=1).
-
-    Returns
-    -------
-        symbols : str
-            A string consisting of `count` copies of the corresponding symbol
-            from ENERGY_SYMBOLS, or "?" if the type isn't in the dict.
-
-    Examples:
-        >>> parse_energy_cost("Darkness 2")
-        '⚫⚫'
-        >>> parse_energy_cost("Fire")
-        '🔴'
-        >>> parse_energy_cost("Unknown 3")
-        '???'
+    >>> parse_energy_cost("Darkness 2")
+    '⚫⚫'
+    >>> parse_energy_cost("Fire")
+    '🔴'
+    >>> parse_energy_cost("Unknown 3")
+    '???'
     """
-    parts = energy_str.rsplit(" ", 1)
-    match len(parts):
-        case 0:
-            return ""
-        case 1:
-            type_name = energy_str
-            count = 1
-        case 2:
-            type_name = parts[0]
-            count = int(parts[1]) if parts[1].isdigit() else 1
-        case _:
-            raise ValueError(
-                f"energy_str was <{energy_str}> and should be of the form <ENERGY COUNT>"
-            )
-
-    symbol = ENERGY_SYMBOLS.get(type_name, "?")
+    m = re.fullmatch(r"(.+?)\s+(\d+)", energy_str.strip())
+    name, count = (m.group(1), int(m.group(2))) if m else (energy_str.strip(), 1)
+    symbol = ENERGY_SYMBOLS.get(name)
+    if symbol is None:
+        symbol = ENERGY_SYMBOLS.get(TYPE_ALIASES.get(name.lower(), ""), "?")
     return symbol * count
 
 
-def parse_retreat_cost(retreat_cost_img: str) -> int:
+def energy_cost_to_symbols(text: str | None) -> str | None:
     """
-    Maps a retreat cost image URL to its corresponding numeric retreat cost.
+    Convert the JSON's energy cost ("Grass:Colorless 2") to emoji ("🟢🔘🔘").
+    Entries may be separated by ':' or ';'. Empty input gives `None`.
 
-    Parameters
-    ----------
-        retreat_cost_img : str
-            The full URL of the retreat cost icon image (e.g., from an <img> tag's "data-src" attribute).
-
-    Returns
-    -------
-        cost : int
-            The numeric retreat cost (0-4) if the URL is recognized,
-            or -1 if the image is not found in the known RETREAT_COSTS mapping.
-
-    Examples:
-    >>> parse_retreat_cost("https://img.game8.co/3998539/6bb558f97aac02e469e3ddc06e2ac167.png/show")
-    3
-    >>> parse_retreat_cost("https://img.unknown.com/retreat5.png")
-    -1
+    >>> energy_cost_to_symbols("Grass:Colorless 2")
+    '🟢🔘🔘'
+    >>> energy_cost_to_symbols("") is None
+    True
     """
-    return RETREAT_COSTS.get(retreat_cost_img, -1)
-
-
-def trim_after_second_parens(s: str) -> str:
-    """
-    Trims a string to just before the second opening parenthesis, if one exists.
-
-    This function is useful for removing trailing descriptive or redundant info
-    that appears after the second set of parentheses in a string, while preserving
-    the core phrase up to and including the first set of parentheses.
-
-    Parameters
-    ----------
-        s : str
-            Input string that may contain multiple sets of parentheses.
-
-    Returns
-    -------
-        new_s : str
-            The trimmed string, or the original string if there are fewer than two
-            opening parentheses.
-
-    Examples:
-        >>> trim_after_second_parens("Genetic Apex (A1) Mewtwo")
-        'Genetic Apex (A1) Mewtwo'
-        >>> trim_after_second_parens("Genetic Apex (A1) Any")
-        'Genetic Apex (A1) Any'
-        >>> trim_after_second_parens("Space-Time Smackdown (A2) Any (Space-Time Smackdown)")
-        'Space-Time Smackdown (A2)'
-        >>> trim_after_second_parens("Name (Alpha) (Beta) (Gamma)")
-        'Name (Alpha)'
-        >>> trim_after_second_parens("No parentheses here")
-        'No parentheses here'
-        >>> trim_after_second_parens("(Only one)")
-        '(Only one)'
-    """
-    # Find all positions of opening parentheses
-    matches = list(re.finditer(r"\(", s))
-    if len(matches) <= 1:
-        return s  # Keep original if only one or none
-
-    # Cut string just before the second opening parenthesis
-    return s[: matches[1].start()].strip()
+    if not text:
+        return None
+    parts = [p.strip() for p in re.split(r"[:;]", text) if p.strip()]
+    return "".join(parse_energy_cost(p) for p in parts) or None

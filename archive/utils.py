@@ -13,7 +13,7 @@ COLUMNS = [
     "type",
     "weakness",
     "retreat_cost",
-    "ultra_beast",
+    "classification",
     "generation",
     "illustrator",
     "pack_name",

@@ -94,7 +94,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
 
         - `stage`
         - `retreat_cost` (numeric cost gotten from `parse_retreat_cost`)
-        - `ultra_beast` (string truth value gotten from move info divs)
+        - `classification` (card classification gotten from move info divs)
         - `ability_name`, `ability_effect`
         - `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`
         - `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`
@@ -103,7 +103,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     cell9_data = {
         "stage": DEFAULT_EMPTY,
         "retreat_cost": DEFAULT_EMPTY,
-        "ultra_beast": "No",
+        "classification": DEFAULT_EMPTY,
         "ability_name": DEFAULT_EMPTY,
         "ability_effect": DEFAULT_EMPTY,
         "move1_name": DEFAULT_EMPTY,
@@ -164,7 +164,7 @@ def extract_cell9(cell9: bs4.element.Tag, is_trainer: bool) -> dict[str, str | N
     for i, div in enumerate(move_divs):
         # Immediately check for Ultra beats to stop future div out of range
         if clean_str(div.text) == "Ultra Beast":
-            cell9_data["ultra_beast"] = "Yes"
+            cell9_data["classification"] = "Ultra Beast"
             continue
 
         j = move_start_index + i  # will be 1 or 2 depending on ability
@@ -392,7 +392,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         Merges:
         - Basic columns: `id`, `name`, `image`, `rarity`,
           `pack_name`, `type`, `hp`, `stage`, `pack_points`, `url`
-        - Cell 9 columns: `stage`, `retreat_cost`, `ultra_beast`
+        - Cell 9 columns: `stage`, `retreat_cost`, `classification`
           `ability_name`, `ability_effect`,
           `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
           `move2_name`, `move2_cost`, `move2_damage`, `move2_effect`

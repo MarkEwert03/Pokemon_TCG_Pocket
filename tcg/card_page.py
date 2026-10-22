@@ -3,7 +3,7 @@ Stage 3: extract the fields the raw JSON does not have from a card page's HTML.
 
 Fields produced (see `config.PAGE_FIELDS`):
     generation, illustrator, weakness, retreat_cost,
-    pack_points, ultra_beast, ability_effect
+    pack_points, classification, ability_effect
 
 This module is pure: HTML string in, dict out. No network, no disk. That makes
 it easy to tweak and re-run against the cached pages.
@@ -178,7 +178,7 @@ def parse_card_page(
     # Only look inside the card's own tables, so the "List of Ultra Beasts"
     # sidebar link on every page doesn't cause false positives.
     scan = f"{_text(info) or ''} {_text(moves) or ''}".lower()
-    result["ultra_beast"] = "Yes" if "ultra beast" in scan else "No"
+    result["classification"] = "Ultra Beast" if "ultra beast" in scan else None
 
     if is_trainer:
         result["ability_effect"] = _extract_trainer_text(moves)

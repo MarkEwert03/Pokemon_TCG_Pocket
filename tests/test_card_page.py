@@ -51,13 +51,13 @@ def test_basic_pokemon_page():
     assert out["retreat_cost"] == "2"
     assert out["pack_points"] == "35"
     # the sidebar "List of Ultra Beasts" link must not trigger a false positive
-    assert out["ultra_beast"] == "No"
+    assert out["classification"] is None
     assert out["ability_effect"] is None
 
 
 def test_ultra_beast_detected_inside_card_tables():
     moves = ATTACK_ONLY + "<tr><td>Ultra Beast</td></tr>"
-    assert parse_card_page(page(moves), is_trainer=False)["ultra_beast"] == "Yes"
+    assert parse_card_page(page(moves), is_trainer=False)["classification"] == "Ultra Beast"
 
 
 def test_ability_effect_found_by_name_in_next_row():

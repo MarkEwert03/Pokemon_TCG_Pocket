@@ -16,7 +16,7 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 
 1. **Download** the big raw JSON (once; kept in `data/raw/cards.json`).
 2. **Convert** it to one flat dict per card. The JSON already has name, rarity, stage, HP, type, pack, ability name, moves (name / cost / damage / effect), image and URL.
-3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `generation`, `illustrator`, `weakness`, `retreat_cost`, `pack_points`, `ultra_beast`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
+3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `generation`, `illustrator`, `weakness`, `retreat_cost`, `pack_points`, `classification`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
 4. **Apply manual overrides** (`tcg/overrides.py`) for cards where Game8 is wrong or missing data.
 5. **Write** `data/full.csv`.
 
@@ -120,9 +120,9 @@ Columns include:
 - `retreat_cost`
   - Number of energy symbols needed to retreat the Pokémon.
   - Examples: "0", "1", "4"
-- `ultra_beast`
-  - Whether the card is classified as an Ultra Beast.
-  - Examples: "No", "Yes"
+- `classification`
+  - The card's broader classification, when applicable.
+  - Examples: "Ultra Beast", blank
 - `generation`
   - The mainline game generation the Pokémon originates from.
   - Examples: "1", "5", "9"
@@ -186,7 +186,7 @@ Columns include:
   "type": "Grass",
   "weakness": "Fire",
   "retreat_cost": "1",
-  "ultra_beast": "No",
+  "classification": null,
   "generation": "1",
   "illustrator": "Narumi Sato",
   "pack_name": "Genetic Apex (A1) Mewtwo",

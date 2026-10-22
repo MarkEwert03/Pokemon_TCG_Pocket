@@ -137,7 +137,7 @@ def build_cards(
             FAILED_PAGES_PATH.unlink()
 
     for card in cards:
-        card["ultra_beast"] = "Yes" if is_ultra_beast(card["name"], card["type"]) else "No"
+        card["classification"] = "Ultra Beast" if is_ultra_beast(card["name"], card["type"]) else None
         apply_overrides(card)
     return cards
 

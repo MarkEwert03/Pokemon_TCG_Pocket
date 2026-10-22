@@ -28,7 +28,7 @@ COLUMNS = [
     "type",
     "weakness",
     "retreat_cost",
-    "ultra_beast",
+    "classification",
     "generation",
     "illustrator",
     "pack_name",
@@ -54,6 +54,6 @@ PAGE_FIELDS = (
     "weakness",
     "retreat_cost",
     "pack_points",
-    "ultra_beast",
+    "classification",
     "ability_effect",
 )

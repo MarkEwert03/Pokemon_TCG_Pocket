@@ -4,6 +4,7 @@ import re
 import requests
 from tcg.utils import (
     clean_str,
+    get_classification,
     parse_energy_cost,
     parse_retreat_cost,
     trim_after_second_parens,
@@ -460,6 +461,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
 
     # Normalize spacing in all fields and replace empty string with empty
     card = {k: clean_str(v) for k, v in card.items()}
+    card["classification"] = get_classification(card["name"], card["type"])
 
     # Fix final misc things that are card specific
     fix_edge_cases(card)

@@ -122,7 +122,7 @@ Columns include:
   - Examples: "0", "1", "4"
 - `classification`
   - The card's broader classification, when applicable.
-  - Examples: "Ultra Beast", blank
+  - Examples: "Ultra Beast", "Ancient", "Future", blank
 - `generation`
   - The mainline game generation the Pokémon originates from.
   - Examples: "1", "5", "9"

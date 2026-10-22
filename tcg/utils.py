@@ -120,10 +120,21 @@ def energy_cost_to_symbols(text: str | None) -> str | None:
     return "".join(parse_energy_cost(p) for p in parts) or None
 
 
-# The eleven Ultra Beasts (Gen 7). Game8's pages don't flag them reliably, so use names.
 ULTRA_BEASTS = {
     "Nihilego", "Buzzwole", "Pheromosa", "Xurkitree", "Celesteela", "Kartana",
     "Guzzlord", "Poipole", "Naganadel", "Stakataka", "Blacephalon",
+}
+
+ANCIENT_PARADOX = {
+    "Great Tusk", "Scream Tail", "Brute Bonnet", "Flutter Mane",
+    "Slither Wing", "Sandy Shocks", "Roaring Moon", "Koraidon",
+    "Walking Wake", "Raging Bolt", "Gouging Fire",
+}
+
+FUTURE_PARADOX = {
+    "Iron Treads", "Iron Bundle", "Iron Hands", "Iron Jugulis",
+    "Iron Moth", "Iron Thorns", "Iron Valiant", "Miraidon",
+    "Iron Boulder", "Iron Crown", "Iron Leaves",
 }
 
 
@@ -132,3 +143,17 @@ def is_ultra_beast(name: str | None, card_type: str | None) -> bool:
     if not name or is_trainer_type(card_type):
         return False
     return re.sub(r"\s+ex$", "", name) in ULTRA_BEASTS
+
+
+def get_classification(name: str | None, card_type: str | None) -> str | None:
+    """Return the broad classification for a Pokémon, or None when unclassified."""
+    if not name or is_trainer_type(card_type):
+        return None
+    normalized_name = re.sub(r"\s+ex$", "", name)
+    if normalized_name in ANCIENT_PARADOX:
+        return "Ancient"
+    if normalized_name in FUTURE_PARADOX:
+        return "Future"
+    if normalized_name in ULTRA_BEASTS:
+        return "Ultra Beast"
+    return None

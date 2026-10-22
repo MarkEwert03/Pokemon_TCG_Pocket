@@ -23,7 +23,7 @@ from tcg.config import (
 )
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_overrides
-from tcg.utils import is_trainer_type, is_ultra_beast
+from tcg.utils import get_classification, is_trainer_type
 
 
 def scrape_extras(
@@ -137,7 +137,7 @@ def build_cards(
             FAILED_PAGES_PATH.unlink()
 
     for card in cards:
-        card["classification"] = "Ultra Beast" if is_ultra_beast(card["name"], card["type"]) else None
+        card["classification"] = get_classification(card["name"], card["type"])
         apply_overrides(card)
     return cards
 

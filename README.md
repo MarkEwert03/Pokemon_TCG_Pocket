@@ -44,7 +44,7 @@ Useful options:
 
 | Command | What it does |
 |---|---|
-| `python run.py --no-pages` | JSON only (fast, offline-ish). Page-only columns stay blank. |
+| `python run.py --no-pages` | JSON only (fast, offline-ish) -> `data/no_pages.csv`. Page-only columns stay blank. |
 | `python run.py --refresh-json` | Re-download the raw JSON (do this when new sets are released). |
 | `python run.py --refresh-pages` | Ignore the page cache and re-download every card page. |
 | `python run.py --limit 20` | Only process the first 20 cards (good for testing). |

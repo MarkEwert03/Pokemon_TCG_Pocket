@@ -11,6 +11,7 @@ RAW_JSON_PATH = DATA_DIR / "raw" / "cards.json"
 PAGE_CACHE_DIR = DATA_DIR / "cache" / "pages"
 # Final output
 OUTPUT_CSV_PATH = DATA_DIR / "full.csv"
+NO_PAGES_OUTPUT_CSV_PATH = DATA_DIR / "no_pages.csv"
 # Cards whose page could not be fetched on the last run
 FAILED_PAGES_PATH = DATA_DIR / "failed_pages.txt"
 

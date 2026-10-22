@@ -11,9 +11,7 @@ from tcg.utils import COLORLESS
 OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
-    "A2 047": {"move1_damage": "30"},  # Wash Rotom: Wave Splash does 30, not 39
-    "A4 177": {"hp": "60"},
-    "A1a 057": {"move1_cost": COLORLESS},  # Pidgey: Flap's cost is missing
+    "A4 177": {"hp": "60"}, # Spinarak: HP is included as "/"
     # --- weakness wrong (W) / page missing (M) ---
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
     "A1 170": {"weakness": "Fighting"},  # Nidorino (W)
@@ -27,16 +25,6 @@ OVERRIDES: dict[str, dict[str, str]] = {
     "A1a 065": {"generation": "9"},  # Mythical Slab
     "A1a 066": {"generation": "9"},  # Budding Expeditioner
     "A1a 080": {"generation": "9"},  # Budding Expeditioner
-    "P-A 053": {  # Floatzel (page missing)
-        "generation": "4",
-        "illustrator": "Shin Nagasawa",
-        "weakness": "Lightning",
-    },
-    "P-A 056": {  # Ekans (page missing)
-        "generation": "1",
-        "illustrator": "Krgc",
-        "weakness": "Fighting",
-    },
     # TODO: illustrators still missing on game8 (fill in as found):
     #   A2b 002 005 006 007 008 014 018 020 021 023 025 040 041 047 049 068 070
     #       071 073 074 075 076 089 090 095 096 103

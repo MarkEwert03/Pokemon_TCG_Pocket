@@ -9,7 +9,7 @@ COLUMNS = [
     "name",
     "rarity",
     "stage",
-    "HP",
+    "hp",
     "type",
     "weakness",
     "retreat_cost",

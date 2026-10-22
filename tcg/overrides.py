@@ -12,7 +12,7 @@ OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
     "A2 047": {"move1_damage": "30"},  # Wash Rotom: Wave Splash does 30, not 39
-    "A4 177": {"HP": "60"},
+    "A4 177": {"hp": "60"},
     "A1a 057": {"move1_cost": COLORLESS},  # Pidgey: Flap's cost is missing
     # --- weakness wrong (W) / page missing (M) ---
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)

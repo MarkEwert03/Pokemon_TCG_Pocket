@@ -391,7 +391,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     dict[str, str]
         Merges:
         - Basic columns: `id`, `name`, `image`, `rarity`,
-          `pack_name`, `type`, `HP`, `stage`, `pack_points`, `url`
+          `pack_name`, `type`, `hp`, `stage`, `pack_points`, `url`
         - Cell 9 columns: `stage`, `retreat_cost`, `ultra_beast`
           `ability_name`, `ability_effect`,
           `move1_name`, `move1_cost`, `move1_damage`, `move1_effect`,
@@ -413,7 +413,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     rarity = cells[3].text
     pack = trim_after_second_parens(cells[4].text)
     type = cells[5].find("img")["alt"].split("-")[-1]  # last word is the type
-    HP = cells[6].text
+    hp = cells[6].text
     stage = cells[7].text
     pack_points = (
         cells[8].text.replace(",", "").replace("Pts", "") if rarity != "Promo" else DEFAULT_EMPTY
@@ -448,7 +448,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         "rarity": rarity,
         "pack_name": pack,
         "type": type,
-        "HP": HP,
+        "hp": hp,
         "stage": stage,
         "pack_points": pack_points,
         "url": card_full_url,

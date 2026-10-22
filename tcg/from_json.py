@@ -75,7 +75,7 @@ def convert_card(raw: dict) -> dict[str, str | None]:
         name=clean_str(raw.get("name")),
         rarity=clean_str(raw.get("rarity")),
         stage=clean_str(raw.get("evolution_stage")) if is_pokemon else None,
-        HP=clean_str(raw.get("hp")) if is_pokemon else None,
+        hp=clean_str(raw.get("hp")) if is_pokemon else None,
         type=card_type,
         pack_name=pack_name,
         ability_name=clean_str(raw.get("ability")),

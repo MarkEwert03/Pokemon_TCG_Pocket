@@ -42,7 +42,7 @@ def test_basic_pokemon():
     assert card["id"] == "A1 001"
     assert card["name"] == "Bulbasaur"
     assert card["stage"] == "Basic"
-    assert card["HP"] == "70"
+    assert card["hp"] == "70"
     assert card["type"] == "Grass"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["move1_name"] == "Vine Whip"
@@ -94,7 +94,7 @@ def test_trainer_card():
     }
     card = convert_card(raw)
     assert card["type"] == "Supporter"
-    assert card["stage"] is None and card["HP"] is None
+    assert card["stage"] is None and card["hp"] is None
     assert card["move1_cost"] is None
     assert card["ability_effect"] == "Draw 2 cards."
 

@@ -108,7 +108,7 @@ Columns include:
 - `stage`
   - Evolutionary stage of Pokémon (blank for Trainers)
   - Examples: "Basic", "Stage 1", "Stage 2"
-- `HP`
+- `hp`
   - Hit points (health) of the Pokémon card.
   - Examples: "70", "100", "180"
 - `type`
@@ -182,7 +182,7 @@ Columns include:
   "name": "Bulbasaur",
   "rarity": "◇",
   "stage": "Basic",
-  "HP": "70",
+  "hp": "70",
   "type": "Grass",
   "weakness": "Fire",
   "retreat_cost": "1",

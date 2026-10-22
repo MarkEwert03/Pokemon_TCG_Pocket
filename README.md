@@ -96,7 +96,7 @@ The finished data is at [`data/full.csv`](https://github.com/MarkEwert03/Pokemon
 <summary>Click to expand column descriptions</summary>
 
 Columns include:
-- `number`
+- `id`
   - The card’s unique identifier combining set and index.
   - Examples: "A1 001", "A2b 107", "P-A 034"
 - `name`
@@ -178,7 +178,7 @@ Columns include:
 
 ```json
 {
-  "number": "A1 001",
+  "id": "A1 001",
   "name": "Bulbasaur",
   "rarity": "◇",
   "stage": "Basic",

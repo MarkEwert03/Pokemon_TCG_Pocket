@@ -39,7 +39,7 @@ def test_has_exactly_the_readme_columns():
 
 def test_basic_pokemon():
     card = convert_card(BULBASAUR)
-    assert card["number"] == "A1 001"
+    assert card["id"] == "A1 001"
     assert card["name"] == "Bulbasaur"
     assert card["stage"] == "Basic"
     assert card["HP"] == "70"

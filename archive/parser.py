@@ -249,7 +249,7 @@ def fix_edge_cases(card: dict[str, str | None]):
 
     Notes
     -----
-    - Fixes are hardcoded using pattern matching on `card["number"]`.
+    - Fixes are hardcoded using pattern matching on `card["id"]`.
     - Uses lookup dictionaries for illustrator, generation, and weakness patches.
     - This function modifies `card` in-place and does not return anything.
     """
@@ -340,7 +340,7 @@ def fix_edge_cases(card: dict[str, str | None]):
     }
 
     # Specific fixes for fields in main table
-    match card["number"]:
+    match card["id"]:
         case "A1 183":  # Dratini
             # Dratini's Ram should do 40 dmg not 70
             card["move1_damage"] = "40"
@@ -359,7 +359,7 @@ def fix_edge_cases(card: dict[str, str | None]):
         ("generation", FIXED_GENERATIONS),
         ("weakness", FIXED_WEAKNESSES),
     ]:
-        val = lookup.get(card["number"])
+        val = lookup.get(card["id"])
         if val:
             card[field] = val
 
@@ -376,7 +376,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
         A `<tr>` containing exactly ten `<td>` cells in the known layout:
 
             0) checkbox
-            1) number
+            1) id
             2) name/image
             3) rarity
             4) pack,
@@ -390,7 +390,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     -------
     dict[str, str]
         Merges:
-        - Basic columns: `number`, `name`, `image`, `rarity`,
+        - Basic columns: `id`, `name`, `image`, `rarity`,
           `pack_name`, `type`, `HP`, `stage`, `pack_points`, `url`
         - Cell 9 columns: `stage`, `retreat_cost`, `ultra_beast`
           `ability_name`, `ability_effect`,
@@ -407,7 +407,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # cell_0 is checkmark (ignored)
 
     # Extract card data from each cell
-    number = cells[1].text
+    card_id = cells[1].text
     name = cells[2].find("a").text
     image = cells[2].find("img").get("data-src")
     rarity = cells[3].text
@@ -442,7 +442,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
 
     # Create dictionary with raw data
     card = {
-        "number": number,
+        "id": card_id,
         "name": name,
         "image": image,
         "rarity": rarity,

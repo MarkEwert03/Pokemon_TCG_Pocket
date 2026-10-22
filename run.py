@@ -33,7 +33,7 @@ def main() -> None:
     if args.debug:
         cards = build_cards(only=args.debug, **common)
         if not cards:
-            raise SystemExit(f"No card with number {args.debug!r}")
+            raise SystemExit(f"No card with id {args.debug!r}")
         print(json.dumps(cards[0], ensure_ascii=False, indent=2))
     else:
         run(output_file=args.out, limit=args.limit, **common)

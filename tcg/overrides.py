@@ -1,7 +1,7 @@
 """
 Manual corrections for cards where game8's data is wrong or missing.
 
-Format: {card number: {column: correct value}}
+Format: {card id: {column: correct value}}
 Applied last, so these always win over scraped values.
 Add a short comment saying *why* each entry exists.
 """
@@ -47,5 +47,5 @@ OVERRIDES: dict[str, dict[str, str]] = {
 
 
 def apply_overrides(card: dict[str, str | None]) -> None:
-    """Mutate `card` in place with any manual corrections for its number."""
-    card.update(OVERRIDES.get(card["number"], {}))
+    """Mutate `card` in place with any manual corrections for its id."""
+    card.update(OVERRIDES.get(card["id"], {}))

@@ -71,7 +71,7 @@ def convert_card(raw: dict) -> dict[str, str | None]:
     pack_name = clean_str(" ".join(p for p in (set_name, subset) if p))
 
     card.update(
-        number=clean_str(raw.get("id")),
+        id=clean_str(raw.get("id")),
         name=clean_str(raw.get("name")),
         rarity=clean_str(raw.get("rarity")),
         stage=clean_str(raw.get("evolution_stage")) if is_pokemon else None,

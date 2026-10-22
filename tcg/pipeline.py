@@ -37,36 +37,36 @@ def scrape_extras(
 
     Returns
     -------
-    extras : {card number: parsed page fields}
-    failures : {card number: reason}
+    extras : {card id: parsed page fields}
+    failures : {card id: reason}
     """
     extras: dict[str, dict] = {}
     failures: dict[str, str] = {}
 
     def work(card: dict):
-        number = card["number"]
+        card_id = card["id"]
         if not card["url"]:
-            return number, None, "no archive_url in JSON"
+            return card_id, None, "no archive_url in JSON"
         try:
             html = fetch.get_card_html(card["url"], refresh=refresh, delay=delay)
             if html is None:
-                return number, None, "page returned 404"
+                return card_id, None, "page returned 404"
             parsed = parse_card_page(
                 html,
                 is_trainer=is_trainer_type(card["type"]),
                 ability_name=card["ability_name"],
             )
-            return number, parsed, None
+            return card_id, parsed, None
         except Exception as e:  # keep going; report at the end
-            return number, None, f"{type(e).__name__}: {e}"
+            return card_id, None, f"{type(e).__name__}: {e}"
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        for i, (number, parsed, error) in enumerate(pool.map(work, cards), start=1):
+        for i, (card_id, parsed, error) in enumerate(pool.map(work, cards), start=1):
             if error:
-                failures[number] = error
-                print(f"  ! {number}: {error}")
+                failures[card_id] = error
+                print(f"  ! {card_id}: {error}")
             else:
-                extras[number] = parsed
+                extras[card_id] = parsed
             if i % 100 == 0 or i == len(cards):
                 print(f"  scraped {i}/{len(cards)} cards")
 
@@ -97,10 +97,10 @@ def print_report(cards: list[dict]) -> None:
         filled = sum(1 for c in cards if c[col] is not None)
         print(f"  {col:<15} {filled:>5}/{len(cards)}")
 
-    numbers = [c["number"] for c in cards]
-    dupes = {n for n in numbers if numbers.count(n) > 1}
+    card_ids = [c["id"] for c in cards]
+    dupes = {card_id for card_id in card_ids if card_ids.count(card_id) > 1}
     if dupes:
-        print(f"\nWARNING: duplicate card numbers: {sorted(dupes)}")
+        print(f"\nWARNING: duplicate card ids: {sorted(dupes)}")
 
 
 def build_cards(
@@ -113,11 +113,11 @@ def build_cards(
     workers: int = 4,
     delay: float = 0.25,
 ) -> list[dict]:
-    """Run stages 1-4 and return the finished card dicts (`only` = a single card number)."""
+    """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
     fetch.ensure_raw_json(json_path, refresh=refresh_json)
     cards = convert_all(load_raw_cards(json_path))
     if only:
-        cards = [c for c in cards if c["number"] == only]
+        cards = [c for c in cards if c["id"] == only]
     if limit:
         cards = cards[:limit]
 
@@ -125,7 +125,7 @@ def build_cards(
         print(f"Scraping {len(cards)} card pages (cached pages are reused)...")
         extras, failures = scrape_extras(cards, refresh_pages, workers, delay)
         for card in cards:
-            merge_extras(card, extras.get(card["number"]))
+            merge_extras(card, extras.get(card["id"]))
 
         if failures:
             FAILED_PAGES_PATH.parent.mkdir(parents=True, exist_ok=True)

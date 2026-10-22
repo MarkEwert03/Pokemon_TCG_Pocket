@@ -19,7 +19,7 @@ from pathlib import Path
 
 def read(path: Path) -> dict[str, dict[str, str]]:
     with open(path, encoding="utf-8", newline="") as f:
-        return {row["number"]: row for row in csv.DictReader(f)}
+        return {row["id"]: row for row in csv.DictReader(f)}
 
 
 def main() -> None:
@@ -37,11 +37,11 @@ def main() -> None:
 
     columns = [c for c in new[shared[0]] if c in old[shared[0]]] if shared else []
     mismatches: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
-    for number in shared:
+    for card_id in shared:
         for col in columns:
-            a, b = old[number][col], new[number][col]
+            a, b = old[card_id][col], new[card_id][col]
             if a != b:
-                mismatches[col].append((number, a, b))
+                mismatches[col].append((card_id, a, b))
 
     print(f"{'column':<16}{'differences':>12}")
     for col in columns:
@@ -49,8 +49,8 @@ def main() -> None:
 
     for col in args.show:
         print(f"\n--- {col}: first {args.max_show} differences (card, old, new) ---")
-        for number, a, b in mismatches[col][: args.max_show]:
-            print(f"  {number:<10} {a!r:<30} {b!r}")
+        for card_id, a, b in mismatches[col][: args.max_show]:
+            print(f"  {card_id:<10} {a!r:<30} {b!r}")
 
 
 if __name__ == "__main__":

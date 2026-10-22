@@ -19,7 +19,7 @@ USER_AGENT = "Mozilla/5.0 (compatible; Pokemon_TCG_Pocket-dataset-builder)"
 
 # Ordered list of all columns each card has in the final CSV
 COLUMNS = [
-    "number",
+    "id",
     "name",
     "rarity",
     "stage",

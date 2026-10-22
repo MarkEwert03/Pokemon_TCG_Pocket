@@ -27,7 +27,7 @@ def test_end_to_end(tmp_path, monkeypatch):
     with open(out, encoding="utf-8") as f:
         reader = csv.DictReader(f)
         assert reader.fieldnames == COLUMNS
-        rows = {r["number"]: r for r in reader}
+        rows = {r["id"]: r for r in reader}
 
     bulb = rows["A1 001"]
     assert (bulb["weakness"], bulb["retreat_cost"], bulb["generation"]) == ("Fire", "2", "1")

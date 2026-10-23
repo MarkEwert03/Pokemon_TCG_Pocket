@@ -11,7 +11,11 @@ from tcg.utils import COLORLESS
 OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
-    "A4 177": {"hp": "60"}, # Spinarak: HP is included as "/"
+    "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
+    "B3 031": {  # Larvesta: Move cost and damage not included
+        "move1_cost": "🔴",
+        "move1_damage": "20",
+    },
     # --- weakness wrong (W) / page missing (M) ---
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
     "A1 170": {"weakness": "Fighting"},  # Nidorino (W)

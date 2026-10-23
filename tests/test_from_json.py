@@ -41,6 +41,7 @@ def test_basic_pokemon():
     card = convert_card(BULBASAUR)
     assert card["id"] == "A1 001"
     assert card["name"] == "Bulbasaur"
+    assert card["category"] == "Pokemon"
     assert card["stage"] == "Basic"
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
@@ -96,6 +97,7 @@ def test_trainer_card():
     }
     card = convert_card(raw)
     assert card["type"] == "Supporter"
+    assert card["category"] == "Trainer"
     assert card["stage"] is None and card["hp"] is None
     assert card["knockout_points"] is None
     assert card["move1_cost"] is None

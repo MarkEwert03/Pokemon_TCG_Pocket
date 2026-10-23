@@ -84,6 +84,7 @@ def convert_card(
     card.update(
         id=clean_str(raw.get("id")),
         name=clean_str(raw.get("name")),
+        category=clean_str(raw.get("card_type")),
         rarity=clean_str(raw.get("rarity")),
         stage=clean_str(raw.get("evolution_stage")) if is_pokemon else None,
         hp=clean_str(raw.get("hp")) if is_pokemon else None,

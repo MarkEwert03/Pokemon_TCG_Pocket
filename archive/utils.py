@@ -7,6 +7,7 @@ DEFAULT_EMPTY = None
 COLUMNS = [
     "id",
     "base_id",
+    "category",
     "name",
     "rarity",
     "stage",

@@ -446,6 +446,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     card = {
         "id": card_id,
         "base_id": card_id,
+        "category": "Trainer" if is_trainer else "Pokemon",
         "name": name,
         "image": image,
         "rarity": rarity,

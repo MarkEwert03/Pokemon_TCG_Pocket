@@ -24,6 +24,7 @@ COLUMNS = [
     "base_id",
     "name",
     "rarity",
+    "category",
     "stage",
     "hp",
     "type",

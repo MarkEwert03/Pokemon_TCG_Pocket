@@ -111,6 +111,9 @@ Columns include:
 - `rarity`
   - Visual rarity denoted by a series of symbols
   - Examples: "◇", "☆☆☆", "♛", "✸✸"
+- `category`
+  - The type of card category this is.
+  - Current values are "Pokemon" and "Trainer".
 - `stage`
   - Evolutionary stage of Pokémon (blank for Trainers)
   - Examples: "Basic", "Stage 1", "Stage 2"
@@ -192,6 +195,7 @@ Columns include:
 {
   "id": "A1 001",
   "base_id": "A1 001",
+  "category": "Pokemon",
   "name": "Bulbasaur",
   "rarity": "◇",
   "stage": "Basic",

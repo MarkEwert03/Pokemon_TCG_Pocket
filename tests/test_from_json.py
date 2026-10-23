@@ -43,6 +43,7 @@ def test_basic_pokemon():
     assert card["name"] == "Bulbasaur"
     assert card["category"] == "Pokemon"
     assert card["stage"] == "Basic"
+    assert card["evolves_from"] is None
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
     assert card["knockout_points"] == "1"
@@ -76,6 +77,17 @@ def test_ability_pokemon_packs_moves_consecutively():
     assert card["move2_name"] is None
 
 
+def test_evolution_predecessor_uses_canonical_name_for_variants():
+    wartortle = convert_card(
+        {**BULBASAUR, "name": "Wartortle", "evolution_stage": "Stage 1"}
+    )
+    mega_blastoise = convert_card(
+        {**BULBASAUR, "name": "Mega Blastoise ex", "evolution_stage": "Stage 2"}
+    )
+    assert wartortle["evolves_from"] == "Squirtle"
+    assert mega_blastoise["evolves_from"] == "Wartortle"
+
+
 def test_trainer_card():
     raw = {
         "id": "A1 223",
@@ -99,6 +111,7 @@ def test_trainer_card():
     assert card["type"] == "Supporter"
     assert card["category"] == "Trainer"
     assert card["stage"] is None and card["hp"] is None
+    assert card["evolves_from"] is None
     assert card["knockout_points"] is None
     assert card["move1_cost"] is None
     assert card["ability_effect"] == "Draw 2 cards."

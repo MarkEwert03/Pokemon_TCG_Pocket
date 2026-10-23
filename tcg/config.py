@@ -26,6 +26,7 @@ COLUMNS = [
     "rarity",
     "category",
     "stage",
+    "evolves_from",
     "hp",
     "type",
     "weakness",

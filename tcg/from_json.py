@@ -11,6 +11,7 @@ import re
 from pathlib import Path
 
 from tcg.config import COLUMNS
+from tcg.evolutions import EVOLVES_FROM
 from tcg.utils import (
     clean_str,
     energy_cost_to_symbols,
@@ -87,6 +88,11 @@ def convert_card(
         category=clean_str(raw.get("card_type")),
         rarity=clean_str(raw.get("rarity")),
         stage=clean_str(raw.get("evolution_stage")) if is_pokemon else None,
+        evolves_from=(
+            EVOLVES_FROM.get(clean_str(raw.get("name")))
+            if is_pokemon
+            else None
+        ),
         hp=clean_str(raw.get("hp")) if is_pokemon else None,
         type=card_type,
         knockout_points=get_knockout_points(

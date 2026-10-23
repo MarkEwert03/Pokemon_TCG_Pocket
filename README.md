@@ -117,6 +117,10 @@ Columns include:
 - `stage`
   - Evolutionary stage of Pokémon (blank for Trainers)
   - Examples: "Basic", "Stage 1", "Stage 2"
+- `evolves_from`
+  - Canonical name of the Pokémon this card evolves from, when applicable.
+  - Variant cards share the same predecessor name; for example, Blastoise,
+    Blastoise ex, and Mega Blastoise ex each use "Wartortle".
 - `hp`
   - Hit points (health) of the Pokémon card.
   - Examples: "70", "100", "180"

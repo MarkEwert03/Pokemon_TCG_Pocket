@@ -41,18 +41,23 @@ def _convert_move(raw_move: dict) -> dict | None:
     Returns `None` for empty slots and for the junk entry game8 appends to every
     card (its "damage" is a pull-rate string like "1.5% | 0.2% | 0% | 0%").
     """
-    damage = clean_str(raw_move.get("damage"))
+    def clean_move_value(value: str | None) -> str | None:
+        value = clean_str(value)
+        return None if value == "-" else value
+
+    damage = clean_move_value(raw_move.get("damage"))
     if damage and "%" in damage:
         return None
-    tokens = re.split(r"[:;]", raw_move.get("energy_cost") or "")
+    energy_cost = clean_move_value(raw_move.get("energy_cost"))
+    tokens = re.split(r"[:;]", energy_cost or "")
     if any(_PACK_CODE.match(t.strip()) for t in tokens):
         return None  # pull-rate junk whose "energy" is really a list of packs
 
     move = {
-        "name": clean_str(raw_move.get("name")),
-        "cost": energy_cost_to_symbols(raw_move.get("energy_cost")),
+        "name": clean_move_value(raw_move.get("name")),
+        "cost": energy_cost_to_symbols(energy_cost),
         "damage": damage,
-        "effect": clean_str(raw_move.get("description")),
+        "effect": clean_move_value(raw_move.get("description")),
     }
     return move if any(move.values()) else None
 

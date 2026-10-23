@@ -117,6 +117,22 @@ def test_trainer_card():
     assert card["ability_effect"] == "Draw 2 cards."
 
 
+def test_trainer_placeholder_description_is_filled_by_page():
+    raw = {
+        **BULBASAUR,
+        "id": "A1 266",
+        "name": "Erika",
+        "card_type": "Trainer",
+        "pokemon_type": "Supporter",
+        "moves": [
+            {"name": "-", "damage": "-", "energy_cost": "-", "description": "-"},
+            EMPTY_MOVE,
+        ],
+    }
+    card = convert_card(raw)
+    assert card["ability_effect"] is None
+
+
 def test_tool_is_renamed():
     raw = {**BULBASAUR, "card_type": "Trainer", "pokemon_type": "Tool", "moves": []}
     assert convert_card(raw)["type"] == "Pokemon Tool"

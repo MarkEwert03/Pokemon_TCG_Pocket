@@ -157,3 +157,17 @@ def get_classification(name: str | None, card_type: str | None) -> str | None:
     if normalized_name in ULTRA_BEASTS:
         return "Ultra Beast"
     return None
+
+
+def get_knockout_points(
+    name: str | None, card_type: str | None, ex: str | None = None
+) -> str | None:
+    """Return string-valued prize points for a Pokémon, or None for non-Pokémon cards."""
+    if not name or is_trainer_type(card_type):
+        return None
+    normalized_name = name.strip()
+    if normalized_name.lower().startswith("mega ") or (ex and "mega" in ex.lower()):
+        return "3"
+    if (ex and ex.strip()) or re.search(r"\s+ex$", normalized_name, re.IGNORECASE):
+        return "2"
+    return "1"

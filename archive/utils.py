@@ -14,6 +14,7 @@ COLUMNS = [
     "weakness",
     "retreat_cost",
     "classification",
+    "knockout_points",
     "generation",
     "illustrator",
     "pack_name",

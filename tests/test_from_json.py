@@ -44,6 +44,7 @@ def test_basic_pokemon():
     assert card["stage"] == "Basic"
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
+    assert card["knockout_points"] == "1"
     assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
     assert card["move1_name"] == "Vine Whip"
     assert card["move1_cost"] == "🟢🔘"
@@ -95,6 +96,7 @@ def test_trainer_card():
     card = convert_card(raw)
     assert card["type"] == "Supporter"
     assert card["stage"] is None and card["hp"] is None
+    assert card["knockout_points"] is None
     assert card["move1_cost"] is None
     assert card["ability_effect"] == "Draw 2 cards."
 
@@ -102,3 +104,12 @@ def test_trainer_card():
 def test_tool_is_renamed():
     raw = {**BULBASAUR, "card_type": "Trainer", "pokemon_type": "Tool", "moves": []}
     assert convert_card(raw)["type"] == "Pokemon Tool"
+
+
+def test_ex_and_mega_ex_knockout_points():
+    ex_card = convert_card({**BULBASAUR, "name": "Charizard ex", "ex": "ex"})
+    mega_ex_card = convert_card(
+        {**BULBASAUR, "name": "Mega Charizard Y ex", "ex": "Mega Evolution ex"}
+    )
+    assert ex_card["knockout_points"] == "2"
+    assert mega_ex_card["knockout_points"] == "3"

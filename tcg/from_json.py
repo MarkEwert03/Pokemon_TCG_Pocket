@@ -11,7 +11,12 @@ import re
 from pathlib import Path
 
 from tcg.config import COLUMNS
-from tcg.utils import clean_str, energy_cost_to_symbols, is_trainer_type
+from tcg.utils import (
+    clean_str,
+    energy_cost_to_symbols,
+    get_knockout_points,
+    is_trainer_type,
+)
 
 
 # Pack codes like "A1-M", "A4b", "P-A" appear in the junk entry's energy_cost
@@ -77,6 +82,9 @@ def convert_card(raw: dict) -> dict[str, str | None]:
         stage=clean_str(raw.get("evolution_stage")) if is_pokemon else None,
         hp=clean_str(raw.get("hp")) if is_pokemon else None,
         type=card_type,
+        knockout_points=get_knockout_points(
+            clean_str(raw.get("name")), card_type, clean_str(raw.get("ex"))
+        ),
         pack_name=pack_name,
         ability_name=clean_str(raw.get("ability")),
         image=clean_str(raw.get("image_url")),

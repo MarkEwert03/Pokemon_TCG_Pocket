@@ -28,7 +28,10 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 git clone https://github.com/MarkEwert03/Pokemon_TCG_Pocket
 cd Pokemon_TCG_Pocket
 python -m venv .venv
-source .venv/bin/activate   # On Windows: .venv\Scripts\activate
+
+source .venv/bin/activate
+# On Windows: .venv\Scripts\activate
+
 pip install -r requirements.txt
 ```
 
@@ -37,7 +40,7 @@ pip install -r requirements.txt
 From the project root:
 
 ```bash
-python run.py                       # full pipeline -> data/full.csv
+python run.py # full pipeline -> data/full.csv
 ```
 
 Useful options:
@@ -57,7 +60,7 @@ At the end of every run a report shows how many values were filled per column. A
 
 ```bash
 pip install -r requirements-dev.txt
-python -m pytest                                  # unit tests (no network needed)
+python -m pytest # unit tests (no network needed)
 python scripts/compare_csv.py old.csv data/full.csv --show weakness retreat_cost
 ```
 
@@ -123,6 +126,9 @@ Columns include:
 - `classification`
   - The card's broader classification, when applicable.
   - Examples: "Ultra Beast", "Ancient", "Future", blank
+- `knockout_points`
+  - String-valued points awarded for knocking out the card.
+  - Regular Pokémon and Fossils: `"1"`; Pokémon ex: `"2"`; Mega ex Pokémon: `"3"`; non-Pokémon: blank
 - `generation`
   - The mainline game generation the Pokémon originates from.
   - Examples: "1", "5", "9"
@@ -187,6 +193,7 @@ Columns include:
   "weakness": "Fire",
   "retreat_cost": "1",
   "classification": null,
+  "knockout_points": "1",
   "generation": "1",
   "illustrator": "Narumi Sato",
   "pack_name": "Genetic Apex (A1) Mewtwo",

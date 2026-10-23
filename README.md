@@ -136,7 +136,7 @@ Columns include:
 - `classification`
   - The card's broader classification, when applicable.
   - Examples: "Ultra Beast", "Ancient", "Future", blank
-- `knockout_points`
+- `ko`
   - String-valued points awarded for knocking out the card.
   - Regular Pokémon and Fossils: `"1"`; Pokémon ex: `"2"`; Mega ex Pokémon: `"3"`; non-Pokémon: blank
 - `generation`
@@ -208,7 +208,7 @@ Columns include:
   "weakness": "Fire",
   "retreat_cost": "1",
   "classification": null,
-  "knockout_points": "1",
+  "ko": "1",
   "expansion": "Genetic Apex (A1)",
   "generation": "1",
   "illustrator": "Narumi Sato",

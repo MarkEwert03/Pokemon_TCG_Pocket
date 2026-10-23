@@ -100,7 +100,7 @@ def convert_card(
         ),
         hp=clean_str(raw.get("hp")) if is_pokemon else None,
         type=card_type,
-        knockout_points=get_knockout_points(
+        ko=get_knockout_points(
             clean_str(raw.get("name")), card_type, clean_str(raw.get("ex"))
         ),
         expansion=set_name,

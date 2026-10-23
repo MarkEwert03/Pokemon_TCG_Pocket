@@ -32,7 +32,7 @@ COLUMNS = [
     "weakness",
     "retreat_cost",
     "classification",
-    "knockout_points",
+    "ko",
     "generation",
     "illustrator",
     "expansion",

@@ -46,7 +46,7 @@ def test_basic_pokemon():
     assert card["evolves_from"] is None
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
-    assert card["knockout_points"] == "1"
+    assert card["ko"] == "1"
     assert card["expansion"] == "Genetic Apex (A1)"
     assert card["pack_name"] == "Mewtwo"
     assert card["move1_name"] == "Vine Whip"
@@ -127,7 +127,7 @@ def test_trainer_card():
     assert card["category"] == "Trainer"
     assert card["stage"] is None and card["hp"] is None
     assert card["evolves_from"] is None
-    assert card["knockout_points"] is None
+    assert card["ko"] is None
     assert card["move1_cost"] is None
     assert card["ability_effect"] == "Draw 2 cards."
 
@@ -165,10 +165,10 @@ def test_any_subset_is_normalized():
     assert convert_card(raw)["pack_name"] == "Any"
 
 
-def test_ex_and_mega_ex_knockout_points():
+def test_ex_and_mega_ex_ko():
     ex_card = convert_card({**BULBASAUR, "name": "Charizard ex", "ex": "ex"})
     mega_ex_card = convert_card(
         {**BULBASAUR, "name": "Mega Charizard Y ex", "ex": "Mega Evolution ex"}
     )
-    assert ex_card["knockout_points"] == "2"
-    assert mega_ex_card["knockout_points"] == "3"
+    assert ex_card["ko"] == "2"
+    assert mega_ex_card["ko"] == "3"

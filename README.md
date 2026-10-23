@@ -138,9 +138,12 @@ Columns include:
 - `illustrator`
   - The name of the card's illustrator.
   - Examples: "Narumi Sato", "HYOGONOSUKE", "0313"
+- `expansion`
+  - The main expansion containing the card.
+  - Examples: "Genetic Apex (A1)", "Eevee Grove (A3b)"
 - `pack_name`
-  - The name of the pack in which the card appears.
-  - Examples: "Genetic Apex (A1) Mewtwo", "Space-Time Smackdown (A2) Any", "Promo Promo-A"
+  - The pack within the expansion. Single-pack expansions and generic packs use "Any".
+  - Examples: "Mewtwo", "Pikachu", "Charizard", "Any"
 - `pack_points`
   - The number of pack points required to exchange for this card.
   - Examples: "35", "500", "2500"
@@ -198,9 +201,10 @@ Columns include:
   "retreat_cost": "1",
   "classification": null,
   "knockout_points": "1",
+  "expansion": "Genetic Apex (A1)",
   "generation": "1",
   "illustrator": "Narumi Sato",
-  "pack_name": "Genetic Apex (A1) Mewtwo",
+  "pack_name": "Mewtwo",
   "pack_points": "35",
   "ability_name": null,
   "ability_effect": null,

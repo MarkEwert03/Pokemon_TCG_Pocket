@@ -56,7 +56,9 @@ def _convert_move(raw_move: dict) -> dict | None:
     return move if any(move.values()) else None
 
 
-def convert_card(raw: dict) -> dict[str, str | None]:
+def convert_card(
+    raw: dict, single_pack_expansions: set[str] | None = None
+) -> dict[str, str | None]:
     """
     Convert one raw JSON card into a dict with exactly the keys in `COLUMNS`.
 
@@ -73,7 +75,11 @@ def convert_card(raw: dict) -> dict[str, str | None]:
 
     set_name = clean_str(raw.get("set"))
     subset = clean_str(raw.get("subset"))
-    pack_name = clean_str(" ".join(p for p in (set_name, subset) if p))
+    single_pack_expansions = single_pack_expansions or set()
+    if set_name in single_pack_expansions or (subset and subset.startswith("Any (")):
+        pack_name = "Any"
+    else:
+        pack_name = subset
 
     card.update(
         id=clean_str(raw.get("id")),
@@ -85,6 +91,7 @@ def convert_card(raw: dict) -> dict[str, str | None]:
         knockout_points=get_knockout_points(
             clean_str(raw.get("name")), card_type, clean_str(raw.get("ex"))
         ),
+        expansion=set_name,
         pack_name=pack_name,
         ability_name=clean_str(raw.get("ability")),
         image=clean_str(raw.get("image_url")),
@@ -108,4 +115,13 @@ def convert_card(raw: dict) -> dict[str, str | None]:
 
 
 def convert_all(raw_cards: list[dict]) -> list[dict[str, str | None]]:
-    return [convert_card(c) for c in raw_cards]
+    subsets_by_expansion: dict[str, set[str]] = {}
+    for raw in raw_cards:
+        expansion = clean_str(raw.get("set"))
+        subset = clean_str(raw.get("subset"))
+        if expansion and subset:
+            subsets_by_expansion.setdefault(expansion, set()).add(subset)
+    single_pack_expansions = {
+        expansion for expansion, subsets in subsets_by_expansion.items() if len(subsets) == 1
+    }
+    return [convert_card(c, single_pack_expansions) for c in raw_cards]

@@ -16,6 +16,7 @@ COLUMNS = [
     "retreat_cost",
     "classification",
     "knockout_points",
+    "expansion",
     "generation",
     "illustrator",
     "pack_name",

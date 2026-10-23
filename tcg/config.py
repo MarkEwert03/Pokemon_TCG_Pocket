@@ -33,6 +33,7 @@ COLUMNS = [
     "knockout_points",
     "generation",
     "illustrator",
+    "expansion",
     "pack_name",
     "pack_points",
     "ability_name",

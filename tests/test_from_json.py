@@ -45,7 +45,8 @@ def test_basic_pokemon():
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
     assert card["knockout_points"] == "1"
-    assert card["pack_name"] == "Genetic Apex (A1) Mewtwo"
+    assert card["expansion"] == "Genetic Apex (A1)"
+    assert card["pack_name"] == "Mewtwo"
     assert card["move1_name"] == "Vine Whip"
     assert card["move1_cost"] == "🟢🔘"
     assert card["move1_damage"] == "40"
@@ -104,6 +105,18 @@ def test_trainer_card():
 def test_tool_is_renamed():
     raw = {**BULBASAUR, "card_type": "Trainer", "pokemon_type": "Tool", "moves": []}
     assert convert_card(raw)["type"] == "Pokemon Tool"
+
+
+def test_single_pack_expansion_uses_any_pack_name():
+    raw = {**BULBASAUR, "set": "Eevee Grove", "subset": "Eevee"}
+    card = convert_card(raw, {"Eevee Grove"})
+    assert card["expansion"] == "Eevee Grove"
+    assert card["pack_name"] == "Any"
+
+
+def test_any_subset_is_normalized():
+    raw = {**BULBASAUR, "subset": "Any (Genetic Apex)"}
+    assert convert_card(raw)["pack_name"] == "Any"
 
 
 def test_ex_and_mega_ex_knockout_points():

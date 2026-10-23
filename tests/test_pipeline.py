@@ -37,6 +37,23 @@ def test_end_to_end(tmp_path, monkeypatch):
     assert rows["A1 183"]["move1_damage"] == "40"  # override beat the JSON's 70
 
 
+def test_assign_base_ids_uses_first_matching_signature():
+    cards = [
+        {"id": "A1 055", "name": "Blastoise", "hp": "150", "move1_name": "Hydro Pump"},
+        {"id": "P-A 029", "name": "Blastoise", "hp": "150", "move1_name": "Hydro Pump"},
+        {"id": "B1a 019", "name": "Blastoise", "hp": "150", "move1_name": "Double Splash"},
+        {"id": "B1a 020", "name": "Mega Blastoise ex", "hp": "230", "move1_name": "Triple Bombardment"},
+        {"id": "B1a 084", "name": "Mega Blastoise ex", "hp": "230", "move1_name": "Triple Bombardment"},
+    ]
+
+    pipeline.assign_base_ids(cards)
+
+    assert cards[0]["base_id"] == "A1 055"
+    assert cards[1]["base_id"] == "A1 055"
+    assert cards[2]["base_id"] == "B1a 019"
+    assert cards[4]["base_id"] == "B1a 020"
+
+
 def test_failed_page_does_not_stop_the_run(tmp_path, monkeypatch):
     json_path = _write_json(tmp_path, [BULBASAUR])
     monkeypatch.setattr(pipeline, "FAILED_PAGES_PATH", tmp_path / "failed.txt")

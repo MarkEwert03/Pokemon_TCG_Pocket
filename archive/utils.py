@@ -6,6 +6,7 @@ DEFAULT_EMPTY = None
 # Ordered list of all columns each card should have
 COLUMNS = [
     "id",
+    "base_id",
     "name",
     "rarity",
     "stage",

@@ -102,6 +102,9 @@ Columns include:
 - `id`
   - The card’s unique identifier combining set and index.
   - Examples: "A1 001", "A2b 107", "P-A 034"
+- `base_id`
+  - The ID of the first card with the same name, HP, and first move; equivalent reprints and variants point to it.
+  - Examples: "A1 055" for base Blastoise, Promo-A Blastoise, and shiny Blastoise
 - `name`
   - The full name of the Pokémon or trainer.
   - Examples: "Bulbasaur", "Gengar ex", "Brock", "Rocky Helmet"
@@ -185,6 +188,7 @@ Columns include:
 ```json
 {
   "id": "A1 001",
+  "base_id": "A1 001",
   "name": "Bulbasaur",
   "rarity": "◇",
   "stage": "Basic",

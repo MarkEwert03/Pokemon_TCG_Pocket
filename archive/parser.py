@@ -445,6 +445,7 @@ def extract_card(card_html: bs4.element.Tag) -> dict[str, str]:
     # Create dictionary with raw data
     card = {
         "id": card_id,
+        "base_id": card_id,
         "name": name,
         "image": image,
         "rarity": rarity,

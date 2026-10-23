@@ -82,6 +82,15 @@ def merge_extras(card: dict, extra: dict | None) -> None:
             card[field] = extra[field]
 
 
+def assign_base_ids(cards: list[dict]) -> None:
+    """Point equivalent cards to the first card with the same core signature."""
+    base_ids: dict[tuple[str | None, str | None, str | None], str] = {}
+    for card in cards:
+        signature = (card["name"], card["hp"], card["move1_name"])
+        base_id = base_ids.setdefault(signature, card["id"])
+        card["base_id"] = base_id
+
+
 def write_csv(cards: list[dict], output_file: Path) -> None:
     output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, "w", newline="", encoding="utf-8") as f:
@@ -116,6 +125,7 @@ def build_cards(
     """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
     fetch.ensure_raw_json(json_path, refresh=refresh_json)
     cards = convert_all(load_raw_cards(json_path))
+    assign_base_ids(cards)
     if only:
         cards = [c for c in cards if c["id"] == only]
     if limit:

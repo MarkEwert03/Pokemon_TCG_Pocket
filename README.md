@@ -53,8 +53,21 @@ Useful options:
 | `python run.py --limit 20` | Only process the first 20 cards (good for testing). |
 | `python run.py --json path/to/file.json` | Use a JSON file you already have. |
 | `python run.py --debug "A1 001"` | Print one finished card as JSON. |
+| `python run.py --validate` | Validate the final `data/full.csv` and write `data/validation_final.log`. |
 
 At the end of every run a report shows how many values were filled per column. A column that's suddenly near 0 means a parser broke. Cards whose page failed to download are listed in `data/failed_pages.txt`; just re-run to retry them (successful pages are cached).
+
+Before manual overrides are applied, the pipeline checks required-field
+invariants and writes any missing values to `data/validation.log`. The report
+is diagnostic and does not stop CSV generation, so it distinguishes source or
+parser gaps from values supplied later by overrides. It includes universal
+fields required for every card, Pokémon-only fields, and the Trainer
+`ability_effect` field.
+
+After overrides and CSV writing, the same checks run against the final card
+records. A successful run prints `Final required-field validation passed` and
+writes an empty-findings report to `data/validation_final.log`. If gaps remain,
+the report lists them and the run still completes so the CSV can be inspected.
 
 ## 💻 Developers
 

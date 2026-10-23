@@ -3,6 +3,11 @@ import json
 
 from tcg import fetch, pipeline
 from tcg.config import COLUMNS
+from tcg.validation import (
+    missing_required_fields,
+    validate_csv_file,
+    write_validation_log,
+)
 from tests.test_card_page import ATTACK_ONLY, page
 from tests.test_from_json import BULBASAUR, EMPTY_MOVE
 
@@ -66,3 +71,57 @@ def test_failed_page_does_not_stop_the_run(tmp_path, monkeypatch):
 
     assert cards[0]["name"] == "Bulbasaur" and cards[0]["generation"] is None
     assert "A1 001" in (tmp_path / "failed.txt").read_text()
+
+
+def test_required_fields_depend_on_card_category():
+    pokemon = {"category": "Pokemon", "id": "A1 001", "move1_name": ""}
+    trainer = {"category": "Trainer", "id": "A1 223", "ability_effect": ""}
+
+    assert missing_required_fields(pokemon) == [
+        "base_id", "name", "rarity", "type", "generation", "illustrator",
+        "expansion", "pack_name", "image", "url", "stage", "hp",
+        "retreat_cost", "ko", "move1_name", "move1_cost",
+    ]
+    assert missing_required_fields(trainer) == [
+        "base_id", "name", "rarity", "type", "generation", "illustrator",
+        "expansion", "pack_name", "image", "url", "ability_effect",
+    ]
+
+
+def test_pipeline_writes_pre_override_validation_log(tmp_path):
+    card = {
+        "id": "A1 001",
+        "name": "Bulbasaur",
+        "category": "Pokemon",
+        "move1_name": "",
+    }
+    log_path = tmp_path / "validation.log"
+    findings = write_validation_log([card], log_path)
+
+    assert ("A1 001", "Bulbasaur", "move1_name") in findings
+    assert "A1 001\tBulbasaur\tmove1_name" in log_path.read_text()
+
+
+def test_validation_log_can_describe_final_stage(tmp_path):
+    log_path = tmp_path / "validation_final.log"
+    findings = write_validation_log(
+        [{"id": "A1 001", "name": "Bulbasaur", "category": "Pokemon"}],
+        log_path,
+        stage="Final",
+    )
+
+    assert findings
+    assert log_path.read_text().startswith("Final required-field validation")
+
+
+def test_validate_csv_file_reads_final_output(tmp_path):
+    csv_path = tmp_path / "full.csv"
+    csv_path.write_text(
+        "id,name,category\nA1 001,Bulbasaur,Pokemon\n", encoding="utf-8"
+    )
+    log_path = tmp_path / "validation_final.log"
+
+    findings = validate_csv_file(csv_path, log_path)
+
+    assert ("A1 001", "Bulbasaur", "base_id") in findings
+    assert log_path.read_text().startswith("Final required-field validation")

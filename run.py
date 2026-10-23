@@ -4,8 +4,14 @@ import argparse
 import json
 from pathlib import Path
 
-from tcg.config import NO_PAGES_OUTPUT_CSV_PATH, OUTPUT_CSV_PATH, RAW_JSON_PATH
+from tcg.config import (
+    FINAL_VALIDATION_LOG_PATH,
+    NO_PAGES_OUTPUT_CSV_PATH,
+    OUTPUT_CSV_PATH,
+    RAW_JSON_PATH,
+)
 from tcg.pipeline import build_cards, run
+from tcg.validation import validate_csv_file
 
 
 def main() -> None:
@@ -19,7 +25,25 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=4, help="Parallel page downloads (default 4)")
     p.add_argument("--delay", type=float, default=0.25, help="Seconds to wait after each download (default 0.25)")
     p.add_argument("--debug", metavar="CARD_ID", help='Print one finished card as JSON, e.g. --debug "A1 001"')
+    p.add_argument(
+        "--validate",
+        action="store_true",
+        help="Validate the final CSV and write data/validation_final.log",
+    )
     args = p.parse_args()
+
+    if args.validate:
+        findings = validate_csv_file(OUTPUT_CSV_PATH, FINAL_VALIDATION_LOG_PATH)
+        if findings:
+            print(
+                f"Final validation found {len(findings)} required-field gaps. "
+                f"See {FINAL_VALIDATION_LOG_PATH}."
+            )
+            for card_id, name, field in findings:
+                print(f"  {card_id}\t{name}\t{field}")
+            raise SystemExit(1)
+        print("Final validation passed: no required-field gaps found.")
+        return
 
     common = dict(
         json_path=args.json,

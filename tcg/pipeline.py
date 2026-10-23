@@ -17,13 +17,16 @@ from tcg.card_page import parse_card_page
 from tcg.config import (
     COLUMNS,
     FAILED_PAGES_PATH,
+    FINAL_VALIDATION_LOG_PATH,
     OUTPUT_CSV_PATH,
     PAGE_FIELDS,
     RAW_JSON_PATH,
+    VALIDATION_LOG_PATH,
 )
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_overrides
 from tcg.utils import get_classification, is_trainer_type
+from tcg.validation import validate_csv_file, write_validation_log
 
 
 def scrape_extras(
@@ -146,6 +149,10 @@ def build_cards(
         elif FAILED_PAGES_PATH.exists():
             FAILED_PAGES_PATH.unlink()
 
+    findings = write_validation_log(cards, VALIDATION_LOG_PATH)
+    if findings:
+        print(f"{len(findings)} required-field gaps before overrides -> {VALIDATION_LOG_PATH}")
+
     for card in cards:
         card["classification"] = get_classification(card["name"], card["type"])
         apply_overrides(card)
@@ -155,5 +162,13 @@ def build_cards(
 def run(output_file: Path = OUTPUT_CSV_PATH, **kwargs) -> None:
     cards = build_cards(**kwargs)
     write_csv(cards, output_file)
+    final_findings = validate_csv_file(output_file, FINAL_VALIDATION_LOG_PATH)
     print_report(cards)
     print(f"\nCSV file created: {output_file}")
+    if final_findings:
+        print(
+            f"{len(final_findings)} required-field gaps remain after overrides "
+            f"-> {FINAL_VALIDATION_LOG_PATH}"
+        )
+    else:
+        print("Final required-field validation passed: no gaps remain.")

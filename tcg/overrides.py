@@ -9,13 +9,15 @@ Add a short comment saying *why* each entry exists.
 from tcg.utils import COLORLESS
 
 OVERRIDES: dict[str, dict[str, str]] = {
-    # --- wrong values on game8 ---
+    # --- wrong or missing values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
     "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
     "B3 031": {  # Larvesta: Move cost and damage not included
         "move1_cost": "🔴",
         "move1_damage": "20",
     },
+    "B2a 115": {"type": "Supporter"}, # Arven: Missing type
+    "B2b 117": {"type": "Pokemon Tool"}, # Metal Core Barrier: Missing type
     # --- weakness wrong (W) / page missing (M) ---
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
     "A1 170": {"weakness": "Fighting"},  # Nidorino (W)

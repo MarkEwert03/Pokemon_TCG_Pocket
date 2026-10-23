@@ -84,6 +84,18 @@ def test_trainer_skips_weakness_and_retreat_and_takes_text():
     assert out["generation"] == "1"
 
 
+def test_trainer_effect_is_read_from_card_info_table():
+    html = page("").replace(
+        "</table>",
+        "<tr><th>Effect</th></tr>"
+        "<tr><td>If the attached Pokemon is damaged, do 20 damage.</td></tr>"
+        "</table>",
+        1,
+    )
+    out = parse_card_page(html, is_trainer=True)
+    assert out["ability_effect"] == "If the attached Pokemon is damaged, do 20 damage."
+
+
 def test_zero_retreat_cost_and_missing_pieces():
     html = page(ATTACK_ONLY).replace(
         '<a><img alt="Colorless"></a><a><img alt="Colorless"></a>', "-"

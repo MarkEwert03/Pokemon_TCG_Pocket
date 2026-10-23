@@ -66,6 +66,13 @@ def _value_below(table: Tag, label: str) -> Tag | None:
     return None
 
 
+def _extract_labeled_text(table: Tag | None, label: str) -> str | None:
+    """Return the text in the value row immediately below a labeled row."""
+    if table is None:
+        return None
+    return _text(_value_below(table, label))
+
+
 def _find_moves_table(soup: BeautifulSoup) -> Tag | None:
     """The table under the '<Name> Moves and Abilities' heading."""
     heading = soup.find(
@@ -181,7 +188,11 @@ def parse_card_page(
     result["classification"] = "Ultra Beast" if "ultra beast" in scan else None
 
     if is_trainer:
-        result["ability_effect"] = _extract_trainer_text(moves)
+        # Trainer pages store their text in the card-info table under
+        # "Effect", rather than in a Moves and Abilities table.
+        result["ability_effect"] = (
+            _extract_labeled_text(info, "Effect") or _extract_trainer_text(moves)
+        )
     elif ability_name:
         result["ability_effect"] = _extract_ability_effect(moves, ability_name)
 

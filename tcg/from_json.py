@@ -117,7 +117,8 @@ def convert_card(
         # ability_effect (README convention); otherwise the page scrape fills it.
         card["ability_effect"] = next((m["effect"] for m in moves if m["effect"]), None)
     else:
-        for i, move in enumerate(moves[:2], start=1):
+        pokemon_moves = [move for move in moves if move["name"]][:2]
+        for i, move in enumerate(pokemon_moves, start=1):
             card[f"move{i}_name"] = move["name"]
             card[f"move{i}_cost"] = move["cost"]
             card[f"move{i}_damage"] = move["damage"]

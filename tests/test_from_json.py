@@ -77,6 +77,21 @@ def test_ability_pokemon_packs_moves_consecutively():
     assert card["move2_name"] is None
 
 
+def test_empty_second_move_cannot_populate_move2_fields():
+    raw = {
+        **BULBASAUR,
+        "moves": [
+            {"name": "Vine Whip", "damage": "40", "energy_cost": "Grass", "description": ""},
+            {"name": "", "damage": "", "energy_cost": "-", "description": ""},
+        ],
+    }
+    card = convert_card(raw)
+    assert card["move2_name"] is None
+    assert card["move2_cost"] is None
+    assert card["move2_damage"] is None
+    assert card["move2_effect"] is None
+
+
 def test_evolution_predecessor_uses_canonical_name_for_variants():
     wartortle = convert_card(
         {**BULBASAUR, "name": "Wartortle", "evolution_stage": "Stage 1"}

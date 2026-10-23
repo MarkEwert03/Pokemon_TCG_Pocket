@@ -31,6 +31,9 @@ OVERRIDES: dict[str, dict[str, str]] = {
     "A1a 065": {"generation": "9"},  # Mythical Slab
     "A1a 066": {"generation": "9"},  # Budding Expeditioner
     "A1a 080": {"generation": "9"},  # Budding Expeditioner
+    # --- type wrong on game8 (attacks use Grass energy; the card's other print is Grass) ---
+    "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
+    "B1a 070": {"type": "Grass"},  # Ariados: listed as Darkness (B1a 006 is Grass)
     # --- stage missing on game8 (B2 194-233 are alternate arts; copied from the original print) ---
     "B2 194": {"stage": "Basic"},  # Teal Mask Ogerpon ex
     "B2 195": {"stage": "Basic"},  # Blacephalon ex
@@ -163,6 +166,11 @@ OVERRIDES: dict[str, dict[str, str]] = {
     #   B4 068 074 168
     #   B4a 063 077
     #   B4b 013 108 109 110 188 246 306 307 308 358
+    # TODO: spot-check type against the card art. Nothing in the data confirms these (attacks cost
+    #   only Colorless, single print) and they differ from the species' usual type; likely genuine:
+    #   A1 085 086 | A2 121 | A2a 035 | A3a 027 | A4 062 063 073 | P-B 022 | B2a 010 | B3a 057
+    #   B3b 026 | B4 077
+    # TODO: Ariados B1a 006 vs B1a 070 disagree on retreat_cost (2 vs 1); one of them is wrong.
     # TODO: incomplete attack/ability data on game8:
     #   A2b 041 Hitmonchan: move1_name missing (damage 90 is present)
     #   B4b 009 Celebi: ability "Time Recall" has no effect text

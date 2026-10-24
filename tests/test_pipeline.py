@@ -160,3 +160,22 @@ def test_override_audit_classifies_source_values(tmp_path, monkeypatch):
     assert "REDUNDANT\tA1 001\tBulbasaur\tstage\tBasic" in report
     assert "FILLING_MISSING\tA1 001\tBulbasaur\thp\t<missing>" in report
     assert "ACTIVE_CORRECTION\tA1 001\tBulbasaur\tillustrator\tOther Artist" in report
+
+
+def test_build_cards_can_skip_manual_overrides(tmp_path, monkeypatch):
+    json_path = _write_json(tmp_path, [BULBASAUR])
+    monkeypatch.setattr(fetch, "get_card_html", lambda url, **kw: page(ATTACK_ONLY))
+    monkeypatch.setattr(
+        pipeline,
+        "apply_overrides",
+        lambda card: card.update({"hp": "999"}),
+    )
+
+    source_cards = pipeline.build_cards(
+        json_path=json_path,
+        workers=1,
+        delay=0,
+        apply_manual_overrides=False,
+    )
+
+    assert source_cards[0]["hp"] == "70"

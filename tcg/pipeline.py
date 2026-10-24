@@ -125,6 +125,7 @@ def build_cards(
     only: str | None = None,
     workers: int = 4,
     delay: float = 0.25,
+    apply_manual_overrides: bool = True,
 ) -> list[dict]:
     """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
     fetch.ensure_raw_json(json_path, refresh=refresh_json)
@@ -163,7 +164,8 @@ def build_cards(
 
     for card in cards:
         card["classification"] = get_classification(card["name"], card["type"])
-        apply_overrides(card)
+        if apply_manual_overrides:
+            apply_overrides(card)
     return cards
 
 

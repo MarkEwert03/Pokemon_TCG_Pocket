@@ -54,6 +54,7 @@ Useful options:
 | `python run.py --json path/to/file.json` | Use a JSON file you already have. |
 | `python run.py --debug "A1 001"` | Print one finished card as JSON. |
 | `python run.py --validate` | Validate the final `data/full.csv` and write `data/validation_final.log`. |
+| `python run.py --audit-overrides` | Audit overrides against the complete pre-override source data. |
 
 At the end of every run a report shows how many values were filled per column. A column that's suddenly near 0 means a parser broke. Cards whose page failed to download are listed in `data/failed_pages.txt`; just re-run to retry them (successful pages are cached).
 
@@ -69,8 +70,10 @@ records. A successful run prints `Final required-field validation passed` and
 writes an empty-findings report to `data/validation_final.log`. If gaps remain,
 the report lists them and the run still completes so the CSV can be inspected.
 
-Each run also audits manual entries in `tcg/overrides.py` before applying them
-and writes `data/override_audit.log`. Each override is classified as
+Each full pipeline run also audits manual entries in `tcg/overrides.py` before
+applying them and writes `data/override_audit.log`. You can run the audit
+without writing a new CSV using `python run.py --audit-overrides`; this loads
+the complete source dataset and reuses cached pages. Each override is classified as
 `REDUNDANT` when the source already has the expected value,
 `FILLING_MISSING` when the source is blank, or `ACTIVE_CORRECTION` when the
 source has a different non-blank value. A redundant entry can be safely

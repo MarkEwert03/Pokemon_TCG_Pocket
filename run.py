@@ -7,11 +7,12 @@ from pathlib import Path
 from tcg.config import (
     FINAL_VALIDATION_LOG_PATH,
     NO_PAGES_OUTPUT_CSV_PATH,
+    OVERRIDE_AUDIT_LOG_PATH,
     OUTPUT_CSV_PATH,
     RAW_JSON_PATH,
 )
 from tcg.pipeline import build_cards, run
-from tcg.validation import validate_csv_file
+from tcg.validation import audit_overrides, validate_csv_file
 
 
 def main() -> None:
@@ -30,6 +31,11 @@ def main() -> None:
         action="store_true",
         help="Validate the final CSV and write data/validation_final.log",
     )
+    p.add_argument(
+        "--audit-overrides",
+        action="store_true",
+        help="Audit all overrides against the complete pre-override source data",
+    )
     args = p.parse_args()
 
     if args.validate:
@@ -43,6 +49,26 @@ def main() -> None:
                 print(f"  {card_id}\t{name}\t{field}")
             raise SystemExit(1)
         print("Final validation passed: no required-field gaps found.")
+        return
+
+    if args.audit_overrides:
+        cards = build_cards(
+            json_path=args.json,
+            refresh_json=args.refresh_json,
+            refresh_pages=args.refresh_pages,
+            skip_pages=args.no_pages,
+            workers=args.workers,
+            delay=args.delay,
+            apply_manual_overrides=False,
+        )
+        counts = audit_overrides(cards, OVERRIDE_AUDIT_LOG_PATH)
+        print(
+            f"Override audit complete: {counts['REDUNDANT']} redundant, "
+            f"{counts['FILLING_MISSING']} filling missing, "
+            f"{counts['ACTIVE_CORRECTION']} active corrections, "
+            f"{counts['CARD_NOT_FOUND']} cards not found."
+        )
+        print("See data/override_audit.log.")
         return
 
     common = dict(

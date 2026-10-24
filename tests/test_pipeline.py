@@ -5,6 +5,7 @@ from tcg import fetch, pipeline
 from tcg.config import COLUMNS
 from tcg.validation import (
     audit_overrides,
+    find_battle_attribute_mismatches,
     missing_required_fields,
     validate_csv_file,
     write_validation_log,
@@ -114,6 +115,43 @@ def test_validation_log_can_describe_final_stage(tmp_path):
 
     assert findings
     assert log_path.read_text().startswith("Final required-field validation")
+
+
+def test_base_id_battle_attributes_must_match():
+    cards = [
+        {
+            "id": "A1 001",
+            "base_id": "A1 001",
+            "stage": "Basic",
+            "type": "Grass",
+            "move1_name": "Tackle",
+        },
+        {
+            "id": "P-A 001",
+            "base_id": "A1 001",
+            "stage": "Stage 1",
+            "type": "Grass",
+            "move1_name": "Tackle",
+        },
+    ]
+
+    assert find_battle_attribute_mismatches(cards) == [
+        ("A1 001", "P-A 001", "stage", "Basic", "Stage 1"),
+    ]
+
+
+def test_validation_log_includes_base_id_battle_mismatches(tmp_path):
+    log_path = tmp_path / "validation.log"
+    cards = [
+        {"id": "A1 001", "base_id": "A1 001", "type": "Grass"},
+        {"id": "P-A 001", "base_id": "A1 001", "type": "Fire"},
+    ]
+
+    findings = write_validation_log(cards, log_path)
+
+    assert ("A1 001", "P-A 001", "type", "Grass", "Fire") in findings
+    assert "base_id\tcard_id\tattribute\tcanonical_value\tcard_value" in log_path.read_text()
+    assert "A1 001\tP-A 001\ttype\tGrass\tFire" in log_path.read_text()
 
 
 def test_validate_csv_file_reads_final_output(tmp_path):

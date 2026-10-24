@@ -42,11 +42,11 @@ def main() -> None:
         findings = validate_csv_file(OUTPUT_CSV_PATH, FINAL_VALIDATION_LOG_PATH)
         if findings:
             print(
-                f"Final validation found {len(findings)} required-field gaps. "
+                f"Final validation found {len(findings)} issue(s). "
                 f"See {FINAL_VALIDATION_LOG_PATH}."
             )
-            for card_id, name, field in findings:
-                print(f"  {card_id}\t{name}\t{field}")
+            for finding in findings:
+                print(f"  {'\t'.join(finding)}")
             raise SystemExit(1)
         print("Final validation passed: no required-field gaps found.")
         return

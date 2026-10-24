@@ -1,6 +1,7 @@
 """Validation rules for required card fields."""
 
 import csv
+from collections import defaultdict
 from pathlib import Path
 
 from tcg.overrides import OVERRIDES
@@ -21,6 +22,23 @@ UNIVERSAL_FIELDS = (
 )
 POKEMON_FIELDS = ("stage", "hp", "retreat_cost", "ko", "move1_name", "move1_cost")
 TRAINER_FIELDS = ("ability_effect",)
+BATTLE_ATTRIBUTE_FIELDS = (
+    "stage",
+    "type",
+    "weakness",
+    "retreat_cost",
+    "ko",
+    "ability_name",
+    "ability_effect",
+    "move1_name",
+    "move1_cost",
+    "move1_damage",
+    "move1_effect",
+    "move2_name",
+    "move2_cost",
+    "move2_damage",
+    "move2_effect",
+)
 
 
 def missing_required_fields(card: dict) -> list[str]:
@@ -43,22 +61,68 @@ def find_missing_fields(cards: list[dict]) -> list[tuple[str, str, str]]:
     return findings
 
 
+def find_battle_attribute_mismatches(
+    cards: list[dict],
+) -> list[tuple[str, str, str, str, str]]:
+    """Return battle attributes that differ within a shared base-id group."""
+    groups: dict[str, list[dict]] = defaultdict(list)
+    for card in cards:
+        base_id = card.get("base_id")
+        if base_id:
+            groups[base_id].append(card)
+
+    findings = []
+    for base_id, group in groups.items():
+        if len(group) < 2:
+            continue
+        canonical = group[0]
+        for card in group[1:]:
+            for field in BATTLE_ATTRIBUTE_FIELDS:
+                expected = canonical.get(field)
+                actual = card.get(field)
+                if actual != expected:
+                    findings.append(
+                        (
+                            base_id,
+                            card.get("id") or "<missing id>",
+                            field,
+                            str(expected) if expected is not None else "<missing>",
+                            str(actual) if actual is not None else "<missing>",
+                        )
+                    )
+    return findings
+
+
 def write_validation_log(
     cards: list[dict], path: Path, *, stage: str = "Pre-override"
-) -> list[tuple[str, str, str]]:
-    """Write missing-field diagnostics and return the findings."""
-    findings = find_missing_fields(cards)
+) -> list[tuple[str, ...]]:
+    """Write required-field and base-id consistency diagnostics."""
+    missing_findings = find_missing_fields(cards)
+    battle_findings = find_battle_attribute_mismatches(cards)
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [
         f"{stage} required-field validation",
         "card_id\tname\tmissing_field",
     ]
-    lines.extend(f"{card_id}\t{name}\t{field}" for card_id, name, field in findings)
+    lines.extend(
+        f"{card_id}\t{name}\t{field}" for card_id, name, field in missing_findings
+    )
+    lines.extend(
+        [
+            "",
+            f"{stage} base-id battle-attribute consistency validation",
+            "base_id\tcard_id\tattribute\tcanonical_value\tcard_value",
+        ]
+    )
+    lines.extend(
+        f"{base_id}\t{card_id}\t{field}\t{expected}\t{actual}"
+        for base_id, card_id, field, expected, actual in battle_findings
+    )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    return findings
+    return [*missing_findings, *battle_findings]
 
 
-def validate_csv_file(csv_path: Path, log_path: Path) -> list[tuple[str, str, str]]:
+def validate_csv_file(csv_path: Path, log_path: Path) -> list[tuple[str, ...]]:
     """Read a completed CSV and write a final required-field validation report."""
     with csv_path.open(encoding="utf-8", newline="") as file:
         cards = list(csv.DictReader(file))

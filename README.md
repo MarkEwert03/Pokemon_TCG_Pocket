@@ -65,6 +65,11 @@ parser gaps from values supplied later by overrides. It includes universal
 fields required for every card, Pokémon-only fields, and the Trainer
 `ability_effect` field.
 
+Validation also checks that cards sharing a `base_id` have matching battle
+attributes: stage, type, weakness, retreat cost, knockout points, ability
+details, and both moves. Any mismatches are included in the same timestamped
+validation report.
+
 After overrides and CSV writing, the same checks run against the final card
 records. A successful run prints `Final required-field validation passed` and
 writes an empty-findings report to a timestamped file in `logs/`. If gaps remain,

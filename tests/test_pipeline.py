@@ -105,12 +105,12 @@ def test_required_fields_depend_on_card_category():
 
     assert missing_required_fields(pokemon) == [
         "base_id", "name", "rarity", "type", "generation", "illustrator",
-        "expansion", "pack_name", "image", "url", "stage", "hp",
+        "expansion_name", "expansion_id", "pack_name", "image", "url", "stage", "hp",
         "retreat_cost", "ko", "move1_name", "move1_cost",
     ]
     assert missing_required_fields(trainer) == [
         "base_id", "name", "rarity", "type", "generation", "illustrator",
-        "expansion", "pack_name", "image", "url", "ability_effect",
+        "expansion_name", "expansion_id", "pack_name", "image", "url", "ability_effect",
     ]
 
 

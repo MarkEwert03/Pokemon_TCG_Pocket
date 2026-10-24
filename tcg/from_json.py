@@ -22,6 +22,7 @@ from tcg.utils import (
 
 # Pack codes like "A1-M", "A4b", "P-A" appear in the junk entry's energy_cost
 _PACK_CODE = re.compile(r"^(?:[AB]\d+[a-z]?|P-[AB])(?:-[A-Z])?$")
+_EXPANSION_PATTERN = re.compile(r"^(.*?)\s*\(([^()]+)\)$")
 
 
 def load_raw_cards(path: Path) -> list[dict]:
@@ -62,6 +63,19 @@ def _convert_move(raw_move: dict) -> dict | None:
     return move if any(move.values()) else None
 
 
+def _split_expansion(set_name: str | None, card_id: str | None) -> tuple[str | None, str | None]:
+    """Split an expansion label into its display name and set ID."""
+    set_code = (card_id or "").split(maxsplit=1)[0]
+    if set_code in {"P-A", "P-B"}:
+        return f"Promo-{set_code[-1]}", set_code
+    if not set_name:
+        return None, None
+    match = _EXPANSION_PATTERN.match(set_name)
+    if match:
+        return match.group(1), match.group(2)
+    return set_name, None
+
+
 def convert_card(
     raw: dict, single_pack_expansions: set[str] | None = None
 ) -> dict[str, str | None]:
@@ -80,6 +94,8 @@ def convert_card(
         card_type = "Pokemon Tool"
 
     set_name = clean_str(raw.get("set"))
+    card_id = clean_str(raw.get("id"))
+    expansion_name, expansion_id = _split_expansion(set_name, card_id)
     subset = clean_str(raw.get("subset"))
     single_pack_expansions = single_pack_expansions or set()
     if set_name in single_pack_expansions or (subset and subset.startswith("Any (")):
@@ -88,7 +104,7 @@ def convert_card(
         pack_name = subset
 
     card.update(
-        id=clean_str(raw.get("id")),
+        id=card_id,
         name=clean_str(raw.get("name")),
         category=clean_str(raw.get("card_type")),
         rarity=clean_str(raw.get("rarity")),
@@ -103,7 +119,8 @@ def convert_card(
         ko=get_knockout_points(
             clean_str(raw.get("name")), card_type, clean_str(raw.get("ex"))
         ),
-        expansion=set_name,
+        expansion_name=expansion_name,
+        expansion_id=expansion_id,
         pack_name=pack_name,
         ability_name=clean_str(raw.get("ability")),
         image=clean_str(raw.get("image_url")),

@@ -47,7 +47,8 @@ def test_basic_pokemon():
     assert card["hp"] == "70"
     assert card["type"] == "Grass"
     assert card["ko"] == "1"
-    assert card["expansion"] == "Genetic Apex (A1)"
+    assert card["expansion_name"] == "Genetic Apex"
+    assert card["expansion_id"] == "A1"
     assert card["pack_name"] == "Mewtwo"
     assert card["move1_name"] == "Vine Whip"
     assert card["move1_cost"] == "🟢🔘"
@@ -156,13 +157,22 @@ def test_tool_is_renamed():
 def test_single_pack_expansion_uses_any_pack_name():
     raw = {**BULBASAUR, "set": "Eevee Grove", "subset": "Eevee"}
     card = convert_card(raw, {"Eevee Grove"})
-    assert card["expansion"] == "Eevee Grove"
+    assert card["expansion_name"] == "Eevee Grove"
+    assert card["expansion_id"] is None
     assert card["pack_name"] == "Any"
 
 
 def test_any_subset_is_normalized():
     raw = {**BULBASAUR, "subset": "Any (Genetic Apex)"}
     assert convert_card(raw)["pack_name"] == "Any"
+
+
+def test_promo_expansions_are_normalized_from_card_set_code():
+    promo_a = convert_card({**BULBASAUR, "id": "P-A 001", "set": "Promo"})
+    promo_b = convert_card({**BULBASAUR, "id": "P-B 001", "set": "Promo-B"})
+
+    assert (promo_a["expansion_name"], promo_a["expansion_id"]) == ("Promo-A", "P-A")
+    assert (promo_b["expansion_name"], promo_b["expansion_id"]) == ("Promo-B", "P-B")
 
 
 def test_ex_and_mega_ex_ko():

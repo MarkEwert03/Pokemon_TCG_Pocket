@@ -9,6 +9,7 @@ The whole pipeline, in order:
 """
 
 import csv
+import re
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -22,12 +23,34 @@ from tcg.config import (
     OUTPUT_CSV_PATH,
     PAGE_FIELDS,
     RAW_JSON_PATH,
+    SET_ORDER,
     VALIDATION_LOG_PATH,
 )
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_overrides
 from tcg.utils import get_classification, is_trainer_type
 from tcg.validation import audit_overrides, validate_csv_file, write_validation_log
+
+_CARD_ID_PATTERN = re.compile(r"^(\S+)\s+(\d+)$")
+_SET_RANK = {set_code: rank for rank, set_code in enumerate(SET_ORDER)}
+
+
+def sort_cards(cards: list[dict]) -> None:
+    """Sort cards by the documented set order and numeric card number."""
+    def sort_key(card: dict) -> tuple[int, int, str]:
+        match = _CARD_ID_PATTERN.match(card.get("id") or "")
+        if not match:
+            return (len(SET_ORDER), 0, card.get("id") or "")
+        set_code, card_number = match.groups()
+        return (_SET_RANK.get(set_code, len(SET_ORDER)), int(card_number), set_code)
+
+    cards.sort(key=sort_key)
+
+
+def assign_indexes(cards: list[dict]) -> None:
+    """Assign a one-based index in the final dataset order."""
+    for index, card in enumerate(cards, start=1):
+        card["index"] = str(index)
 
 
 def scrape_extras(
@@ -134,7 +157,9 @@ def build_cards(
     """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
     fetch.ensure_raw_json(json_path, refresh=refresh_json, quiet=quiet)
     cards = convert_all(load_raw_cards(json_path))
+    sort_cards(cards)
     assign_base_ids(cards)
+    assign_indexes(cards)
     if only:
         cards = [c for c in cards if c["id"] == only]
     if limit:

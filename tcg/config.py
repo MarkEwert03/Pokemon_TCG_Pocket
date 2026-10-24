@@ -26,6 +26,7 @@ USER_AGENT = "Mozilla/5.0 (compatible; Pokemon_TCG_Pocket-dataset-builder)"
 
 # Ordered list of all columns each card has in the final CSV
 COLUMNS = [
+    "index",
     "id",
     "base_id",
     "name",
@@ -57,6 +58,13 @@ COLUMNS = [
     "image",
     "url",
 ]
+
+# Cards are ordered by release family, then by the numeric card number.
+SET_ORDER = (
+    "A1", "A1a", "A2", "A2a", "A2b", "A3", "A3a", "A3b",
+    "A4", "A4a", "A4b", "B1", "B1a", "B2", "B2a", "B2b",
+    "B3", "B3a", "B3b", "B4", "B4a", "B4b", "P-A", "P-B",
+)
 
 # Columns that only exist on the individual card page (not in the raw JSON)
 PAGE_FIELDS = (

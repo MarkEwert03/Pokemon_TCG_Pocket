@@ -18,7 +18,9 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 2. **Convert** it to one flat dict per card. The JSON already has name, rarity, stage, HP, type, pack, ability name, moves (name / cost / damage / effect), image and URL.
 3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `generation`, `illustrator`, `weakness`, `retreat_cost`, `pack_points`, `classification`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
 4. **Apply manual overrides** (`tcg/overrides.py`) for cards where Game8 is wrong or missing data.
-5. **Write** `data/full.csv`.
+5. **Order** cards by set release family and card number, then assign the
+   one-based `index` column.
+6. **Write** `data/full.csv`.
 
 ---
 
@@ -57,6 +59,16 @@ Useful options:
 | `python run.py --audit-overrides` | Audit overrides against the complete pre-override source data. |
 
 At the end of every run a report shows how many values were filled per column. A column that's suddenly near 0 means a parser broke. Cards whose page failed to download are listed in `data/failed_pages.txt`; just re-run to retry them (successful pages are cached).
+
+### Dataset ordering
+
+Rows are ordered first by set release family, using this sequence:
+`A1`, `A1a`, `A2`, `A2a`, `A2b`, `A3`, `A3a`, `A3b`, `A4`, `A4a`,
+`A4b`, `B1`, `B1a`, `B2`, `B2a`, `B2b`, `B3`, `B3a`, `B3b`, `B4`,
+`B4a`, `B4b`, `P-A`, `P-B`. Within each set, rows are ordered by the
+numeric card number from the card ID (for example, `A1 001` precedes
+`A1 002`). The `index` column is a one-based row number assigned after this
+ordering.
 
 Before manual overrides are applied, the pipeline checks required-field
 invariants and writes any missing values to a timestamped report in `logs/`. The report
@@ -128,6 +140,8 @@ The finished data is at [`data/full.csv`](https://github.com/MarkEwert03/Pokemon
 <summary>Click to expand column descriptions</summary>
 
 Columns include:
+- `index`
+  - One-based row number in the documented dataset ordering.
 - `id`
   - The card’s unique identifier combining set and index.
   - Examples: "A1 001", "A2b 107", "P-A 034"

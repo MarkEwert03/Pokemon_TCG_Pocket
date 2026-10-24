@@ -62,6 +62,29 @@ def test_assign_base_ids_uses_first_matching_signature():
     assert cards[4]["base_id"] == "B1a 020"
 
 
+def test_sort_cards_uses_set_order_and_card_number():
+    cards = [
+        {"id": "P-A 002"},
+        {"id": "A2b 010"},
+        {"id": "A1 002"},
+        {"id": "A1 001"},
+    ]
+
+    pipeline.sort_cards(cards)
+
+    assert [card["id"] for card in cards] == [
+        "A1 001", "A1 002", "A2b 010", "P-A 002"
+    ]
+
+
+def test_assign_indexes_is_one_based():
+    cards = [{"id": "A1 001"}, {"id": "A1 002"}]
+
+    pipeline.assign_indexes(cards)
+
+    assert [card["index"] for card in cards] == ["1", "2"]
+
+
 def test_failed_page_does_not_stop_the_run(tmp_path, monkeypatch):
     json_path = _write_json(tmp_path, [BULBASAUR])
     monkeypatch.setattr(pipeline, "FAILED_PAGES_PATH", tmp_path / "failed.txt")

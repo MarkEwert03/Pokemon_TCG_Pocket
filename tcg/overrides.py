@@ -12,13 +12,24 @@ from tcg.utils import COLORLESS
 OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong or missing values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
+    "A2b 041": {
+        "move1_name": "Magnum Punch",
+        "move1_cost": "🟠🟠🟠",
+        "move1_damage": "90",
+    },  # Hitmonchan: Missing all move info
     "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
-    "B3 031": {  # Larvesta: Move cost and damage not included
+    "B1a 006": {"retreat_cost": "1"}, # Ariados: RC should be 1 not 2
+    "B3 031": {
         "move1_cost": "🔴",
         "move1_damage": "20",
-    },
-    "B2a 115": {"type": "Supporter"},  # Arven: Missing type
-    "B2b 117": {"type": "Pokemon Tool"},  # Metal Core Barrier: Missing type
+    },  # Larvesta: Move cost and damage not included
+    "B4 233": {"move1_damage": 40},  # Dragonair: Draconic Whip missing damage
+    "B4b 009": {
+        "ability_effect": "Each of your evolved Pokemon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
+        "image": "https://img.game8.co/4479795/7ff12fab25f704898086ae6aba1a07b7.png/show",
+        "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/596976",
+    },  # Celebi: Incorrectly linked to Mega Pinsir ex page
+    "B4b 174": {"move1_damage": 40},  # Axew: Sharp Fang missing damage
     # --- weakness wrong (W) / page missing (M) ---
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
     "A1 170": {"weakness": "Fighting"},  # Nidorino (W)
@@ -32,9 +43,11 @@ OVERRIDES: dict[str, dict[str, str]] = {
     "A1a 065": {"generation": "9"},  # Mythical Slab
     "A1a 066": {"generation": "9"},  # Budding Expeditioner
     "A1a 080": {"generation": "9"},  # Budding Expeditioner
-    # --- type wrong on game8 (attacks use Grass energy; the card's other print is Grass) ---
+    # --- type wrong or missing on game8
     "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
     "B1a 070": {"type": "Grass"},  # Ariados: listed as Darkness (B1a 006 is Grass)
+    "B2a 115": {"type": "Supporter"},  # Arven: Missing type
+    "B2b 117": {"type": "Pokemon Tool"},  # Metal Core Barrier: Missing type
     # --- stage missing on game8 (B2 194-233 are alternate arts; copied from the original print) ---
     "B2 194": {"stage": "Basic"},  # Teal Mask Ogerpon ex
     "B2 195": {"stage": "Basic"},  # Blacephalon ex
@@ -171,11 +184,6 @@ OVERRIDES: dict[str, dict[str, str]] = {
     #   only Colorless, single print) and they differ from the species' usual type; likely genuine:
     #   A1 085 086 | A2 121 | A2a 035 | A3a 027 | A4 062 063 073 | P-B 022 | B2a 010 | B3a 057
     #   B3b 026 | B4 077
-    # TODO: Ariados B1a 006 vs B1a 070 disagree on retreat_cost (2 vs 1); one of them is wrong.
-    # TODO: incomplete attack/ability data on game8:
-    #   A2b 041 Hitmonchan: move1_name missing (damage 90 is present)
-    #   B4b 009 Celebi: ability "Time Recall" has no effect text
-    #   B4 233 Dragonair "Draconic Whip" and B4b 174 Axew "Sharp Fang": no damage or effect
 }
 
 

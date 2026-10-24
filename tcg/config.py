@@ -16,6 +16,7 @@ NO_PAGES_OUTPUT_CSV_PATH = DATA_DIR / "no_pages.csv"
 FAILED_PAGES_PATH = DATA_DIR / "failed_pages.txt"
 VALIDATION_LOG_PATH = DATA_DIR / "validation.log"
 FINAL_VALIDATION_LOG_PATH = DATA_DIR / "validation_final.log"
+OVERRIDE_AUDIT_LOG_PATH = DATA_DIR / "override_audit.log"
 
 JSON_URL = "https://game8.co/api/tool_structural_mappings/551.json"
 USER_AGENT = "Mozilla/5.0 (compatible; Pokemon_TCG_Pocket-dataset-builder)"

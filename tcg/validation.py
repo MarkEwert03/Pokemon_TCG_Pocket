@@ -3,6 +3,8 @@
 import csv
 from pathlib import Path
 
+from tcg.overrides import OVERRIDES
+
 UNIVERSAL_FIELDS = (
     "id",
     "base_id",
@@ -61,3 +63,46 @@ def validate_csv_file(csv_path: Path, log_path: Path) -> list[tuple[str, str, st
     with csv_path.open(encoding="utf-8", newline="") as file:
         cards = list(csv.DictReader(file))
     return write_validation_log(cards, log_path, stage="Final")
+
+
+def audit_overrides(
+    cards: list[dict], path: Path
+) -> dict[str, int]:
+    """Report whether each manual override is still needed by source data."""
+    by_id = {card.get("id"): card for card in cards}
+    findings: list[tuple[str, str, str, str, str]] = []
+    counts = {"REDUNDANT": 0, "FILLING_MISSING": 0, "ACTIVE_CORRECTION": 0, "CARD_NOT_FOUND": 0}
+
+    for card_id, overrides in OVERRIDES.items():
+        card = by_id.get(card_id)
+        if card is None:
+            findings.append((card_id, "<missing card>", "-", "-", "CARD_NOT_FOUND"))
+            counts["CARD_NOT_FOUND"] += 1
+            continue
+        for field, expected in overrides.items():
+            source = card.get(field)
+            if source == expected:
+                status = "REDUNDANT"
+            elif not source:
+                status = "FILLING_MISSING"
+            else:
+                status = "ACTIVE_CORRECTION"
+            findings.append(
+                (card_id, card.get("name") or "<missing name>", field, source or "<missing>", status)
+            )
+            counts[status] += 1
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "Pre-override manual override audit",
+        "status\tcard_id\tname\tfield\tsource_value",
+    ]
+    lines.extend(
+        f"{status}\t{card_id}\t{name}\t{field}\t{source}"
+        for card_id, name, field, source, status in findings
+    )
+    lines.append("")
+    lines.append("Summary")
+    lines.extend(f"{status}\t{count}" for status, count in counts.items())
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    return counts

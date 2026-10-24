@@ -69,6 +69,13 @@ records. A successful run prints `Final required-field validation passed` and
 writes an empty-findings report to `data/validation_final.log`. If gaps remain,
 the report lists them and the run still completes so the CSV can be inspected.
 
+Each run also audits manual entries in `tcg/overrides.py` before applying them
+and writes `data/override_audit.log`. Each override is classified as
+`REDUNDANT` when the source already has the expected value,
+`FILLING_MISSING` when the source is blank, or `ACTIVE_CORRECTION` when the
+source has a different non-blank value. A redundant entry can be safely
+reviewed for removal; an active correction still changes the source data.
+
 ## 💻 Developers
 
 ```bash

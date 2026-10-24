@@ -18,6 +18,7 @@ from tcg.config import (
     COLUMNS,
     FAILED_PAGES_PATH,
     FINAL_VALIDATION_LOG_PATH,
+    OVERRIDE_AUDIT_LOG_PATH,
     OUTPUT_CSV_PATH,
     PAGE_FIELDS,
     RAW_JSON_PATH,
@@ -26,7 +27,7 @@ from tcg.config import (
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_overrides
 from tcg.utils import get_classification, is_trainer_type
-from tcg.validation import validate_csv_file, write_validation_log
+from tcg.validation import audit_overrides, validate_csv_file, write_validation_log
 
 
 def scrape_extras(
@@ -152,6 +153,13 @@ def build_cards(
     findings = write_validation_log(cards, VALIDATION_LOG_PATH)
     if findings:
         print(f"{len(findings)} required-field gaps before overrides -> {VALIDATION_LOG_PATH}")
+    audit_counts = audit_overrides(cards, OVERRIDE_AUDIT_LOG_PATH)
+    print(
+        f"Override audit -> {OVERRIDE_AUDIT_LOG_PATH} "
+        f"({audit_counts['REDUNDANT']} redundant, "
+        f"{audit_counts['FILLING_MISSING']} filling missing, "
+        f"{audit_counts['ACTIVE_CORRECTION']} active corrections)"
+    )
 
     for card in cards:
         card["classification"] = get_classification(card["name"], card["type"])

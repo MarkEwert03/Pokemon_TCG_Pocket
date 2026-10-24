@@ -4,6 +4,7 @@ import json
 from tcg import fetch, pipeline
 from tcg.config import COLUMNS
 from tcg.validation import (
+    audit_overrides,
     missing_required_fields,
     validate_csv_file,
     write_validation_log,
@@ -125,3 +126,37 @@ def test_validate_csv_file_reads_final_output(tmp_path):
 
     assert ("A1 001", "Bulbasaur", "base_id") in findings
     assert log_path.read_text().startswith("Final required-field validation")
+
+
+def test_override_audit_classifies_source_values(tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        "tcg.validation.OVERRIDES",
+        {
+            "A1 001": {
+                "stage": "Basic",
+                "illustrator": "Narumi Sato",
+                "hp": "70",
+            }
+        },
+    )
+    cards = [
+        {
+            "id": "A1 001",
+            "name": "Bulbasaur",
+            "stage": "Basic",
+            "illustrator": "Other Artist",
+            "hp": None,
+        }
+    ]
+    counts = audit_overrides(cards, tmp_path / "override_audit.log")
+
+    assert counts == {
+        "REDUNDANT": 1,
+        "FILLING_MISSING": 1,
+        "ACTIVE_CORRECTION": 1,
+        "CARD_NOT_FOUND": 0,
+    }
+    report = (tmp_path / "override_audit.log").read_text()
+    assert "REDUNDANT\tA1 001\tBulbasaur\tstage\tBasic" in report
+    assert "FILLING_MISSING\tA1 001\tBulbasaur\thp\t<missing>" in report
+    assert "ACTIVE_CORRECTION\tA1 001\tBulbasaur\tillustrator\tOther Artist" in report

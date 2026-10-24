@@ -6,3 +6,4 @@ data/cache/
 data/failed_pages.txt
 data/validation.log
 data/validation_final.log
+data/override_audit.log

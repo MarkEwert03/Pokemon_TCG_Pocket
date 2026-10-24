@@ -1,7 +1,8 @@
 """
 Manual corrections for cards where game8's data is wrong or missing.
 
-Format: {card id: {column: correct value}}
+Format: {card id: {column: correct value}}. Keep all corrections for one card
+inside the same inner dictionary; duplicate card IDs overwrite earlier entries.
 Applied last, so these always win over scraped values.
 Add a short comment saying *why* each entry exists.
 """
@@ -12,6 +13,7 @@ OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong or missing values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
     "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
+    # Keep both missing move corrections grouped under one card ID.
     "B3 031": {  # Larvesta: Move cost and damage not included
         "move1_cost": "🔴",
         "move1_damage": "20",

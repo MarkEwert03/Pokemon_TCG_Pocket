@@ -9,6 +9,7 @@ from tcg.validation import (
     validate_csv_file,
     write_validation_log,
 )
+from tcg.overrides import OVERRIDES, apply_overrides
 from tests.test_card_page import ATTACK_ONLY, page
 from tests.test_from_json import BULBASAUR, EMPTY_MOVE
 
@@ -179,3 +180,16 @@ def test_build_cards_can_skip_manual_overrides(tmp_path, monkeypatch):
     )
 
     assert source_cards[0]["hp"] == "70"
+
+
+def test_multi_field_override_stays_grouped():
+    assert OVERRIDES["B3 031"] == {
+        "move1_cost": "🔴",
+        "move1_damage": "20",
+    }
+
+    card = {"id": "B3 031", "move1_cost": "?", "move1_damage": None}
+    apply_overrides(card)
+
+    assert card["move1_cost"] == "🔴"
+    assert card["move1_damage"] == "20"

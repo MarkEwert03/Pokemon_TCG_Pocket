@@ -1,9 +1,11 @@
 """Paths, URLs and column definitions shared across the project."""
 
+from datetime import datetime
 from pathlib import Path
 
 PROJ_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJ_ROOT / "data"
+LOGS_DIR = PROJ_ROOT / "logs"
 
 # Stage 1 input: the big raw JSON from game8
 RAW_JSON_PATH = DATA_DIR / "raw" / "cards.json"
@@ -14,9 +16,10 @@ OUTPUT_CSV_PATH = DATA_DIR / "full.csv"
 NO_PAGES_OUTPUT_CSV_PATH = DATA_DIR / "no_pages.csv"
 # Cards whose page could not be fetched on the last run
 FAILED_PAGES_PATH = DATA_DIR / "failed_pages.txt"
-VALIDATION_LOG_PATH = DATA_DIR / "validation.log"
-FINAL_VALIDATION_LOG_PATH = DATA_DIR / "validation_final.log"
-OVERRIDE_AUDIT_LOG_PATH = DATA_DIR / "override_audit.log"
+LOG_TIMESTAMP = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+VALIDATION_LOG_PATH = LOGS_DIR / f"validation_{LOG_TIMESTAMP}.log"
+FINAL_VALIDATION_LOG_PATH = LOGS_DIR / f"validation_final_{LOG_TIMESTAMP}.log"
+OVERRIDE_AUDIT_LOG_PATH = LOGS_DIR / f"override_audit_{LOG_TIMESTAMP}.log"
 
 JSON_URL = "https://game8.co/api/tool_structural_mappings/551.json"
 USER_AGENT = "Mozilla/5.0 (compatible; Pokemon_TCG_Pocket-dataset-builder)"

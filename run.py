@@ -29,7 +29,7 @@ def main() -> None:
     p.add_argument(
         "--validate",
         action="store_true",
-        help="Validate the final CSV and write data/validation_final.log",
+        help="Validate the final CSV and write a timestamped report in logs/",
     )
     p.add_argument(
         "--audit-overrides",
@@ -68,7 +68,7 @@ def main() -> None:
             f"{counts['ACTIVE_CORRECTION']} active corrections, "
             f"{counts['CARD_NOT_FOUND']} cards not found."
         )
-        print("See data/override_audit.log.")
+        print(f"See {OVERRIDE_AUDIT_LOG_PATH}.")
         return
 
     common = dict(

@@ -34,10 +34,11 @@ def download_raw_json(dest: Path, updated_at: int | None = None) -> dict:
     return data
 
 
-def ensure_raw_json(path: Path, refresh: bool = False) -> Path:
+def ensure_raw_json(path: Path, refresh: bool = False, quiet: bool = False) -> Path:
     """Make sure the raw JSON exists locally, downloading it if needed."""
     if refresh or not path.exists():
-        print(f"Downloading card database -> {path}")
+        if not quiet:
+            print(f"Downloading card database -> {path}")
         download_raw_json(path, updated_at=1790751231)
     return path
 

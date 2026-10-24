@@ -81,7 +81,7 @@ def main() -> None:
     )
 
     if args.debug:
-        cards = build_cards(only=args.debug, **common)
+        cards = build_cards(only=args.debug, write_reports=False, quiet=True, **common)
         if not cards:
             raise SystemExit(f"No card with id {args.debug!r}")
         print(json.dumps(cards[0], ensure_ascii=False, indent=2))

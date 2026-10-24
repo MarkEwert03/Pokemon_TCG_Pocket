@@ -52,7 +52,7 @@ Useful options:
 | `python run.py --refresh-pages` | Ignore the page cache and re-download every card page. |
 | `python run.py --limit 20` | Only process the first 20 cards (good for testing). |
 | `python run.py --json path/to/file.json` | Use a JSON file you already have. |
-| `python run.py --debug "A1 001"` | Print one finished card as JSON. |
+| `python run.py --debug "A1 001"` | Print one finished card as JSON without validation, audit, or progress output. |
 | `python run.py --validate` | Validate the final `data/full.csv` and write a timestamped report in `logs/`. |
 | `python run.py --audit-overrides` | Audit overrides against the complete pre-override source data. |
 

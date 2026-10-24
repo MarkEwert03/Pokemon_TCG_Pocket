@@ -35,6 +35,7 @@ def scrape_extras(
     refresh: bool = False,
     workers: int = 4,
     delay: float = 0.25,
+    quiet: bool = False,
 ) -> tuple[dict[str, dict], dict[str, str]]:
     """
     Fetch + parse the card page of every card.
@@ -68,10 +69,11 @@ def scrape_extras(
         for i, (card_id, parsed, error) in enumerate(pool.map(work, cards), start=1):
             if error:
                 failures[card_id] = error
-                print(f"  ! {card_id}: {error}")
+                if not quiet:
+                    print(f"  ! {card_id}: {error}")
             else:
                 extras[card_id] = parsed
-            if i % 100 == 0 or i == len(cards):
+            if not quiet and (i % 100 == 0 or i == len(cards)):
                 print(f"  scraped {i}/{len(cards)} cards")
 
     return extras, failures
@@ -126,9 +128,11 @@ def build_cards(
     workers: int = 4,
     delay: float = 0.25,
     apply_manual_overrides: bool = True,
+    write_reports: bool = True,
+    quiet: bool = False,
 ) -> list[dict]:
     """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
-    fetch.ensure_raw_json(json_path, refresh=refresh_json)
+    fetch.ensure_raw_json(json_path, refresh=refresh_json, quiet=quiet)
     cards = convert_all(load_raw_cards(json_path))
     assign_base_ids(cards)
     if only:
@@ -137,30 +141,34 @@ def build_cards(
         cards = cards[:limit]
 
     if not skip_pages:
-        print(f"Scraping {len(cards)} card pages (cached pages are reused)...")
-        extras, failures = scrape_extras(cards, refresh_pages, workers, delay)
+        if not quiet:
+            print(f"Scraping {len(cards)} card pages (cached pages are reused)...")
+        extras, failures = scrape_extras(cards, refresh_pages, workers, delay, quiet)
         for card in cards:
             merge_extras(card, extras.get(card["id"]))
 
-        if failures:
+        if write_reports and failures:
             FAILED_PAGES_PATH.parent.mkdir(parents=True, exist_ok=True)
             FAILED_PAGES_PATH.write_text(
                 "\n".join(f"{n}\t{why}" for n, why in failures.items()), encoding="utf-8"
             )
-            print(f"{len(failures)} pages failed -> {FAILED_PAGES_PATH}")
-        elif FAILED_PAGES_PATH.exists():
+            if not quiet:
+                print(f"{len(failures)} pages failed -> {FAILED_PAGES_PATH}")
+        elif write_reports and FAILED_PAGES_PATH.exists():
             FAILED_PAGES_PATH.unlink()
 
-    findings = write_validation_log(cards, VALIDATION_LOG_PATH)
-    if findings:
-        print(f"{len(findings)} required-field gaps before overrides -> {VALIDATION_LOG_PATH}")
-    audit_counts = audit_overrides(cards, OVERRIDE_AUDIT_LOG_PATH)
-    print(
-        f"Override audit -> {OVERRIDE_AUDIT_LOG_PATH} "
-        f"({audit_counts['REDUNDANT']} redundant, "
-        f"{audit_counts['FILLING_MISSING']} filling missing, "
-        f"{audit_counts['ACTIVE_CORRECTION']} active corrections)"
-    )
+    if write_reports:
+        findings = write_validation_log(cards, VALIDATION_LOG_PATH)
+        if findings and not quiet:
+            print(f"{len(findings)} required-field gaps before overrides -> {VALIDATION_LOG_PATH}")
+        audit_counts = audit_overrides(cards, OVERRIDE_AUDIT_LOG_PATH)
+        if not quiet:
+            print(
+                f"Override audit -> {OVERRIDE_AUDIT_LOG_PATH} "
+                f"({audit_counts['REDUNDANT']} redundant, "
+                f"{audit_counts['FILLING_MISSING']} filling missing, "
+                f"{audit_counts['ACTIVE_CORRECTION']} active corrections)"
+            )
 
     for card in cards:
         card["classification"] = get_classification(card["name"], card["type"])

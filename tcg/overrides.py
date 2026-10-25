@@ -9,6 +9,35 @@ Add a short comment saying *why* each entry exists.
 
 from tcg.utils import COLORLESS
 
+# These corrections describe gameplay shared by every card with the same
+# base_id. Keys are canonical base IDs, not individual card IDs.
+FUNCTIONAL_FIELDS = frozenset(
+    {
+        "stage",
+        "evolves_from",
+        "hp",
+        "type",
+        "weakness",
+        "retreat_cost",
+        "ko",
+        "ability_name",
+        "ability_effect",
+        "move1_name",
+        "move1_cost",
+        "move1_damage",
+        "move1_effect",
+        "move2_name",
+        "move2_cost",
+        "move2_damage",
+        "move2_effect",
+    }
+)
+
+BASE_OVERRIDES: dict[str, dict[str, str]] = {
+    # Infernape ex has no retreat cost; Game8's "-" placeholder was parsed as 1.
+    "A2 029": {"retreat_cost": "0"},
+}
+
 OVERRIDES: dict[str, dict[str, str]] = {
     # --- wrong or missing values on game8 ---
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
@@ -188,5 +217,13 @@ OVERRIDES: dict[str, dict[str, str]] = {
 
 
 def apply_overrides(card: dict[str, str | None]) -> None:
-    """Mutate `card` in place with any manual corrections for its id."""
+    """Apply base-level functional corrections, then card-specific fixes."""
+    base_overrides = BASE_OVERRIDES.get(card.get("base_id"), {})
+    invalid_fields = set(base_overrides) - FUNCTIONAL_FIELDS
+    if invalid_fields:
+        raise ValueError(
+            f"Base override for {card.get('base_id')!r} contains non-functional "
+            f"fields: {sorted(invalid_fields)}"
+        )
+    card.update(base_overrides)
     card.update(OVERRIDES.get(card["id"], {}))

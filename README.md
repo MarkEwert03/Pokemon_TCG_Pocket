@@ -17,7 +17,8 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 1. **Download** the big raw JSON (once; kept in `data/raw/cards.json`).
 2. **Convert** it to one flat dict per card. The JSON already has name, rarity, stage, HP, type, pack, ability name, moves (name / cost / damage / effect), image and URL.
 3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `generation`, `illustrator`, `weakness`, `retreat_cost`, `pack_points`, `classification`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
-4. **Apply manual overrides** (`tcg/overrides.py`) for cards where Game8 is wrong or missing data.
+4. **Apply manual overrides** (`tcg/overrides.py`): base-level functional
+   corrections first, then card-specific corrections.
 5. **Order** cards by set release family and card number, then assign the
    one-based `index` column.
 6. **Write** `data/full.csv`.
@@ -128,7 +129,13 @@ logs/                   timestamped validation and override audit reports
 
 ### Fixing a wrong or missing value
 
-Add an entry to `OVERRIDES` in `tcg/overrides.py` with a comment saying why.
+Add an entry to `BASE_OVERRIDES` in `tcg/overrides.py` when the correction
+applies to every card sharing a `base_id`. Base overrides are limited to
+functional attributes: `stage`, `type`, `weakness`, `retreat_cost`, `ko`,
+`evolves_from`, `ability_*`, and `move1_*`/`move2_*`. Use the card-specific
+`OVERRIDES` mapping for corrections that apply to only one card, such as
+illustrator, image, or URL fixes. Base overrides are applied first, so a
+card-specific override takes precedence when necessary.
 
 ---
 

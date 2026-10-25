@@ -10,7 +10,7 @@ from tcg.validation import (
     validate_csv_file,
     write_validation_log,
 )
-from tcg.overrides import OVERRIDES, apply_overrides
+from tcg.overrides import BASE_OVERRIDES, OVERRIDES, apply_overrides
 from tests.test_card_page import ATTACK_ONLY, page
 from tests.test_from_json import BULBASAUR, EMPTY_MOVE
 
@@ -201,6 +201,7 @@ def test_override_audit_classifies_source_values(tmp_path, monkeypatch):
             }
         },
     )
+    monkeypatch.setattr("tcg.validation.BASE_OVERRIDES", {})
     cards = [
         {
             "id": "A1 001",
@@ -254,3 +255,16 @@ def test_multi_field_override_stays_grouped():
 
     assert card["move1_cost"] == "🔴"
     assert card["move1_damage"] == "20"
+
+
+def test_base_override_applies_before_card_override(monkeypatch):
+    monkeypatch.setattr(
+        "tcg.overrides.BASE_OVERRIDES",
+        {"A1 001": {"retreat_cost": "0", "type": "Grass"}},
+    )
+    card = {"id": "P-A 001", "base_id": "A1 001", "retreat_cost": "2", "type": "Fire"}
+
+    apply_overrides(card)
+
+    assert card["retreat_cost"] == "0"
+    assert card["type"] == "Grass"

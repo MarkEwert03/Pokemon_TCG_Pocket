@@ -4,7 +4,7 @@ import csv
 from collections import defaultdict
 from pathlib import Path
 
-from tcg.overrides import OVERRIDES
+from tcg.overrides import BASE_OVERRIDES, OVERRIDES
 
 UNIVERSAL_FIELDS = (
     "id",
@@ -135,6 +135,10 @@ def audit_overrides(
 ) -> dict[str, int]:
     """Report whether each manual override is still needed by source data."""
     by_id = {card.get("id"): card for card in cards}
+    by_base_id: dict[str, list[dict]] = defaultdict(list)
+    for card in cards:
+        if card.get("base_id"):
+            by_base_id[card["base_id"]].append(card)
     findings: list[tuple[str, str, str, str, str]] = []
     counts = {"REDUNDANT": 0, "FILLING_MISSING": 0, "ACTIVE_CORRECTION": 0, "CARD_NOT_FOUND": 0}
 
@@ -156,6 +160,32 @@ def audit_overrides(
                 (card_id, card.get("name") or "<missing name>", field, source or "<missing>", status)
             )
             counts[status] += 1
+
+    for base_id, overrides in BASE_OVERRIDES.items():
+        group = by_base_id.get(base_id)
+        if not group:
+            findings.append((base_id, "<missing base group>", "-", "-", "CARD_NOT_FOUND"))
+            counts["CARD_NOT_FOUND"] += 1
+            continue
+        for card in group:
+            for field, expected in overrides.items():
+                source = card.get(field)
+                if source == expected:
+                    status = "REDUNDANT"
+                elif not source:
+                    status = "FILLING_MISSING"
+                else:
+                    status = "ACTIVE_CORRECTION"
+                findings.append(
+                    (
+                        base_id,
+                        card.get("name") or "<missing name>",
+                        field,
+                        source or "<missing>",
+                        status,
+                    )
+                )
+                counts[status] += 1
 
     path.parent.mkdir(parents=True, exist_ok=True)
     lines = [

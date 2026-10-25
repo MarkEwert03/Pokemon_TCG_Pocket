@@ -102,10 +102,23 @@ def _extract_retreat_cost(cell: Tag | None) -> str | None:
     """
     if cell is None:
         return None
-    icons = cell.find_all("img") or cell.find_all("a")
+    icons = cell.find_all("img")
+    if icons:
+        labels = [icon.get("alt", "").strip() for icon in icons]
+        if all(label in {"", "-", "N/A"} for label in labels):
+            return "0"
+    else:
+        labels = [link.get_text(" ", strip=True) for link in cell.find_all("a")]
+        if not labels:
+            labels = [cell.get_text(" ", strip=True)]
+        if all(label in {"", "-", "N/A"} for label in labels):
+            return "0"
+
     total = 0
-    for icon in icons:
+    for icon in icons or cell.find_all("a"):
         label = icon.get("alt") or icon.get_text(" ") or ""
+        if label.strip() in {"", "-", "N/A"}:
+            continue
         m = re.search(r"(\d+)\s*$", label.strip())
         total += int(m.group(1)) if m else 1
     return str(total)

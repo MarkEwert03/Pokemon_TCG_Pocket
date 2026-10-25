@@ -103,6 +103,14 @@ def test_zero_retreat_cost_and_missing_pieces():
     assert parse_card_page(html, is_trainer=False)["retreat_cost"] == "0"
 
 
+def test_zero_retreat_cost_for_na_placeholder():
+    html = page(ATTACK_ONLY).replace(
+        '<a><img alt="Colorless"></a><a><img alt="Colorless"></a>',
+        '<img alt="-" />',
+    )
+    assert parse_card_page(html, is_trainer=False)["retreat_cost"] == "0"
+
+
 def test_garbage_html_returns_all_none_without_crashing():
     out = parse_card_page("<html><body>nothing here</body></html>", is_trainer=False)
     assert out["generation"] is None and out["illustrator"] is None

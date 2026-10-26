@@ -34,44 +34,17 @@ FUNCTIONAL_FIELDS = frozenset(
 )
 
 BASE_OVERRIDES: dict[str, dict[str, str]] = {
-    # Infernape ex has no retreat cost; Game8's "-" placeholder was parsed as 1.
-    "A2 029": {"retreat_cost": "0"},
-    # --- wrong or missing values on game8 ---
-    "A1 183": {"move1_damage": "40"},  # Dratini: Ram does 40, not 70
+    # misc ------------------------------------------------------------
     "A2b 041": {
         "move1_name": "Magnum Punch",
         "move1_cost": "🟠🟠🟠",
         "move1_damage": "90",
-    },  # Hitmonchan: Missing all move info
-    "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
-    "B1a 006": {"retreat_cost": "1"},  # Ariados: RC should be 1 not 2
+    },  # Hitmonchan: Magnum Punch
     "B3 031": {
         "move1_cost": "🔴",
         "move1_damage": "20",
     },  # Larvesta: Move cost and damage not included
-    "B4 233": {"move1_damage": "40"},  # Dragonair: Draconic Whip
-    "B4b 174": {"move1_damage": "40"},  # Axew: Sharp Fang
-    "A2b 006": {"move1_damage": "40"},  # Floragato: Slash
-    # --- weakness wrong (W) / page missing (M) ---
-    "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
-    "A1 170": {"weakness": "Fighting"},  # Nidorino (W)
-    "A1 171": {"weakness": "Fighting"},  # Nidoking (W)
-    "A1 241": {"weakness": "Fighting"},  # Nidoking (W)
-    "A1a 048": {"weakness": "Grass"},  # Stonjourner (W)
-    "P-A 028": {"weakness": "Water"},  # Volcarona (W)
-    "P-A 037": {"weakness": "Darkness"},  # Cresselia ex (W)
-    "P-A 038": {"weakness": "Darkness"},  # Misdreavus (W)
-    "B2 181": {"weakness": "Water"},  # Blacephalon ex: Incorrectly has weakness as Fire
-    "B2 195": {
-        "stage": "Basic",
-        "weakness": "Water",
-    },  # Blacephalon ex: Missing stage and weakness
-    # --- type wrong or missing on game8
-    "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
-    "B1a 070": {"type": "Grass"},  # Ariados: listed as Darkness (B1a 006 is Grass)
-    "B2a 115": {"type": "Supporter"},  # Arven: Missing type
-    "B2b 117": {"type": "Pokemon Tool"},  # Metal Core Barrier: Missing type
-    # --- stage missing on game8 (B2 194-233 are alternate arts; copied from the original print) ---
+    # stage  ------------------------------------------------------------
     "B2 194": {"stage": "Basic"},  # Teal Mask Ogerpon ex
     "B2 196": {"stage": "Stage 1"},  # Alolan Ninetales ex
     "B2 197": {"stage": "Stage 2"},  # Mega Swampert ex
@@ -153,23 +126,31 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     },  # Umbreon ex: Blank ability
     "B2 232": {"stage": "Basic"},  # Lugia ex
     "B2 233": {"stage": "Basic"},  # Meloetta
-    # --- game8 typo: effect text ends in "/" instead of "." ---
-    "B2a 037": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B2a 102": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B2a 112": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "P-B 041": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B4b 081": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    # --- stage wrong on game8 (checked against the evolution chain: stage = 1 + stage of the card it evolves from) ---
+    # hp ------------------------------------------------------------
+    "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
+    # type ------------------------------------------------------------
+    "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
+    "B1a 070": {"type": "Grass"},  # Ariados: listed as Darkness (B1a 006 is Grass)
+    "B2a 115": {"type": "Supporter"},  # Arven: Missing type
+    "B2b 117": {"type": "Pokemon Tool"},  # Metal Core Barrier: Missing type
+    # weakness ------------------------------------------------------------
+    "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
+    "A1 170": {"weakness": "Fighting"},  # Nidorino (W)
+    "A1 171": {"weakness": "Fighting"},  # Nidoking (W)
+    "A1 241": {"weakness": "Fighting"},  # Nidoking (W)
+    "A1a 048": {"weakness": "Grass"},  # Stonjourner (W)
+    "P-A 028": {"weakness": "Water"},  # Volcarona (W)
+    "P-A 037": {"weakness": "Darkness"},  # Cresselia ex (W)
+    "P-A 038": {"weakness": "Darkness"},  # Misdreavus (W)
+    "B2 181": {"weakness": "Water"},  # Blacephalon ex: Incorrectly has weakness as Fire
+    "B2 195": {
+        "stage": "Basic",
+        "weakness": "Water",
+    },  # Blacephalon ex: Missing stage and weakness
+    # retreat_cost ------------------------------------------------------------
+    "A2 029": {"retreat_cost": "0"},  # Infernape ex
+    "B1a 006": {"retreat_cost": "1"},  # Ariados
+    # stage ------------------------------------------------------------
     "A3a 087": {"stage": "Stage 1"},  # Alolan Dugtrio ex: evolves from Alolan Diglett (Basic)
     "A3b 015": {"stage": "Stage 1"},  # Salazzle: evolves from Salandit (Basic)
     "A3b 057": {"stage": "Stage 1"},  # Snorlax ex: evolves from Munchlax (Basic)
@@ -187,7 +168,7 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     "B4b 418": {"stage": "Stage 1"},  # Mega Lucario ex: evolves from Riolu (Basic)
     "P-A 091": {"stage": "Stage 1"},  # Greedent: evolves from Skwovet (Basic)
     "P-A 097": {"stage": "Basic"},  # Kangaskhan: no evolves_from
-    # --- attack cost wrong on game8 (variant disagrees with the card's other prints) ---
+    # move1_cost ------------------------------------------------------------
     "A2b 020": {"move1_cost": "🔵🔵🔘🔘"},  # Dondozo: Ocean Cyclone
     "A2b 056": {"move1_cost": "⚪⚪🔘"},  # Revavroom: Spinning Drift
     "A4 065": {"move1_cost": "🟡🔘🔘"},  # Lanturn ex: Flashing Signal
@@ -199,33 +180,58 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     "B3 079": {"move1_cost": "🟤"},  # Riolu: Fighting Fist
     "B3 122": {"move1_cost": "🔘"},  # Meltan: Stampede
     "B2 130": {"move1_cost": "🔘🔘"},  # Smeargle: Tail Whap
-    # --- attack damage wrong or blank on game8 (variant disagrees with the card's other prints) ---
-    "A1 018": {"move1_damage": "20"},  # Bellsprout
+    # move1_damage ------------------------------------------------------------
+    "A1 018": {"move1_damage": "20"},  # Bellsprout: Vine Whip
+    "A1 183": {"move1_damage": "40"},  # Dratini: Ram
     "A1 079": {
         "move1_damage": "20+",
         "move1_effect": "If this Pokemon has at least 3 extra Water Energy attached, this attack does 70 more damage.",
-    },  # Lapras
-    "A1 154": {"move1_damage": None},  # Hitmonlee (does 30 dmg to bench)
+    },  # Lapras: Hydro Pump
+    "A1 154": {"move1_damage": None},  # Hitmonlee: Stretch Kick
     "A2 019": {"move1_damage": "40+"},  # Carnivine
-    "A2b 040": {"move1_damage": "30"},  # Hitmonlee
+    "A2b 006": {"move1_damage": "40"},  # Floragato: Slash
+    "A2b 040": {"move1_damage": "30"},  # Hitmonlee: Kick
     "A2b 048": {"move1_damage": "60+"},  # Paldean Clodsire ex
     "A4 045": {"move1_damage": "20+"},  # Gyarados
     "B1 005": {"move1_damage": None},  # Beautifly (does 50 dmg to one pokemon)
+    "B4 233": {"move1_damage": "40"},  # Dragonair: Draconic Whip
+    "B4b 174": {"move1_damage": "40"},  # Axew: Sharp Fang
+    # move2_effect ------------------------------------------------------------
+    "B2a 037": {
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
+    },  # Chien-Pao ex
+    "B2a 102": {
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
+    },  # Chien-Pao ex
+    "B2a 112": {
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
+    },  # Chien-Pao ex
+    "P-B 041": {
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
+    },  # Chien-Pao ex
+    "B4b 081": {
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
+    },  # Chien-Pao ex
 }
 
 OVERRIDES: dict[str, dict[str, str | None]] = {
-    # --- wrong or missing values on game8 ---
+    # --- misc ---
     "B4b 009": {
         "ability_effect": "Each of your evolved Pokemon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
         "image": "https://img.game8.co/4479795/7ff12fab25f704898086ae6aba1a07b7.png/show",
         "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/596976",
         "retreat_cost": "1",
     },  # Celebi: Incorrectly linked to Mega Pinsir ex page
-    # --- generation / illustrator missing on page ---
+    # generation ------------------------------------------------------------
     "A1a 065": {"generation": "9"},  # Mythical Slab
     "A1a 066": {"generation": "9"},  # Budding Expeditioner
     "A1a 080": {"generation": "9"},  # Budding Expeditioner
-    # --- rarity missing on game8 (Promo-B cards) ---
+    "B4a 087": {"generation": "1"},  # Team Rocket's Boss
+    "B4b 373": {"generation": "9"},  # Ancient Booster Energy Capsule
+    "B4b 374": {"generation": "9"},  # Future Booster Energy Capsule
+    "B4b 397": {"generation": "9"},  # Mesagoza
+    "B4 113": {"generation": "9"},  # Archaludon (debuted in Gen 9; entered by hand)
+    # rarity ------------------------------------------------------------
     "P-B 087": {"rarity": "Promo"},  # Mega Sceptile ex
     "P-B 088": {"rarity": "Promo"},  # Team Rocket's Scyther
     "P-B 089": {"rarity": "Promo"},  # Team Rocket's Lapras
@@ -234,13 +240,7 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     "P-B 092": {"rarity": "Promo"},  # Marowak
     "P-B 093": {"rarity": "Promo"},  # Fennekin
     "P-B 094": {"rarity": "Promo"},  # Meowstic
-    # --- generation missing on game8 (copied from the same card's other print) ---
-    "B4a 087": {"generation": "1"},  # Team Rocket's Boss
-    "B4b 373": {"generation": "9"},  # Ancient Booster Energy Capsule
-    "B4b 374": {"generation": "9"},  # Future Booster Energy Capsule
-    "B4b 397": {"generation": "9"},  # Mesagoza
-    "B4 113": {"generation": "9"},  # Archaludon (debuted in Gen 9; entered by hand)
-    # --- illustrator missing on game8 (same card, same rarity, other print) ---
+    # illustrator ------------------------------------------------------------
     "B2 145": {"illustrator": "inose yukie"},  # Lucky Ice Pop
     "B2a 092": {"illustrator": "Susumu Maeya"},  # Penny
     "B4b 198": {"illustrator": "inose yukie"},  # Lucky Ice Pop

@@ -10,7 +10,12 @@ from tcg.validation import (
     validate_csv_file,
     write_validation_log,
 )
-from tcg.overrides import BASE_OVERRIDES, OVERRIDES, apply_overrides
+from tcg.overrides import (
+    BASE_OVERRIDES,
+    OVERRIDES,
+    apply_overrides,
+    check_override_keys,
+)
 from tests.test_card_page import ATTACK_ONLY, page
 from tests.test_from_json import BULBASAUR, EMPTY_MOVE
 
@@ -245,12 +250,17 @@ def test_build_cards_can_skip_manual_overrides(tmp_path, monkeypatch):
 
 
 def test_multi_field_override_stays_grouped():
-    assert OVERRIDES["B3 031"] == {
+    assert BASE_OVERRIDES["B3 031"] == {
         "move1_cost": "🔴",
         "move1_damage": "20",
     }
 
-    card = {"id": "B3 031", "move1_cost": "?", "move1_damage": None}
+    card = {
+        "id": "B3 031",
+        "base_id": "B3 031",
+        "move1_cost": "?",
+        "move1_damage": None,
+    }
     apply_overrides(card)
 
     assert card["move1_cost"] == "🔴"
@@ -268,3 +278,20 @@ def test_base_override_applies_before_card_override(monkeypatch):
 
     assert card["retreat_cost"] == "0"
     assert card["type"] == "Grass"
+
+
+def test_check_override_keys_reports_unknown_base_and_card_ids(monkeypatch):
+    monkeypatch.setattr(
+        "tcg.overrides.BASE_OVERRIDES",
+        {"A1 001": {}, "missing base": {}},
+    )
+    monkeypatch.setattr(
+        "tcg.overrides.OVERRIDES",
+        {"A1 001": {}, "missing card": {}},
+    )
+    cards = [{"id": "A1 001", "base_id": "A1 001"}]
+
+    assert check_override_keys(cards) == [
+        "BASE_OVERRIDES key 'missing base' is not a base_id of any card",
+        "OVERRIDES key 'missing card' is not a card id",
+    ]

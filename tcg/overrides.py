@@ -45,129 +45,146 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
         "move1_damage": "20",
     },  # Larvesta: Move cost and damage not included
     # stage  ------------------------------------------------------------
-    "B2 194": {"stage": "Basic"},  # Teal Mask Ogerpon ex
-    "B2 196": {"stage": "Stage 1"},  # Alolan Ninetales ex
-    "B2 197": {"stage": "Stage 2"},  # Mega Swampert ex
-    "B2 198": {"stage": "Stage 1"},  # Toxtricity ex
-    "B2 199": {
+    "B2 017": {"stage": "Basic"},  # Teal Mask Ogerpon ex (was keyed by variant B2 194)
+    "B2 029": {"stage": "Stage 1"},  # Alolan Ninetales ex (was keyed by variant B2 196)
+    "B2 036": {"stage": "Stage 2"},  # Mega Swampert ex (was keyed by variant B2 197)
+    "B2 055": {"stage": "Stage 1"},  # Toxtricity ex (was keyed by variant B2 198)
+    "B2 073": {
         "stage": "Basic",
         "ability_name": "Disguise",
         "ability_effect": "When this Pokemon is first damaged by an attack after coming into play, prevent that damage",
-    },  # Mimikyu ex: Blank ability text
-    "B2 200": {"stage": "Stage 2"},  # Gigalith ex
-    "B2 201": {"stage": "Basic"},  # Mega Mawile ex
-    "B2 202": {"stage": "Basic"},  # Mega Kangaskhan ex
-    "B2 203": {"stage": "Stage 2"},  # Mega Gardevoir ex
-    "B2 204": {"stage": "Basic"},  # Meowth
-    "B2 205": {"stage": "Basic"},  # Tangela
-    "B2 206": {
+    },  # Mimikyu ex: Blank ability text (was keyed by variant B2 199)
+    "B2 087": {"stage": "Stage 2"},  # Gigalith ex (was keyed by variant B2 200)
+    "B2 113": {"stage": "Basic"},  # Mega Mawile ex (was keyed by variant B2 201)
+    "B2 127": {"stage": "Basic"},  # Mega Kangaskhan ex (was keyed by variant B2 202)
+    "B2 066": {"stage": "Stage 2"},  # Mega Gardevoir ex (was keyed by variant B2 203)
+    "B2 124": {"stage": "Basic"},  # Meowth (was keyed by variant B2 204)
+    "A4 004": {"stage": "Basic"},  # Tangela (was keyed by variant B2 205)
+    "A4 032": {
         "stage": "Basic",
         "weakness": None,
-    },  # Magby: Incorrectly had weakness to Fire
-    "B2 207": {"stage": "Basic"},  # Magmar
-    "B2 208": {"stage": "Basic"},  # Horsea
-    "B2 209": {"stage": "Stage 1"},  # Seadra
-    "B2 210": {
+    },  # Magby: Incorrectly had weakness to Fire (was keyed by variant B2 206)
+    "A2 023": {"stage": "Basic"},  # Magmar (was keyed by variant B2 207)
+    "A4 041": {"stage": "Basic"},  # Horsea (was keyed by variant B2 208)
+    "A4 042": {"stage": "Stage 1"},  # Seadra (was keyed by variant B2 209)
+    "A1 081": {
         "stage": "Stage 1",
         "weakness": "Lightning",
-    },  # Omanyte: Incorrectly had weakness as Grass
-    "B2 211": {
+    },  # Omanyte: Incorrectly had weakness as Grass (was keyed by variant B2 210)
+    "A1 082": {
         "stage": "Stage 2",
         "weakness": "Lightning",
-    },  # Omastar (Omastar is Water; base A1 082 is Lightning)
-    "B2 212": {
+    },  # Omastar (Omastar is Water; base A1 082 is Lightning) (was keyed by variant B2 211)
+    "A4a 023": {
         "stage": "Basic",
         "weakness": None,
-    },  # Mantyke: Incorrectly had weakness as Water
-    "B2 213": {
+    },  # Mantyke: Incorrectly had weakness as Water (was keyed by variant B2 212)
+    "A4 066": {
         "stage": "Basic",
         "weakness": None,
-    },  # Pichu: Incorrectly had weakness as Lightning
-    "B2 214": {"stage": "Basic"},  # Clefairy
-    "B2 215": {"stage": "Stage 1"},  # Clefable
-    "B2 216": {"stage": "Basic"},  # Latias
-    "B2 217": {
+    },  # Pichu: Incorrectly had weakness as Lightning (was keyed by variant B2 213)
+    "A1 113": {"stage": "Basic"},  # Clefairy (was keyed by variant B2 214)
+    "A1 114": {"stage": "Stage 1"},  # Clefable (was keyed by variant B2 215)
+    "A4a 036": {"stage": "Basic"},  # Latias (was keyed by variant B2 216)
+    "A4a 037": {
         "stage": "Basic",
         "ability_name": "Fantastical Floating",
         "ability_effect": "If you have Latias in play, this Pokemon has no Retreat Cost.",
-    },  # Latios: Blank ability
-    "B2 218": {"stage": "Basic", "move1_damage": "80"},  # Hitmonlee (blank; base print is 80)
-    "B2 219": {"stage": "Basic"},  # Hitmonchan
-    "B2 220": {"stage": "Stage 1"},  # Kabuto
-    "B2 221": {"stage": "Stage 2"},  # Kabutops
-    "B2 222": {"stage": "Basic"},  # Phanpy
-    "B2 223": {
+    },  # Latios: Blank ability (was keyed by variant B2 217)
+    "A1 154": {
+        "stage": "Basic",
+        "move1_damage": None,
+    },  # Hitmonlee (blank; base print is 80) (was keyed by variant B2 218)
+    "A1 155": {"stage": "Basic"},  # Hitmonchan (was keyed by variant B2 219)
+    "A1 158": {"stage": "Stage 1"},  # Kabuto (was keyed by variant B2 220)
+    "A1 159": {"stage": "Stage 2"},  # Kabutops (was keyed by variant B2 221)
+    "A4 099": {"stage": "Basic"},  # Phanpy (was keyed by variant B2 222)
+    "A4 101": {
         "stage": "Basic",
         "weakness": None,
-    },  # Tyrogue: Incorrectly had weakness as Fighting
-    "B2 224": {"stage": "Basic"},  # Tauros
-    "B2 225": {
+    },  # Tyrogue: Incorrectly had weakness as Fighting (was keyed by variant B2 223)
+    "A1a 060": {"stage": "Basic"},  # Tauros (was keyed by variant B2 224)
+    "A3b 009": {
         "stage": "Stage 1",
         "ability_name": "Combust",
         "ability_effect": "Once during your turn, you may attach a Fire Energy from your discard pile to this Pokemon. If you do, do 20 damage to this Pokemon.",
-    },  # Flareon ex: Blank ability
-    "B2 226": {"stage": "Basic"},  # Ho-Oh ex
-    "B2 227": {"stage": "Stage 2"},  # Kingdra ex
-    "B2 228": {
+    },  # Flareon ex: Blank ability (was keyed by variant B2 225)
+    "A4 034": {"stage": "Basic"},  # Ho-Oh ex (was keyed by variant B2 226)
+    "A4 043": {"stage": "Stage 2"},  # Kingdra ex (was keyed by variant B2 227)
+    "A4 083": {
         "stage": "Stage 1",
         "ability_name": "Psychic Healing",
         "ability_effect": "Once during your turn, if this Pokemon is in the Active Spot, you may heal 30 damage from 1 of your Pokemon.",
-    },  # Espeon ex: Blank ability
-    "B2 229": {
+    },  # Espeon ex: Blank ability (was keyed by variant B2 228)
+    "A3b 034": {
         "stage": "Stage 1",
         "ability_name": "Happy Ribbon",
         "ability_effect": "Once during your turn, when you play this Pokemon from your hand to evolve 1 of your Pokemon, you may draw 2 cards.",
-    },  # Sylveon ex: Blank ability
-    "B2 230": {"stage": "Stage 1"},  # Donphan ex
-    "B2 231": {
+    },  # Sylveon ex: Blank ability (was keyed by variant B2 229)
+    "A4 100": {"stage": "Stage 1"},  # Donphan ex (was keyed by variant B2 230)
+    "A4 112": {
         "stage": "Stage 1",
         "ability_name": "Dark Chase",
         "ability_effect": "Once during your turn, if this Pokemon is in the Active Spot, you may switch in 1 of your opponent's benched Pokemon that has damage on it to the Active Spot.",
-    },  # Umbreon ex: Blank ability
-    "B2 232": {"stage": "Basic"},  # Lugia ex
-    "B2 233": {"stage": "Basic"},  # Meloetta
+    },  # Umbreon ex: Blank ability (was keyed by variant B2 231)
+    "A4 149": {"stage": "Basic"},  # Lugia ex (was keyed by variant B2 232)
+    "B2 070": {"stage": "Basic"},  # Meloetta (was keyed by variant B2 233)
     # hp ------------------------------------------------------------
     "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
     # type ------------------------------------------------------------
     "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
-    "B1a 070": {"type": "Grass"},  # Ariados: listed as Darkness (B1a 006 is Grass)
-    "B2a 115": {"type": "Supporter"},  # Arven: Missing type
-    "B2b 117": {"type": "Pokemon Tool"},  # Metal Core Barrier: Missing type
+    "B1a 006": {
+        "type": "Grass",
+        "retreat_cost": "1",
+    },  # Ariados: listed as Darkness (B1a 006 is Grass) (was keyed by variant B1a 070)
+    "B2a 091": {"type": "Supporter"},  # Arven: Missing type (was keyed by variant B2a 115)
+    "B2 148": {
+        "type": "Pokemon Tool"
+    },  # Metal Core Barrier: Missing type (was keyed by variant B2b 117)
     # weakness ------------------------------------------------------------
     "A1 169": {"weakness": "Fighting"},  # Nidoran M (W)
     "A1 170": {"weakness": "Fighting"},  # Nidorino (W)
-    "A1 171": {"weakness": "Fighting"},  # Nidoking (W)
-    "A1 241": {"weakness": "Fighting"},  # Nidoking (W)
+    "A1 171": {"weakness": "Fighting"},  # Nidoking (W) (also fixes variant A1 241)
     "A1a 048": {"weakness": "Grass"},  # Stonjourner (W)
-    "P-A 028": {"weakness": "Water"},  # Volcarona (W)
+    "A1a 014": {"weakness": "Water"},  # Volcarona (W) (was keyed by variant P-A 028)
     "P-A 037": {"weakness": "Darkness"},  # Cresselia ex (W)
     "P-A 038": {"weakness": "Darkness"},  # Misdreavus (W)
-    "B2 181": {"weakness": "Water"},  # Blacephalon ex: Incorrectly has weakness as Fire
-    "B2 195": {
-        "stage": "Basic",
+    "B2 023": {
         "weakness": "Water",
-    },  # Blacephalon ex: Missing stage and weakness
+        "stage": "Basic",
+    },  # Blacephalon ex: Incorrectly has weakness as Fire (was keyed by variant B2 181; also fixes variant B2 195)
     # retreat_cost ------------------------------------------------------------
     "A2 029": {"retreat_cost": "0"},  # Infernape ex
-    "B1a 006": {"retreat_cost": "1"},  # Ariados
     # stage ------------------------------------------------------------
-    "A3a 087": {"stage": "Stage 1"},  # Alolan Dugtrio ex: evolves from Alolan Diglett (Basic)
+    "A3a 047": {
+        "stage": "Stage 1",
+    },  # Alolan Dugtrio ex: evolves from Alolan Diglett (Basic) (was keyed by variant A3a 087)
     "A3b 015": {"stage": "Stage 1"},  # Salazzle: evolves from Salandit (Basic)
-    "A3b 057": {"stage": "Stage 1"},  # Snorlax ex: evolves from Munchlax (Basic)
-    "A3b 084": {"stage": "Stage 1"},  # Snorlax ex: evolves from Munchlax (Basic)
-    "A4b 288": {"stage": "Stage 1"},  # Snorlax ex: evolves from Munchlax (Basic)
-    "B1 327": {"stage": "Stage 1"},  # Bibarel ex: evolves from Bidoof (Basic)
+    "A3b 057": {
+        "stage": "Stage 1",
+    },  # Snorlax ex: evolves from Munchlax (Basic) (also fixes variant A3b 084; also fixes variant A4b 288)
+    "A2b 065": {
+        "stage": "Stage 1"
+    },  # Bibarel ex: evolves from Bidoof (Basic) (was keyed by variant B1 327)
     "B2a 082": {"stage": "Stage 1"},  # Maushold: evolves from Tandemaus (Basic)
-    "B3 008": {"stage": "Stage 2"},  # Mega Sceptile ex: evolves from Grovyle (Stage 1)
+    "B3 008": {
+        "stage": "Stage 2",
+    },  # Mega Sceptile ex: evolves from Grovyle (Stage 1) (also fixes variant B4b 012)
     "B3 160": {"stage": "Stage 1"},  # Flapple: evolves from Applin (Basic)
-    "B3 204": {"stage": "Stage 1"},  # Mega Lucario ex: evolves from Riolu (Basic)
-    "B4b 012": {"stage": "Stage 2"},  # Mega Sceptile ex: evolves from Grovyle (Stage 1)
-    "B4b 275": {"stage": "Basic"},  # Alolan Vulpix: no evolves_from
-    "B4b 348": {"stage": "Stage 2"},  # Haxorus: evolves from Fraxure (Stage 1)
-    "B4b 417": {"stage": "Stage 1"},  # Mega Altaria ex: evolves from Swablu (Basic)
-    "B4b 418": {"stage": "Stage 1"},  # Mega Lucario ex: evolves from Riolu (Basic)
-    "P-A 091": {"stage": "Stage 1"},  # Greedent: evolves from Skwovet (Basic)
-    "P-A 097": {"stage": "Basic"},  # Kangaskhan: no evolves_from
+    "B3 081": {
+        "stage": "Stage 1",
+    },  # Mega Lucario ex: evolves from Riolu (Basic) (was keyed by variant B3 204; also fixes variant B4b 418)
+    "B2 028": {"stage": "Basic"},  # Alolan Vulpix: no evolves_from (was keyed by variant B4b 275)
+    "B2b 110": {
+        "stage": "Stage 2"
+    },  # Haxorus: evolves from Fraxure (Stage 1) (was keyed by variant B4b 348)
+    "B1 102": {
+        "stage": "Stage 1",
+    },  # Mega Altaria ex: evolves from Swablu (Basic) (was keyed by variant B4b 417)
+    "A3b 065": {
+        "stage": "Stage 1"
+    },  # Greedent: evolves from Skwovet (Basic) (was keyed by variant P-A 091)
+    "A4 133": {"stage": "Basic"},  # Kangaskhan: no evolves_from (was keyed by variant P-A 097)
     # move1_cost ------------------------------------------------------------
     "A2b 020": {"move1_cost": "🔵🔵🔘🔘"},  # Dondozo: Ocean Cyclone
     "A2b 056": {"move1_cost": "⚪⚪🔘"},  # Revavroom: Spinning Drift
@@ -187,31 +204,18 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
         "move1_damage": "20+",
         "move1_effect": "If this Pokemon has at least 3 extra Water Energy attached, this attack does 70 more damage.",
     },  # Lapras: Hydro Pump
-    "A1 154": {"move1_damage": None},  # Hitmonlee: Stretch Kick
     "A2 019": {"move1_damage": "40+"},  # Carnivine
     "A2b 006": {"move1_damage": "40"},  # Floragato: Slash
     "A2b 040": {"move1_damage": "30"},  # Hitmonlee: Kick
     "A2b 048": {"move1_damage": "60+"},  # Paldean Clodsire ex
     "A4 045": {"move1_damage": "20+"},  # Gyarados
     "B1 005": {"move1_damage": None},  # Beautifly (does 50 dmg to one pokemon)
-    "B4 233": {"move1_damage": "40"},  # Dragonair: Draconic Whip
-    "B4b 174": {"move1_damage": "40"},  # Axew: Sharp Fang
+    "B4 117": {"move1_damage": "40"},  # Dragonair: Draconic Whip (was keyed by variant B4 233)
+    "B2b 054": {"move1_damage": "40"},  # Axew: Sharp Fang (was keyed by variant B4b 174)
     # move2_effect ------------------------------------------------------------
     "B2a 037": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B2a 102": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B2a 112": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "P-B 041": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
-    "B4b 081": {
-        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon."
-    },  # Chien-Pao ex
+        "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon.",
+    },  # Chien-Pao ex (also fixes variant B2a 102; also fixes variant B2a 112; also fixes variant P-B 041; also fixes variant B4b 081)
 }
 
 OVERRIDES: dict[str, dict[str, str | None]] = {
@@ -328,3 +332,24 @@ def apply_overrides(card: dict[str, str | None]) -> None:
         }
     card.update(base_overrides)
     card.update(OVERRIDES.get(card["id"], {}))
+
+
+def check_override_keys(cards: list[dict[str, str | None]]) -> list[str]:
+    """
+    Return a list of problems with the override keys (empty list = all good).
+    Run it on the finished cards, e.g. in a test:  assert not check_override_keys(cards)
+
+    - BASE_OVERRIDES keys must be some card's base_id. A key that is only a variant's id
+      matches nothing, so the correction is silently never applied.
+    - OVERRIDES keys must be card ids that exist.
+    """
+    base_ids = {c["base_id"] for c in cards}
+    ids = {c["id"] for c in cards}
+    problems = []
+    for key in BASE_OVERRIDES:
+        if key not in base_ids:
+            problems.append(f"BASE_OVERRIDES key {key!r} is not a base_id of any card")
+    for key in OVERRIDES:
+        if key not in ids:
+            problems.append(f"OVERRIDES key {key!r} is not a card id")
+    return problems

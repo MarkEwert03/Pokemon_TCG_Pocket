@@ -10,7 +10,7 @@ Add a short comment saying *why* each entry exists.
 import warnings
 
 # These corrections describe gameplay shared by every card with the same
-# base_id. Keys are canonical base IDs, not individual card IDs.
+# canon_id. Keys are canonical IDs, not individual card IDs.
 FUNCTIONAL_FIELDS = frozenset(
     {
         "stage",
@@ -18,7 +18,7 @@ FUNCTIONAL_FIELDS = frozenset(
         "hp",
         "type",
         "weakness",
-        "retreat_cost",
+        "rc",
         "ko",
         "ability_name",
         "ability_effect",
@@ -33,7 +33,7 @@ FUNCTIONAL_FIELDS = frozenset(
     }
 )
 
-BASE_OVERRIDES: dict[str, dict[str, str]] = {
+CANON_OVERRIDES: dict[str, dict[str, str]] = {
     # misc ------------------------------------------------------------
     "A2b 041": {
         "move1_name": "Magnum Punch",
@@ -135,7 +135,7 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
     "B1a 006": {
         "type": "Grass",
-        "retreat_cost": "1",
+        "rc": "1",
     },  # Ariados: listed as Darkness (B1a 006 is Grass) (was keyed by variant B1a 070)
     "B2a 091": {"type": "Supporter"},  # Arven: Missing type (was keyed by variant B2a 115)
     "B2 148": {
@@ -153,26 +153,26 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
         "weakness": "Water",
         "stage": "Basic",
     },  # Blacephalon ex: Incorrectly has weakness as Fire (was keyed by variant B2 181; also fixes variant B2 195)
-    # retreat_cost ------------------------------------------------------------
-    "A2 029": {"retreat_cost": "0"},  # Infernape ex
-    "A2 061": {"retreat_cost": "1"},  # Pachirisu ex: other 4 prints say 1 (variant A2 183)
-    "A3 098": {"retreat_cost": "1"},  # Rockruff: other 2 prints say 1 (variant B1 310)
-    "B1 069": {"retreat_cost": "2"},  # Jellicent: other 2 prints say 2 (variant B3 210)
-    "B1 085": {"retreat_cost": "1"},  # Mega Ampharos ex: other 4 prints say 1 (variant B3b 103)
-    "B1 088": {"retreat_cost": "1"},  # Luxray: other 2 prints say 1 (variant P-B 004)
-    "B1a 062": {"retreat_cost": "1"},  # Buneary: other 5 prints say 1 (variant B1a 075)
+    # rc ------------------------------------------------------------
+    "A2 029": {"rc": "0"},  # Infernape ex
+    "A2 061": {"rc": "1"},  # Pachirisu ex: other 4 prints say 1 (variant A2 183)
+    "A3 098": {"rc": "1"},  # Rockruff: other 2 prints say 1 (variant B1 310)
+    "B1 069": {"rc": "2"},  # Jellicent: other 2 prints say 2 (variant B3 210)
+    "B1 085": {"rc": "1"},  # Mega Ampharos ex: other 4 prints say 1 (variant B3b 103)
+    "B1 088": {"rc": "1"},  # Luxray: other 2 prints say 1 (variant P-B 004)
+    "B1a 062": {"rc": "1"},  # Buneary: other 5 prints say 1 (variant B1a 075)
     "B1a 034": {
-        "retreat_cost": "3"
+        "rc": "3"
     },  # Reuniclus: alt art read as 0 (missing icon); base print is 3 (variant B1a 072)
     "B1a 037": {
-        "retreat_cost": "2"
+        "rc": "2"
     },  # Xerneas: alt art read as 0 (missing icon); base print is 2 (variant B1a 073)
     "B1a 049": {
-        "retreat_cost": "1"
+        "rc": "1"
     },  # Trubbish: alt art read as 0 (missing icon); base print is 1 (variant B1a 074)
-    "B3 013": {"retreat_cost": "0"},  # Budew: other 3 prints say 0 (variant B4b 246)
-    "B4 068": {"retreat_cost": "0"},  # Mime Jr.: other 2 prints say 0 (variant B4b 308)
-    "B4 074": {"retreat_cost": "0"},  # Wynaut: other 3 prints say 0 (variant B4b 306)
+    "B3 013": {"rc": "0"},  # Budew: other 3 prints say 0 (variant B4b 246)
+    "B4 068": {"rc": "0"},  # Mime Jr.: other 2 prints say 0 (variant B4b 308)
+    "B4 074": {"rc": "0"},  # Wynaut: other 3 prints say 0 (variant B4b 306)
     # stage ------------------------------------------------------------
     "A3a 047": {
         "stage": "Stage 1",
@@ -329,17 +329,17 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
         "ability_effect": "Each of your evolved Pokemon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
         "image": "https://img.game8.co/4479795/7ff12fab25f704898086ae6aba1a07b7.png/show",
         "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/596976",
-        "retreat_cost": "1",
+        "rc": "1",
     },  # Celebi: Incorrectly linked to Mega Pinsir ex page
-    # generation ------------------------------------------------------------
-    "A1a 065": {"generation": "9"},  # Mythical Slab
-    "A1a 066": {"generation": "9"},  # Budding Expeditioner
-    "A1a 080": {"generation": "9"},  # Budding Expeditioner
-    "B4a 087": {"generation": "1"},  # Team Rocket's Boss
-    "B4b 373": {"generation": "9"},  # Ancient Booster Energy Capsule
-    "B4b 374": {"generation": "9"},  # Future Booster Energy Capsule
-    "B4b 397": {"generation": "9"},  # Mesagoza
-    "B4 113": {"generation": "9"},  # Archaludon (debuted in Gen 9; entered by hand)
+    # gen ------------------------------------------------------------
+    "A1a 065": {"gen": "9"},  # Mythical Slab
+    "A1a 066": {"gen": "9"},  # Budding Expeditioner
+    "A1a 080": {"gen": "9"},  # Budding Expeditioner
+    "B4a 087": {"gen": "1"},  # Team Rocket's Boss
+    "B4b 373": {"gen": "9"},  # Ancient Booster Energy Capsule
+    "B4b 374": {"gen": "9"},  # Future Booster Energy Capsule
+    "B4b 397": {"gen": "9"},  # Mesagoza
+    "B4 113": {"gen": "9"},  # Archaludon (debuted in Gen 9; entered by hand)
     # rarity ------------------------------------------------------------
     "P-B 087": {"rarity": "Promo"},  # Mega Sceptile ex
     "P-B 088": {"rarity": "Promo"},  # Team Rocket's Scyther
@@ -383,7 +383,7 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     #       217 221 227 232 246 248 249 254 260 271 274 296 304 313 326 337 344 347
     #       359 383 387 393 398 404 406 429
     #   P-B 012 033 041 054 070 071 091 095 101 103
-    # TODO: generation still missing on game8 (almost all Trainers, from the newer sets):
+    # TODO: gen still missing on game8 (almost all Trainers, from the newer sets):
     #   A4 151 152 153 154 155
     #   A4a 067 068 070 084
     #   A4b 310 311
@@ -405,15 +405,15 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     #   A1 085 086 | A2 121 | A2a 035 | A3a 027 | A4 062 063 073 | P-B 022 | B2a 010 | B3a 057
     #   B3b 026 | B4 077
     # TODO: prints of the same card disagree and the data can't say which is right (check the art):
-    #   retreat_cost: A1 040 / A3a 090 Arcanine (1 vs 2) | A1 058 / A4a 094 Golduck (1 vs 2)
+    #   rc: A1 040 / A3a 090 Arcanine (1 vs 2) | A1 058 / A4a 094 Golduck (1 vs 2)
     #       A2 079 / A2 168 Cresselia (1 vs 2) | A3 078 / A3 167 Cutiefly (0 vs 1)
     #       B1 068 / B3 209 Frillish (1 vs 2) | B3b 034 Fidough (0, 0, 1, 1) | B4 141 Swanna ex (1, 1, 2, 2)
     #   weakness: A4 057 / A4 170 Delibird (Metal vs Lightning)
     #   move1_damage: A3 100 / P-A 068 Lycanroc (80 vs 100)
     #   move1_cost: B4 054 / P-B 085 Pachirisu (🟡 vs 🟡🟡) | B2a 002 vs P-B 069 Floragato (🟢🟢 vs 🟢)
     #   effect numbers: A1 079, B1 108, B1 157, B1 175
-    # TODO: these share a base_id but look like DIFFERENT cards (cost, damage and effect all agree with
-    #   each other); probably a base_id linkage problem, not wrong data. Left alone:
+    # TODO: these share a canon_id but look like DIFFERENT cards (cost, damage and effect all agree with
+    #   each other); probably a canon_id linkage problem, not wrong data. Left alone:
     #   A1 046 / B4 023 Moltres | B3 064 / B4 072 B4b 105 B4b 305 Kirlia | A2a 034 / A4 084 A4 085 Unown
     # TODO: B3b 049 Hisuian Sliggoo is Stage 1 but evolves_from is blank (Hisuian Goomy isn't in the data).
     # TODO: ~41 effect texts differ between prints only in wording or punctuation (' vs ', Pokémon vs Pokemon,
@@ -422,12 +422,12 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
 
 
 def apply_overrides(card: dict[str, str | None]) -> None:
-    """Apply base-level functional corrections, then card-specific fixes."""
-    base_overrides = BASE_OVERRIDES.get(card.get("base_id"), {})
+    """Apply canonical-level functional corrections, then card-specific fixes."""
+    base_overrides = CANON_OVERRIDES.get(card.get("canon_id"), {})
     invalid_fields = set(base_overrides) - FUNCTIONAL_FIELDS
     if invalid_fields:
         warnings.warn(
-            f"Base override for {card.get('base_id')!r} contains non-functional "
+            f"Canonical override for {card.get('canon_id')!r} contains non-functional "
             f"fields: {sorted(invalid_fields)}; ignoring those fields.",
             UserWarning,
             stacklevel=2,
@@ -444,16 +444,16 @@ def check_override_keys(cards: list[dict[str, str | None]]) -> list[str]:
     Return a list of problems with the override keys (empty list = all good).
     Run it on the finished cards, e.g. in a test:  assert not check_override_keys(cards)
 
-    - BASE_OVERRIDES keys must be some card's base_id. A key that is only a variant's id
+    - CANON_OVERRIDES keys must be some card's canon_id. A key that is only a variant's id
       matches nothing, so the correction is silently never applied.
     - OVERRIDES keys must be card ids that exist.
     """
-    base_ids = {c["base_id"] for c in cards}
+    canon_ids = {c["canon_id"] for c in cards}
     ids = {c["id"] for c in cards}
     problems = []
-    for key in BASE_OVERRIDES:
-        if key not in base_ids:
-            problems.append(f"BASE_OVERRIDES key {key!r} is not a base_id of any card")
+    for key in CANON_OVERRIDES:
+        if key not in canon_ids:
+            problems.append(f"CANON_OVERRIDES key {key!r} is not a canon_id of any card")
     for key in OVERRIDES:
         if key not in ids:
             problems.append(f"OVERRIDES key {key!r} is not a card id")

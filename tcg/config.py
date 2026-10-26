@@ -28,7 +28,7 @@ USER_AGENT = "Mozilla/5.0 (compatible; Pokemon_TCG_Pocket-dataset-builder)"
 COLUMNS = [
     "index",
     "id",
-    "base_id",
+    "canon_id",
     "name",
     "rarity",
     "category",
@@ -37,10 +37,10 @@ COLUMNS = [
     "hp",
     "type",
     "weakness",
-    "retreat_cost",
-    "classification",
+    "rc",
+    "gimmick",
     "ko",
-    "generation",
+    "gen",
     "illustrator",
     "expansion_name",
     "expansion_id",
@@ -69,11 +69,11 @@ SET_ORDER = (
 
 # Columns that only exist on the individual card page (not in the raw JSON)
 PAGE_FIELDS = (
-    "generation",
+    "gen",
     "illustrator",
     "weakness",
-    "retreat_cost",
+    "rc",
     "pack_points",
-    "classification",
+    "gimmick",
     "ability_effect",
 )

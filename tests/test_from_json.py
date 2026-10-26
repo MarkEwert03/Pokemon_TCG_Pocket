@@ -57,7 +57,7 @@ def test_basic_pokemon():
     # empty slot + pull-rate junk must not leak into move2
     assert card["move2_name"] is None and card["move2_damage"] is None
     # page-only fields are left for the scraper
-    assert card["weakness"] is None and card["generation"] is None
+    assert card["weakness"] is None and card["gen"] is None
 
 
 def test_ability_pokemon_packs_moves_consecutively():

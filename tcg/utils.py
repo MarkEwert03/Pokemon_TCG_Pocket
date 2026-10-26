@@ -145,8 +145,8 @@ def is_ultra_beast(name: str | None, card_type: str | None) -> bool:
     return re.sub(r"\s+ex$", "", name) in ULTRA_BEASTS
 
 
-def get_classification(name: str | None, card_type: str | None) -> str | None:
-    """Return the broad classification for a Pokémon, or None when unclassified."""
+def get_gimmick(name: str | None, card_type: str | None) -> str | None:
+    """Return the broad gimmick for a Pokémon, or None when unclassified."""
     if not name or is_trainer_type(card_type):
         return None
     normalized_name = re.sub(r"\s+ex$", "", name)

@@ -3,7 +3,7 @@ The whole pipeline, in order:
 
     1. fetch.ensure_raw_json      raw JSON  -> data/raw/cards.json
     2. from_json.convert_all      JSON      -> one dict per card (JSON fields only)
-    3. scrape_extras              card page -> generation, illustrator, weakness, ...
+    3. scrape_extras              card page -> gen, illustrator, weakness, ...
     4. merge + overrides          fix known-bad cards
     5. write_csv                  -> data/full.csv
 """
@@ -28,7 +28,7 @@ from tcg.config import (
 )
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_overrides
-from tcg.utils import get_classification, is_trainer_type
+from tcg.utils import get_gimmick, is_trainer_type
 from tcg.validation import audit_overrides, validate_csv_file, write_validation_log
 
 _CARD_ID_PATTERN = re.compile(r"^(\S+)\s+(\d+)$")
@@ -111,13 +111,13 @@ def merge_extras(card: dict, extra: dict | None) -> None:
             card[field] = extra[field]
 
 
-def assign_base_ids(cards: list[dict]) -> None:
+def assign_canon_ids(cards: list[dict]) -> None:
     """Point equivalent cards to the first card with the same core signature."""
-    base_ids: dict[tuple[str | None, str | None, str | None], str] = {}
+    canon_ids: dict[tuple[str | None, str | None, str | None], str] = {}
     for card in cards:
         signature = (card["name"], card["hp"], card["move1_name"])
-        base_id = base_ids.setdefault(signature, card["id"])
-        card["base_id"] = base_id
+        canon_id = canon_ids.setdefault(signature, card["id"])
+        card["canon_id"] = canon_id
 
 
 def write_csv(cards: list[dict], output_file: Path) -> None:
@@ -158,7 +158,7 @@ def build_cards(
     fetch.ensure_raw_json(json_path, refresh=refresh_json, quiet=quiet)
     cards = convert_all(load_raw_cards(json_path))
     sort_cards(cards)
-    assign_base_ids(cards)
+    assign_canon_ids(cards)
     assign_indexes(cards)
     if only:
         cards = [c for c in cards if c["id"] == only]
@@ -196,7 +196,7 @@ def build_cards(
             )
 
     for card in cards:
-        card["classification"] = get_classification(card["name"], card["type"])
+        card["gimmick"] = get_gimmick(card["name"], card["type"])
         if apply_manual_overrides:
             apply_overrides(card)
     return cards

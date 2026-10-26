@@ -2,8 +2,8 @@
 Stage 3: extract the fields the raw JSON does not have from a card page's HTML.
 
 Fields produced (see `config.PAGE_FIELDS`):
-    generation, illustrator, weakness, retreat_cost,
-    pack_points, classification, ability_effect
+    gen, illustrator, weakness, rc,
+    pack_points, gimmick, ability_effect
 
 This module is pure: HTML string in, dict out. No network, no disk. That makes
 it easy to tweak and re-run against the cached pages.
@@ -95,7 +95,7 @@ def _extract_type(cell: Tag | None) -> str | None:
     return None
 
 
-def _extract_retreat_cost(cell: Tag | None) -> str | None:
+def _extract_rc(cell: Tag | None) -> str | None:
     """
     Count the energy icons in the retreat-cost cell.
     An icon labelled e.g. "Colorless 2" counts as 2. No icons => cost 0.
@@ -184,11 +184,11 @@ def parse_card_page(
     if info is not None:
         gen = _text(_value_below(info, "Generation"))
         m = re.search(r"\d+", gen or "")
-        result["generation"] = m.group() if m else None
+        result["gen"] = m.group() if m else None
         result["illustrator"] = _text(_value_below(info, "Illustrator"))
         if not is_trainer:
             result["weakness"] = _extract_type(_value_below(info, "Weakness"))
-            result["retreat_cost"] = _extract_retreat_cost(
+            result["rc"] = _extract_rc(
                 _value_below(info, "Retreat Cost")
             )
 
@@ -198,7 +198,7 @@ def parse_card_page(
     # Only look inside the card's own tables, so the "List of Ultra Beasts"
     # sidebar link on every page doesn't cause false positives.
     scan = f"{_text(info) or ''} {_text(moves) or ''}".lower()
-    result["classification"] = "Ultra Beast" if "ultra beast" in scan else None
+    result["gimmick"] = "Ultra Beast" if "ultra beast" in scan else None
 
     if is_trainer:
         # Trainer pages store their text in the card-info table under

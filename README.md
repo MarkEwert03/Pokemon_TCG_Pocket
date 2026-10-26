@@ -16,8 +16,8 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 
 1. **Download** the big raw JSON (once; kept in `data/raw/cards.json`).
 2. **Convert** it to one flat dict per card. The JSON already has name, rarity, stage, HP, type, pack, ability name, moves (name / cost / damage / effect), image and URL.
-3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `generation`, `illustrator`, `weakness`, `retreat_cost`, `pack_points`, `classification`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
-4. **Apply manual overrides** (`tcg/overrides.py`): base-level functional
+3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `gen`, `illustrator`, `weakness`, `rc`, `pack_points`, `gimmick`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
+4. **Apply manual overrides** (`tcg/overrides.py`): canonical-level functional
    corrections first, then card-specific corrections.
 5. **Order** cards by set release family and card number, then assign the
    one-based `index` column.
@@ -78,7 +78,7 @@ parser gaps from values supplied later by overrides. It includes universal
 fields required for every card, Pokémon-only fields, and the Trainer
 `ability_effect` field.
 
-Validation also checks that cards sharing a `base_id` have matching battle
+Validation also checks that cards sharing a `canon_id` have matching battle
 attributes: stage, type, weakness, retreat cost, knockout points, ability
 details, and both moves. Any mismatches are included in the same timestamped
 validation report.
@@ -102,7 +102,7 @@ reviewed for removal; an active correction still changes the source data.
 ```bash
 pip install -r requirements-dev.txt
 python -m pytest # unit tests (no network needed)
-python scripts/compare_csv.py old.csv data/full.csv --show weakness retreat_cost
+python scripts/compare_csv.py old.csv data/full.csv --show weakness rc
 ```
 
 ### Project layout
@@ -113,7 +113,7 @@ tcg/
   config.py            paths, URLs, COLUMNS
   fetch.py             all network access (JSON download, cached page download)
   from_json.py         raw JSON -> flat card dict
-  card_page.py         card page HTML -> generation, illustrator, weakness, ...
+  card_page.py         card page HTML -> gen, illustrator, weakness, ...
   overrides.py         manual per-card fixes
   pipeline.py          glues the stages together, writes the CSV
   utils.py             string + energy-symbol helpers
@@ -129,12 +129,12 @@ logs/                   timestamped validation and override audit reports
 
 ### Fixing a wrong or missing value
 
-Add an entry to `BASE_OVERRIDES` in `tcg/overrides.py` when the correction
-applies to every card sharing a `base_id`. Base overrides are limited to
-functional attributes: `stage`, `type`, `weakness`, `retreat_cost`, `ko`,
+Add an entry to `CANON_OVERRIDES` in `tcg/overrides.py` when the correction
+applies to every card sharing a `canon_id`. Canonical overrides are limited to
+functional attributes: `stage`, `type`, `weakness`, `rc`, `ko`,
 `evolves_from`, `ability_*`, and `move1_*`/`move2_*`. Use the card-specific
 `OVERRIDES` mapping for corrections that apply to only one card, such as
-illustrator, image, or URL fixes. Base overrides are applied first, so a
+illustrator, image, or URL fixes. Canonical overrides are applied first, so a
 card-specific override takes precedence when necessary.
 
 ---
@@ -152,7 +152,7 @@ Columns include:
 - `id`
   - The card’s unique identifier combining set and index.
   - Examples: "A1 001", "A2b 107", "P-A 034"
-- `base_id`
+- `canon_id`
   - The ID of the first card with the same name, HP, and first move; equivalent reprints and variants point to it.
   - Examples: "A1 055" for base Blastoise, Promo-A Blastoise, and shiny Blastoise
 - `name`
@@ -175,22 +175,22 @@ Columns include:
   - Hit points (health) of the Pokémon card.
   - Examples: "70", "100", "180"
 - `type`
-  - Pokémon TCG type or trainer card classification.
+  - Pokémon TCG type or trainer card category.
   - Examples: "Grass", "Colorless", "Supporter", "Item", "Pokemon Tool"
 - `weakness`
   - The TCG type this Pokémon is weak against.
   - Examples: "Fire", "Lightning", "Darkness"
-- `retreat_cost`
+- `rc`
   - Number of energy symbols needed to retreat the Pokémon.
   - Examples: "0", "1", "4"
-- `classification`
-  - The card's broader classification, when applicable.
+- `gimmick`
+  - The card's broader gimmick, when applicable.
   - Examples: "Ultra Beast", "Ancient", "Future", blank
 - `ko`
   - String-valued points awarded for knocking out the card.
   - Regular Pokémon and Fossils: `"1"`; Pokémon ex: `"2"`; Mega ex Pokémon: `"3"`; non-Pokémon: blank
-- `generation`
-  - The mainline game generation the Pokémon originates from.
+- `gen`
+  - The mainline game gen the Pokémon originates from.
   - Examples: "1", "5", "9"
 - `illustrator`
   - The name of the card's illustrator.
@@ -251,7 +251,7 @@ Columns include:
 ```json
 {
   "id": "A1 001",
-  "base_id": "A1 001",
+  "canon_id": "A1 001",
   "category": "Pokemon",
   "name": "Bulbasaur",
   "rarity": "◇",
@@ -259,12 +259,12 @@ Columns include:
   "hp": "70",
   "type": "Grass",
   "weakness": "Fire",
-  "retreat_cost": "1",
-  "classification": null,
+  "rc": "1",
+  "gimmick": null,
   "ko": "1",
   "expansion_name": "Genetic Apex",
   "expansion_id": "A1",
-  "generation": "1",
+  "gen": "1",
   "illustrator": "Narumi Sato",
   "pack_name": "Mewtwo",
   "pack_points": "35",

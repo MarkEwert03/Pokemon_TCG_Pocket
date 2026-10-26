@@ -4,16 +4,16 @@ import csv
 from collections import defaultdict
 from pathlib import Path
 
-from tcg.overrides import BASE_OVERRIDES, OVERRIDES
+from tcg.overrides import CANON_OVERRIDES, OVERRIDES
 
 UNIVERSAL_FIELDS = (
     "id",
-    "base_id",
+    "canon_id",
     "name",
     "rarity",
     "category",
     "type",
-    "generation",
+    "gen",
     "illustrator",
     "expansion_name",
     "expansion_id",
@@ -21,13 +21,13 @@ UNIVERSAL_FIELDS = (
     "image",
     "url",
 )
-POKEMON_FIELDS = ("stage", "hp", "retreat_cost", "ko", "move1_name", "move1_cost")
+POKEMON_FIELDS = ("stage", "hp", "rc", "ko", "move1_name", "move1_cost")
 TRAINER_FIELDS = ("ability_effect",)
 BATTLE_ATTRIBUTE_FIELDS = (
     "stage",
     "type",
     "weakness",
-    "retreat_cost",
+    "rc",
     "ko",
     "ability_name",
     "ability_effect",
@@ -65,15 +65,15 @@ def find_missing_fields(cards: list[dict]) -> list[tuple[str, str, str]]:
 def find_battle_attribute_mismatches(
     cards: list[dict],
 ) -> list[tuple[str, str, str, str, str]]:
-    """Return battle attributes that differ within a shared base-id group."""
+    """Return battle attributes that differ within a shared canonical-id group."""
     groups: dict[str, list[dict]] = defaultdict(list)
     for card in cards:
-        base_id = card.get("base_id")
-        if base_id:
-            groups[base_id].append(card)
+        canon_id = card.get("canon_id")
+        if canon_id:
+            groups[canon_id].append(card)
 
     findings = []
-    for base_id, group in groups.items():
+    for canon_id, group in groups.items():
         if len(group) < 2:
             continue
         canonical = group[0]
@@ -84,7 +84,7 @@ def find_battle_attribute_mismatches(
                 if actual != expected:
                     findings.append(
                         (
-                            base_id,
+                            canon_id,
                             card.get("id") or "<missing id>",
                             field,
                             str(expected) if expected is not None else "<missing>",
@@ -97,7 +97,7 @@ def find_battle_attribute_mismatches(
 def write_validation_log(
     cards: list[dict], path: Path, *, stage: str = "Pre-override"
 ) -> list[tuple[str, ...]]:
-    """Write required-field and base-id consistency diagnostics."""
+    """Write required-field and canonical-id consistency diagnostics."""
     missing_findings = find_missing_fields(cards)
     battle_findings = find_battle_attribute_mismatches(cards)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -111,13 +111,13 @@ def write_validation_log(
     lines.extend(
         [
             "",
-            f"{stage} base-id battle-attribute consistency validation",
-            "base_id\tcard_id\tattribute\tcanonical_value\tcard_value",
+            f"{stage} canonical-id battle-attribute consistency validation",
+            "canon_id\tcard_id\tattribute\tcanonical_value\tcard_value",
         ]
     )
     lines.extend(
-        f"{base_id}\t{card_id}\t{field}\t{expected}\t{actual}"
-        for base_id, card_id, field, expected, actual in battle_findings
+        f"{canon_id}\t{card_id}\t{field}\t{expected}\t{actual}"
+        for canon_id, card_id, field, expected, actual in battle_findings
     )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return [*missing_findings, *battle_findings]
@@ -135,10 +135,10 @@ def audit_overrides(
 ) -> dict[str, int]:
     """Report whether each manual override is still needed by source data."""
     by_id = {card.get("id"): card for card in cards}
-    by_base_id: dict[str, list[dict]] = defaultdict(list)
+    by_canon_id: dict[str, list[dict]] = defaultdict(list)
     for card in cards:
-        if card.get("base_id"):
-            by_base_id[card["base_id"]].append(card)
+        if card.get("canon_id"):
+            by_canon_id[card["canon_id"]].append(card)
     findings: list[tuple[str, str, str, str, str]] = []
     counts = {"REDUNDANT": 0, "FILLING_MISSING": 0, "ACTIVE_CORRECTION": 0, "CARD_NOT_FOUND": 0}
 
@@ -161,10 +161,10 @@ def audit_overrides(
             )
             counts[status] += 1
 
-    for base_id, overrides in BASE_OVERRIDES.items():
-        group = by_base_id.get(base_id)
+    for canon_id, overrides in CANON_OVERRIDES.items():
+        group = by_canon_id.get(canon_id)
         if not group:
-            findings.append((base_id, "<missing base group>", "-", "-", "CARD_NOT_FOUND"))
+            findings.append((canon_id, "<missing base group>", "-", "-", "CARD_NOT_FOUND"))
             counts["CARD_NOT_FOUND"] += 1
             continue
         for card in group:
@@ -178,7 +178,7 @@ def audit_overrides(
                     status = "ACTIVE_CORRECTION"
                 findings.append(
                     (
-                        base_id,
+                        canon_id,
                         card.get("name") or "<missing name>",
                         field,
                         source or "<missing>",

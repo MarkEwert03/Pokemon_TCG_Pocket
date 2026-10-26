@@ -3,7 +3,7 @@ Compare a freshly built CSV against an older one (e.g. your previous data/full.c
 from the pack-table scraper) and report, per column, how many cards disagree.
 
     python scripts/compare_csv.py old_full.csv data/full.csv
-    python scripts/compare_csv.py old_full.csv data/full.csv --show weakness retreat_cost
+    python scripts/compare_csv.py old_full.csv data/full.csv --show weakness rc
 
 Only cards present in both files are compared. Expect a few known differences:
 - move1_/move2_ columns shift for cards with an ability (the old scraper left

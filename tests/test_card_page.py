@@ -45,19 +45,19 @@ ATTACK_ONLY = "<tr><td>Grass Colorless Vine Whip</td></tr><tr><td>Damage: 40</td
 
 def test_basic_pokemon_page():
     out = parse_card_page(page(ATTACK_ONLY), is_trainer=False)
-    assert out["generation"] == "1"
+    assert out["gen"] == "1"
     assert out["illustrator"] == "Narumi Sato"
     assert out["weakness"] == "Fire"
-    assert out["retreat_cost"] == "2"
+    assert out["rc"] == "2"
     assert out["pack_points"] == "35"
     # the sidebar "List of Ultra Beasts" link must not trigger a false positive
-    assert out["classification"] is None
+    assert out["gimmick"] is None
     assert out["ability_effect"] is None
 
 
 def test_ultra_beast_detected_inside_card_tables():
     moves = ATTACK_ONLY + "<tr><td>Ultra Beast</td></tr>"
-    assert parse_card_page(page(moves), is_trainer=False)["classification"] == "Ultra Beast"
+    assert parse_card_page(page(moves), is_trainer=False)["gimmick"] == "Ultra Beast"
 
 
 def test_ability_effect_found_by_name_in_next_row():
@@ -79,9 +79,9 @@ def test_ability_effect_found_by_name_in_same_row():
 def test_trainer_skips_weakness_and_retreat_and_takes_text():
     moves = "<tr><td>Draw 2 cards.</td></tr>"
     out = parse_card_page(page(moves), is_trainer=True)
-    assert out["weakness"] is None and out["retreat_cost"] is None
+    assert out["weakness"] is None and out["rc"] is None
     assert out["ability_effect"] == "Draw 2 cards."
-    assert out["generation"] == "1"
+    assert out["gen"] == "1"
 
 
 def test_trainer_effect_is_read_from_card_info_table():
@@ -96,24 +96,24 @@ def test_trainer_effect_is_read_from_card_info_table():
     assert out["ability_effect"] == "If the attached Pokemon is damaged, do 20 damage."
 
 
-def test_zero_retreat_cost_and_missing_pieces():
+def test_zero_rc_and_missing_pieces():
     html = page(ATTACK_ONLY).replace(
         '<a><img alt="Colorless"></a><a><img alt="Colorless"></a>', "-"
     )
-    assert parse_card_page(html, is_trainer=False)["retreat_cost"] == "0"
+    assert parse_card_page(html, is_trainer=False)["rc"] == "0"
 
 
-def test_zero_retreat_cost_for_na_placeholder():
+def test_zero_rc_for_na_placeholder():
     html = page(ATTACK_ONLY).replace(
         '<a><img alt="Colorless"></a><a><img alt="Colorless"></a>',
         '<img alt="-" />',
     )
-    assert parse_card_page(html, is_trainer=False)["retreat_cost"] == "0"
+    assert parse_card_page(html, is_trainer=False)["rc"] == "0"
 
 
 def test_garbage_html_returns_all_none_without_crashing():
     out = parse_card_page("<html><body>nothing here</body></html>", is_trainer=False)
-    assert out["generation"] is None and out["illustrator"] is None
+    assert out["gen"] is None and out["illustrator"] is None
     assert out["pack_points"] is None
 
 

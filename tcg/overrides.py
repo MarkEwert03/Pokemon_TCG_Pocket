@@ -155,6 +155,24 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     },  # Blacephalon ex: Incorrectly has weakness as Fire (was keyed by variant B2 181; also fixes variant B2 195)
     # retreat_cost ------------------------------------------------------------
     "A2 029": {"retreat_cost": "0"},  # Infernape ex
+    "A2 061": {"retreat_cost": "1"},  # Pachirisu ex: other 4 prints say 1 (variant A2 183)
+    "A3 098": {"retreat_cost": "1"},  # Rockruff: other 2 prints say 1 (variant B1 310)
+    "B1 069": {"retreat_cost": "2"},  # Jellicent: other 2 prints say 2 (variant B3 210)
+    "B1 085": {"retreat_cost": "1"},  # Mega Ampharos ex: other 4 prints say 1 (variant B3b 103)
+    "B1 088": {"retreat_cost": "1"},  # Luxray: other 2 prints say 1 (variant P-B 004)
+    "B1a 062": {"retreat_cost": "1"},  # Buneary: other 5 prints say 1 (variant B1a 075)
+    "B1a 034": {
+        "retreat_cost": "3"
+    },  # Reuniclus: alt art read as 0 (missing icon); base print is 3 (variant B1a 072)
+    "B1a 037": {
+        "retreat_cost": "2"
+    },  # Xerneas: alt art read as 0 (missing icon); base print is 2 (variant B1a 073)
+    "B1a 049": {
+        "retreat_cost": "1"
+    },  # Trubbish: alt art read as 0 (missing icon); base print is 1 (variant B1a 074)
+    "B3 013": {"retreat_cost": "0"},  # Budew: other 3 prints say 0 (variant B4b 246)
+    "B4 068": {"retreat_cost": "0"},  # Mime Jr.: other 2 prints say 0 (variant B4b 308)
+    "B4 074": {"retreat_cost": "0"},  # Wynaut: other 3 prints say 0 (variant B4b 306)
     # stage ------------------------------------------------------------
     "A3a 047": {
         "stage": "Stage 1",
@@ -166,7 +184,10 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     "A2b 065": {
         "stage": "Stage 1"
     },  # Bibarel ex: evolves from Bidoof (Basic) (was keyed by variant B1 327)
-    "B2a 082": {"stage": "Stage 1"},  # Maushold: evolves from Tandemaus (Basic)
+    "B2a 082": {
+        "stage": "Stage 1",
+        "move1_effect": "Flip 3 coins. For each heads, discard a random Energy from your opponent's Active Pokemon.",
+    },  # Maushold: evolves from Tandemaus (Basic) | Maushold: typo fixed (was keyed by variant B2a 099)
     "B3 008": {
         "stage": "Stage 2",
     },  # Mega Sceptile ex: evolves from Grovyle (Stage 1) (also fixes variant B4b 012)
@@ -176,7 +197,8 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     },  # Mega Lucario ex: evolves from Riolu (Basic) (was keyed by variant B3 204; also fixes variant B4b 418)
     "B2 028": {"stage": "Basic"},  # Alolan Vulpix: no evolves_from (was keyed by variant B4b 275)
     "B2b 110": {
-        "stage": "Stage 2"
+        "stage": "Stage 2",
+        "move1_effect": "This attack does 20 more damage for each Benched Pokemon (both yours and your opponent's).",
     },  # Haxorus: evolves from Fraxure (Stage 1) (was keyed by variant B4b 348)
     "B1 102": {
         "stage": "Stage 1",
@@ -216,7 +238,90 @@ BASE_OVERRIDES: dict[str, dict[str, str]] = {
     "B2a 037": {
         "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon.",
     },  # Chien-Pao ex (also fixes variant B2a 102; also fixes variant B2a 112; also fixes variant P-B 041; also fixes variant B4b 081)
+    # ability ------------------------------------------------------------
+    "A2 033": {
+        "ability_name": "Thick Fat",
+        "ability_effect": "This Pokémon takes -30 damage from attacks from Fire or Water Pokémon.",
+    },  # Mamoswine: blank; base A2 033 has it (was keyed by variant A2 160)
+    "B1 121": {
+        "ability_name": "Watch Over",
+        "ability_effect": "Once during your turn, you may heal 20 damage from your Active Pokemon.",
+    },  # Indeedee ex: blank; base B1 121 has it (was keyed by variant B3b 104)
+    "B1 160": {
+        "ability_name": "Poison Point",
+        "ability_effect": "If this Pokemon is in the Active Spot and is damaged by an attack from your opponent's Pokemon, the Attacking Pokemon is now Poisoned.",
+    },  # Dragalge ex: blank; base B1 160 has it; blank; other prints have it (was keyed by variant B4b 148)
+    "B2a 020": {
+        "ability_name": "Armor",
+        "ability_effect": "This Pokemon takes -30 damage from attacks.",
+    },  # Armarouge ex: blank; base B2a 020 has it (was keyed by variant B2a 101, B2a 111)
+    "B2b 008": {
+        "ability_name": "Ignition",
+        "ability_effect": "Once during your turn, when you play this Pokemon from your hand to evolve 1 of your Pokemon, you may take a Fire Energy from your Energy Zone and attach it to your Active Fire Pokemon.",
+    },  # Charmeleon: blank; base B2b 008 has it (was keyed by variant B2b 092)
+    "B2b 050": {
+        "ability_name": "Metal Transport",
+        "ability_effect": "Once during your turn, you may switch your Active Metal Pokemon with 1 of your Benched Pokemon.",
+    },  # Revavroom: blank; base B2b 050 has it (was keyed by variant B2b 074)
+    "B3 037": {
+        "ability_name": "Frozen Flow",
+        "ability_effect": "Once during your turn, if this Pokemon is in the Active Spot, you may switch out your opponent's Active Pokemon to the Bench. (Your opponent chooses the new Active Pokemon.)",
+    },  # Vaporeon ex: blank; base B3 037 has it; blank; other prints have it (was keyed by variant B3b 102)
+    "B3b 055": {
+        "ability_name": "Massive Body",
+        "ability_effect": "As long as this Pokemon is in the Active Spot, your opponent can't play any Stadium cards from their hand.",
+    },  # Snorlax: blank; base B3b 055 has it (was keyed by variant B3b 100)
+    "A3 149": {
+        "ability_effect": "Put 1 of your Colorless Pokemon that has damage on it into your hand.",
+    },  # Ilima: 'Normal' should be 'Colorless' (as on A3 191)
+    "A3 155": {
+        "ability_effect": "Heal 60 damage from 1 of your Stage 2 Pokemon.",
+    },  # Lillie: 'Two Pokemon' is a typo for 'Stage 2' (was keyed by variant A3 197, A3 209)
+    "B1 018": {
+        "ability_effect": "Each of your Grass Pokemon gets +20 HP.",
+    },  # Lilligant: typo fixed (was keyed by variant B1 329)
+    "B1 177": {
+        "ability_effect": "As long as this Pokemon is in the Active Spot, attacks used by your opponent's Active Pokemon cost 1 Colorless Energy more.",
+    },  # Goomy: typo fixed (was keyed by variant B1 247)
+    "B1 217": {
+        "ability_effect": "Attach a Fire Energy from your discard pile to your Active Fire Pokemon.",
+    },  # Flame Patch: typo fixed ('Enery'); trailing period kept (was keyed by variant B4b 203)
+    "B2 151": {
+        "ability_effect": "You can use this card only if your Pokemon in play have 3 or more different types of Energy attached. Move all Energy from each of your Benched Pokemon to your Active Pokemon.",
+    },  # Juggler: page shows another Trainer's text; base B2 151 has the right one (was keyed by variant B2 192)
+    # effect text blank or misspelled on a variant (copied from the card's other prints) ---
+    "A2 022": {
+        "move1_effect": "Once during your turn, you may heal 10 damage from each of your Pokémon.",
+    },  # Shaymin: blank; other prints have it (was keyed by variant A2 159)
+    "A3 100": {
+        "move1_effect": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pokemon.",
+    },  # Lycanroc: blank; other prints have it
+    "A3 122": {
+        "move1_effect": "This Pokemon also does 10 damage to itself.",
+    },  # Solgaleo ex: blank; other prints have it (was keyed by variant B1a 101)
+    "A4 001": {
+        "move1_effect": "Your opponent's Active Pokemon is now Poisoned.",
+    },  # Oddish: blank; other prints have it (was keyed by variant B1a 088)
+    "A4 002": {
+        "move1_effect": "Your opponent's Active Pokemon is now Poisoned.",
+    },  # Gloom: blank; other prints have it
+    "B2b 043": {
+        "move1_effect": "Flip a coin. If tails, this attack does nothing."
+    },  # Zorua: typo fixed
+    "B3 039": {
+        "move1_effect": "If this Pokemon has any Fighting Energy attached, this attack does 60 more damage.",
+    },  # Quagsire: typo fixed (was keyed by variant B3 162)
+    "B3 062": {
+        "move1_effect": "If this Pokemon has no damage on it, this attack does 30 more damage.",
+    },  # Morpeko: typo fixed
+    "B3 106": {
+        "move1_effect": "This attack does 30 damage for each of your Benched Darkness-type Pokemon.",
+    },  # Zoroark ex: typo fixed (was keyed by variant B4 230, B4b 146)
+    "A3 033": {
+        "move2_effect": "If this Pokémon has damage on it, this attack does 60 more damage.",
+    },  # Incineroar ex: blank; other prints have it (was keyed by variant B1 318)
 }
+
 
 OVERRIDES: dict[str, dict[str, str | None]] = {
     # --- misc ---

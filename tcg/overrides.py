@@ -170,6 +170,10 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "B1a 049": {
         "rc": "1"
     },  # Trubbish: alt art read as 0 (missing icon); base print is 1 (variant B1a 074)
+    "B3 004": {
+        "rc": "1",
+        "ability_effect": "Each of your evolved Pokemon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
+    },  # Celebi: (variant B4b 009)
     "B3 013": {"rc": "0"},  # Budew: other 3 prints say 0 (variant B4b 246)
     "B4 068": {"rc": "0"},  # Mime Jr.: other 2 prints say 0 (variant B4b 308)
     "B4 074": {"rc": "0"},  # Wynaut: other 3 prints say 0 (variant B4b 306)
@@ -226,14 +230,15 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
         "move1_damage": "20+",
         "move1_effect": "If this Pokemon has at least 3 extra Water Energy attached, this attack does 70 more damage.",
     },  # Lapras: Hydro Pump
-    "A2 019": {"move1_damage": "40+"},  # Carnivine
+    "A2 019": {"move1_damage": "40+"},  # Carnivine: Flog
     "A2b 006": {"move1_damage": "40"},  # Floragato: Slash
     "A2b 040": {"move1_damage": "30"},  # Hitmonlee: Kick
-    "A2b 048": {"move1_damage": "60+"},  # Paldean Clodsire ex
-    "A4 045": {"move1_damage": "20+"},  # Gyarados
-    "B1 005": {"move1_damage": None},  # Beautifly (does 50 dmg to one pokemon)
-    "B4 117": {"move1_damage": "40"},  # Dragonair: Draconic Whip (was keyed by variant B4 233)
+    "A2b 048": {"move1_damage": "60+"},  # Paldean Clodsire ex: Venoshock
+    "A3 100": {"move1_damage": "80"},  # Lycanroc: Crunch
+    "A4 045": {"move1_damage": "20+"},  # Gyarados: Wild Swing
+    "B1 005": {"move1_damage": None},  # Beautifly: Skill Dive
     "B2b 054": {"move1_damage": "40"},  # Axew: Sharp Fang (was keyed by variant B4b 174)
+    "B4 117": {"move1_damage": "40"},  # Dragonair: Draconic Whip (was keyed by variant B4 233)
     # move2_effect ------------------------------------------------------------
     "B2a 037": {
         "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon.",
@@ -324,13 +329,12 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
 
 
 OVERRIDES: dict[str, dict[str, str | None]] = {
-    # --- misc ---
+    # misc ------------------------------------------------------------
     "B4b 009": {
-        "ability_effect": "Each of your evolved Pokemon can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)",
         "image": "https://img.game8.co/4479795/7ff12fab25f704898086ae6aba1a07b7.png/show",
         "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/596976",
-        "rc": "1",
     },  # Celebi: Incorrectly linked to Mega Pinsir ex page
+    "B4 023": {"canon_id": "B4 023"},  # Moltres: Both varients had Sky Attack name
     # gen ------------------------------------------------------------
     "A1a 065": {"gen": "9"},  # Mythical Slab
     "A1a 066": {"gen": "9"},  # Budding Expeditioner
@@ -409,12 +413,11 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     #       A2 079 / A2 168 Cresselia (1 vs 2) | A3 078 / A3 167 Cutiefly (0 vs 1)
     #       B1 068 / B3 209 Frillish (1 vs 2) | B3b 034 Fidough (0, 0, 1, 1) | B4 141 Swanna ex (1, 1, 2, 2)
     #   weakness: A4 057 / A4 170 Delibird (Metal vs Lightning)
-    #   move1_damage: A3 100 / P-A 068 Lycanroc (80 vs 100)
     #   move1_cost: B4 054 / P-B 085 Pachirisu (🟡 vs 🟡🟡) | B2a 002 vs P-B 069 Floragato (🟢🟢 vs 🟢)
     #   effect numbers: A1 079, B1 108, B1 157, B1 175
     # TODO: these share a canon_id but look like DIFFERENT cards (cost, damage and effect all agree with
     #   each other); probably a canon_id linkage problem, not wrong data. Left alone:
-    #   A1 046 / B4 023 Moltres | B3 064 / B4 072 B4b 105 B4b 305 Kirlia | A2a 034 / A4 084 A4 085 Unown
+    #   A2a 034 / A4 084 A4 085 Unown
     # TODO: B3b 049 Hisuian Sliggoo is Stage 1 but evolves_from is blank (Hisuian Goomy isn't in the data).
     # TODO: ~41 effect texts differ between prints only in wording or punctuation (' vs ', Pokémon vs Pokemon,
     #   trailing period). Not errors; a normalization step in the pipeline is better than overrides.

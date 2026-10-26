@@ -115,7 +115,7 @@ def assign_canon_ids(cards: list[dict]) -> None:
     """Point equivalent cards to the first card with the same core signature."""
     canon_ids: dict[tuple[str | None, str | None, str | None], str] = {}
     for card in cards:
-        signature = (card["name"], card["hp"], card["move1_name"])
+        signature = (card["name"], card["move1_name"], card["move1_cost"])
         canon_id = canon_ids.setdefault(signature, card["id"])
         card["canon_id"] = canon_id
 

@@ -27,7 +27,7 @@ from tcg.config import (
     VALIDATION_LOG_PATH,
 )
 from tcg.from_json import convert_all, load_raw_cards
-from tcg.overrides import apply_overrides
+from tcg.overrides import apply_canon_id_overrides, apply_overrides
 from tcg.utils import get_gimmick, is_trainer_type
 from tcg.validation import audit_overrides, validate_csv_file, write_validation_log
 
@@ -37,6 +37,7 @@ _SET_RANK = {set_code: rank for rank, set_code in enumerate(SET_ORDER)}
 
 def sort_cards(cards: list[dict]) -> None:
     """Sort cards by the documented set order and numeric card number."""
+
     def sort_key(card: dict) -> tuple[int, int, str]:
         match = _CARD_ID_PATTERN.match(card.get("id") or "")
         if not match:
@@ -115,7 +116,7 @@ def assign_canon_ids(cards: list[dict]) -> None:
     """Point equivalent cards to the first card with the same core signature."""
     canon_ids: dict[tuple[str | None, str | None, str | None], str] = {}
     for card in cards:
-        signature = (card["name"], card["move1_name"], card["move1_cost"])
+        signature = (card["name"], card["move1_name"])
         canon_id = canon_ids.setdefault(signature, card["id"])
         card["canon_id"] = canon_id
 
@@ -159,6 +160,7 @@ def build_cards(
     cards = convert_all(load_raw_cards(json_path))
     sort_cards(cards)
     assign_canon_ids(cards)
+    apply_canon_id_overrides(cards)
     assign_indexes(cards)
     if only:
         cards = [c for c in cards if c["id"] == only]

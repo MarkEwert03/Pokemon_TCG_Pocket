@@ -33,6 +33,18 @@ FUNCTIONAL_FIELDS = frozenset(
     }
 )
 
+# Explicit canonical-link corrections are applied after heuristic assignment.
+# Keys and values are card IDs; the value is the desired canonical card.
+CANON_ID_OVERRIDES: dict[str, str] = {
+    "A2a 078": "A2a 034",  # Unown: same CHECK ability as A2a 034
+    "A4 084": "A4 084",  # Unown: GUARD is functionally distinct
+    "A4 085": "A4 085",  # Unown: POWER is functionally distinct
+    "B4 023": "B4 023",  # Moltres also with Sky Attack
+    "B4 072": "B4 072",  # Kirlia also with Double Spin
+    "B4b 105": "B4b 105",  # Kirlia also with Double Spin
+    "B4b 305": "B4b 305",  # Kirlia also with Double Spin
+}
+
 CANON_OVERRIDES: dict[str, dict[str, str]] = {
     # misc ------------------------------------------------------------
     "A2b 041": {
@@ -127,7 +139,6 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
         "ability_name": "Dark Chase",
         "ability_effect": "Once during your turn, if this Pokemon is in the Active Spot, you may switch in 1 of your opponent's benched Pokemon that has damage on it to the Active Spot.",
     },  # Umbreon ex: Blank ability (was keyed by variant B2 231)
-    "A4 149": {"stage": "Basic"},  # Lugia ex (was keyed by variant B2 232)
     "B2 070": {"stage": "Basic"},  # Meloetta (was keyed by variant B2 233)
     # hp ------------------------------------------------------------
     "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
@@ -219,10 +230,12 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "A3 104": {"move1_cost": "🟤🔘"},  # Passimian ex: Seismic Toss
     "A3a 006": {"move1_cost": "🔘🔘"},  # Buzzwole ex: Punch
     "A3 087": {"move1_cost": "🟣🔘🔘"},  # Lunala ex: Lunar Blast
+    "A4 149": {"stage": "Basic", "move1_cost": "🔴🔵🟡"},  # Lugia ex: Elemental Blast
     "B2a 002": {"move1_cost": "🟢"},  # Floragato: Leaf Step
     "B3 079": {"move1_cost": "🟤"},  # Riolu: Fighting Fist
     "B3 122": {"move1_cost": "🔘"},  # Meltan: Stampede
     "B2 130": {"move1_cost": "🔘🔘"},  # Smeargle: Tail Whap
+    "B4 054": {"move1_cost": "🟡"},  # Pachirisu: Crackling Snap
     # move1_damage ------------------------------------------------------------
     "A1 018": {"move1_damage": "20"},  # Bellsprout: Vine Whip
     "A1 183": {"move1_damage": "40"},  # Dratini: Ram
@@ -334,7 +347,6 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
         "image": "https://img.game8.co/4479795/7ff12fab25f704898086ae6aba1a07b7.png/show",
         "url": "https://game8.co/games/Pokemon-TCG-Pocket/archives/596976",
     },  # Celebi: Incorrectly linked to Mega Pinsir ex page
-    "B4 023": {"canon_id": "B4 023"},  # Moltres: Both varients had Sky Attack name
     # gen ------------------------------------------------------------
     "A1a 065": {"gen": "9"},  # Mythical Slab
     "A1a 066": {"gen": "9"},  # Budding Expeditioner
@@ -415,13 +427,18 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     #   weakness: A4 057 / A4 170 Delibird (Metal vs Lightning)
     #   move1_cost: B4 054 / P-B 085 Pachirisu (🟡 vs 🟡🟡) | B2a 002 vs P-B 069 Floragato (🟢🟢 vs 🟢)
     #   effect numbers: A1 079, B1 108, B1 157, B1 175
-    # TODO: these share a canon_id but look like DIFFERENT cards (cost, damage and effect all agree with
-    #   each other); probably a canon_id linkage problem, not wrong data. Left alone:
-    #   A2a 034 / A4 084 A4 085 Unown
     # TODO: B3b 049 Hisuian Sliggoo is Stage 1 but evolves_from is blank (Hisuian Goomy isn't in the data).
     # TODO: ~41 effect texts differ between prints only in wording or punctuation (' vs ', Pokémon vs Pokemon,
     #   trailing period). Not errors; a normalization step in the pipeline is better than overrides.
 }
+
+
+def apply_canon_id_overrides(cards: list[dict[str, str | None]]) -> None:
+    """Apply explicit canonical-link corrections after heuristic assignment."""
+    for card in cards:
+        canon_id = CANON_ID_OVERRIDES.get(card.get("id"))
+        if canon_id is not None:
+            card["canon_id"] = canon_id
 
 
 def apply_overrides(card: dict[str, str | None]) -> None:
@@ -447,6 +464,7 @@ def check_override_keys(cards: list[dict[str, str | None]]) -> list[str]:
     Return a list of problems with the override keys (empty list = all good).
     Run it on the finished cards, e.g. in a test:  assert not check_override_keys(cards)
 
+    - CANON_ID_OVERRIDES keys and values must be card ids.
     - CANON_OVERRIDES keys must be some card's canon_id. A key that is only a variant's id
       matches nothing, so the correction is silently never applied.
     - OVERRIDES keys must be card ids that exist.
@@ -454,6 +472,11 @@ def check_override_keys(cards: list[dict[str, str | None]]) -> list[str]:
     canon_ids = {c["canon_id"] for c in cards}
     ids = {c["id"] for c in cards}
     problems = []
+    for key, target in CANON_ID_OVERRIDES.items():
+        if key not in ids:
+            problems.append(f"CANON_ID_OVERRIDES key {key!r} is not a card id")
+        if target not in ids:
+            problems.append(f"CANON_ID_OVERRIDES target {target!r} is not a card id")
     for key in CANON_OVERRIDES:
         if key not in canon_ids:
             problems.append(f"CANON_OVERRIDES key {key!r} is not a canon_id of any card")

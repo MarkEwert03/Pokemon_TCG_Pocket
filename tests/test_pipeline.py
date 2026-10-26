@@ -11,8 +11,10 @@ from tcg.validation import (
     write_validation_log,
 )
 from tcg.overrides import (
+    CANON_ID_OVERRIDES,
     CANON_OVERRIDES,
     OVERRIDES,
+    apply_canon_id_overrides,
     apply_overrides,
     check_override_keys,
 )
@@ -65,6 +67,21 @@ def test_assign_canon_ids_uses_first_matching_signature():
     assert cards[1]["canon_id"] == "A1 055"
     assert cards[2]["canon_id"] == "B1a 019"
     assert cards[4]["canon_id"] == "B1a 020"
+
+
+def test_canon_id_overrides_split_unown_variants():
+    cards = [
+        {"id": "A2a 034", "canon_id": "A2a 034"},
+        {"id": "A2a 078", "canon_id": "A2a 034"},
+        {"id": "A4 084", "canon_id": "A2a 034"},
+        {"id": "A4 085", "canon_id": "A2a 034"},
+    ]
+
+    apply_canon_id_overrides(cards)
+
+    assert [card["canon_id"] for card in cards] == [
+        "A2a 034", "A2a 034", "A4 084", "A4 085"
+    ]
 
 
 def test_sort_cards_uses_set_order_and_card_number():
@@ -281,6 +298,7 @@ def test_base_override_applies_before_card_override(monkeypatch):
 
 
 def test_check_override_keys_reports_unknown_base_and_card_ids(monkeypatch):
+    monkeypatch.setattr("tcg.overrides.CANON_ID_OVERRIDES", {})
     monkeypatch.setattr(
         "tcg.overrides.CANON_OVERRIDES",
         {"A1 001": {}, "missing base": {}},
@@ -294,4 +312,19 @@ def test_check_override_keys_reports_unknown_base_and_card_ids(monkeypatch):
     assert check_override_keys(cards) == [
         "CANON_OVERRIDES key 'missing base' is not a canon_id of any card",
         "OVERRIDES key 'missing card' is not a card id",
+    ]
+
+
+def test_check_override_keys_reports_unknown_canon_id_override_keys(monkeypatch):
+    monkeypatch.setattr("tcg.overrides.CANON_OVERRIDES", {})
+    monkeypatch.setattr("tcg.overrides.OVERRIDES", {})
+    monkeypatch.setattr(
+        "tcg.overrides.CANON_ID_OVERRIDES",
+        {"missing card": "A1 001", "A1 001": "missing target"},
+    )
+    cards = [{"id": "A1 001", "canon_id": "A1 001"}]
+
+    assert check_override_keys(cards) == [
+        "CANON_ID_OVERRIDES key 'missing card' is not a card id",
+        "CANON_ID_OVERRIDES target 'missing target' is not a card id",
     ]

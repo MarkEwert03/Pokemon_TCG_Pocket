@@ -37,8 +37,16 @@ FUNCTIONAL_FIELDS = frozenset(
 # Keys and values are card IDs; the value is the desired canonical card.
 CANON_ID_OVERRIDES: dict[str, str] = {
     "A2a 078": "A2a 034",  # Unown: same CHECK ability as A2a 034
+    "A2b 016": "A2b 016",  # Buizel also with Water Gun
+    "A2b 074": "A2b 016",  # Buizel also with Water Gun
     "A4 084": "A4 084",  # Unown: GUARD is functionally distinct
     "A4 085": "A4 085",  # Unown: POWER is functionally distinct
+    "A4 177": "A4 110",  # Spinarak... not sure why it did not link originally
+    "B1 097": "B1 097",  # Natu also with Peck
+    "B3 018": "B3 018",  # Durant also with Bite Together
+    "B4b 020": "B3 018",  # Durant also with Bite Together
+    "B4b 251": "B3 018",  # Durant also with Bite Together
+    "B1 301": "A3b 023",  # Brionne with Wave Splash (should be water gun)
     "B4 023": "B4 023",  # Moltres also with Sky Attack
     "B4 072": "B4 072",  # Kirlia also with Double Spin
     "B4b 105": "B4b 105",  # Kirlia also with Double Spin
@@ -141,7 +149,10 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     },  # Umbreon ex: Blank ability (was keyed by variant B2 231)
     "B2 070": {"stage": "Basic"},  # Meloetta (was keyed by variant B2 233)
     # hp ------------------------------------------------------------
-    "A4 177": {"hp": "60"},  # Spinarak: HP is included as "/"
+    "A4 110": {"hp": "60"},  # Spinarak (was keyed by variant A4 177)
+    "A4 082": {"hp": "80"},  # Xatu (was keyed by variant A4 174)
+    "B3 020": {"hp": "90"},  # Flapple (was keyed by variant B3 160)
+    "B2b 056": {"hp": "150"},  # Haxorus (was keyed by canon card)
     # type ------------------------------------------------------------
     "B1 027": {"type": "Grass"},  # Rillaboom: listed as Fire (B1 229 is Grass)
     "B1a 006": {
@@ -229,6 +240,7 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "A3a 019": {"move1_cost": "🟡"},  # Tapu Koko ex: Plasma Hurricane
     "A3 104": {"move1_cost": "🟤🔘"},  # Passimian ex: Seismic Toss
     "A3a 006": {"move1_cost": "🔘🔘"},  # Buzzwole ex: Punch
+    "A3b 023": {"move1_name": "Water Gun", "move1_cost": "🔵🔘"},  # Brionne
     "A3 087": {"move1_cost": "🟣🔘🔘"},  # Lunala ex: Lunar Blast
     "A4 149": {"stage": "Basic", "move1_cost": "🔴🔵🟡"},  # Lugia ex: Elemental Blast
     "B2a 002": {"move1_cost": "🟢"},  # Floragato: Leaf Step

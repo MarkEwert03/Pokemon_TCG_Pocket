@@ -129,6 +129,68 @@ def test_assign_indexes_is_one_based():
     assert [card["index"] for card in cards] == ["1", "2"]
 
 
+def test_assign_novelty_labels_deluxe_prints_and_old_amber():
+    cards = [
+        {"id": "A3b 037", "canon_id": "A3b 037", "expansion_id": "A3b",
+         "rarity": "??", "image": "alcremie.png"},
+        {"id": "A4b 187", "canon_id": "A3b 037", "expansion_id": "A4b",
+         "rarity": "??", "image": "alcremie.png"},
+        {"id": "A4b 188", "canon_id": "A3b 037", "expansion_id": "A4b",
+         "rarity": "??", "image": "alcremie_foil.png"},
+        {"id": "P-A 087", "canon_id": "A3b 037", "expansion_id": "P-A",
+         "rarity": "Promo", "image": "alcremie_promo.png"},
+        {"id": "A1 218", "canon_id": "A1 218", "expansion_id": "A1",
+         "rarity": "?", "image": "old_amber.png"},
+        {"id": "A1a 063", "canon_id": "A1 218", "expansion_id": "A1a",
+         "rarity": "?", "image": "old_amber.png"},
+        {"id": "A4b 312", "canon_id": "A1 218", "expansion_id": "A4b",
+         "rarity": "?", "image": "old_amber.png"},
+        {"id": "A4b 313", "canon_id": "A1 218", "expansion_id": "A4b",
+         "rarity": "?", "image": "old_amber_foil.png"},
+    ]
+
+    pipeline.assign_novelty(cards)
+
+    assert [card["novelty"] for card in cards] == [
+        "Original", "Rereleased", "Parallel Foil", "Original",
+        "Original", "Rereleased", "Rereleased", "Parallel Foil",
+    ]
+
+
+def test_assign_novelty_uses_rarity_for_new_deluxe_artwork():
+    cards = [
+        {"id": "A3 122", "canon_id": "A3 122", "expansion_id": "A3",
+         "rarity": "????", "image": "solgaleo.png"},
+        {"id": "A3 189", "canon_id": "A3 122", "expansion_id": "A3",
+         "rarity": "??", "image": "solgaleo_full_art.png"},
+        {"id": "A3 207", "canon_id": "A3 122", "expansion_id": "A3",
+         "rarity": "??", "image": "solgaleo_rainbow.png"},
+        {"id": "A4b 259", "canon_id": "A3 122", "expansion_id": "A4b",
+         "rarity": "????", "image": "solgaleo.png"},
+        {"id": "A4b 369", "canon_id": "A3 122", "expansion_id": "A4b",
+         "rarity": "??", "image": "solgaleo_mural.png"},
+    ]
+
+    pipeline.assign_novelty(cards)
+
+    assert [card["novelty"] for card in cards] == [
+        "Original", "Original", "Original", "Rereleased", "Original",
+    ]
+
+
+def test_assign_novelty_marks_same_rarity_different_art_as_parallel_foil():
+    cards = [
+        {"id": "A1 001", "canon_id": "A1 001", "expansion_id": "A1",
+         "rarity": "?", "image": "bulbasaur.png"},
+        {"id": "A4b 001", "canon_id": "A1 001", "expansion_id": "A4b",
+         "rarity": "?", "image": "bulbasaur_foil.png"},
+    ]
+
+    pipeline.assign_novelty(cards)
+
+    assert cards[1]["novelty"] == "Parallel Foil"
+
+
 def test_failed_page_does_not_stop_the_run(tmp_path, monkeypatch):
     json_path = _write_json(tmp_path, [BULBASAUR])
     monkeypatch.setattr(pipeline, "FAILED_PAGES_PATH", tmp_path / "failed.txt")

@@ -19,9 +19,10 @@ Visualizations for the dataset can be found in [analysis.ipynb](https://github.c
 3. **Scrape** each card's own page (the JSON gives its `archive_url`) for what the JSON lacks: `gen`, `illustrator`, `weakness`, `rc`, `pack_points`, `gimmick`, `ability_effect`. Every page is cached gzipped on disk, so re-runs are fast and you can tweak the parser without re-downloading.
 4. **Apply manual overrides** (`tcg/overrides.py`): canonical-level functional
    corrections first, then card-specific corrections.
-5. **Order** cards by set release family and card number, then assign the
+5. **Classify novelty** as `Original`, `Rereleased`, or `Parallel Foil`.
+6. **Order** cards by set release family and card number, then assign the
    one-based `index` column.
-6. **Write** `data/full.csv`.
+7. **Write** `data/full.csv`.
 
 ---
 
@@ -70,6 +71,15 @@ Rows are ordered first by set release family, using this sequence:
 numeric card number from the card ID (for example, `A1 001` precedes
 `A1 002`). The `index` column is a one-based row number assigned after this
 ordering.
+
+### Novelty
+
+The `novelty` column describes the print's relationship to the canonical card.
+Cards are `Original` by default. The first card in a canonical group from a
+For Deluxe Pack (`A4b` or `B4b`) cards, artwork matching the canonical card is
+`Rereleased`. If the artwork differs, the card is `Parallel Foil` when its
+rarity matches the canonical card, and `Original` when its rarity differs.
+Old Amber `A1a 063` is the one non-Deluxe re-release exception.
 
 Before manual overrides are applied, the pipeline checks required-field
 invariants and writes any missing values to a timestamped report in `logs/`. The report
@@ -200,6 +210,8 @@ Columns include:
 - `illustrator`
   - The name of the card's illustrator.
   - Examples: "Narumi Sato", "HYOGONOSUKE", "0313"
+- `novelty`
+  - The print's relationship to the canonical card: `Original`, `Rereleased`, or `Parallel Foil`.
 - `expansion_name`
   - The display name of the main expansion containing the card.
   - Examples: "Genetic Apex", "Eevee Grove", "Promo-A", "Promo-B"

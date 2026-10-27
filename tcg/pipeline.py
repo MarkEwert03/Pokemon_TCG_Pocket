@@ -33,6 +33,8 @@ from tcg.validation import audit_overrides, validate_csv_file, write_validation_
 
 _CARD_ID_PATTERN = re.compile(r"^(\S+)\s+(\d+)$")
 _SET_RANK = {set_code: rank for rank, set_code in enumerate(SET_ORDER)}
+_DELUXE_EXPANSIONS = {"A4b", "B4b"}
+_NON_DELUXE_RERELEASES = {"A1a 063"}
 
 
 def sort_cards(cards: list[dict]) -> None:
@@ -52,6 +54,32 @@ def assign_indexes(cards: list[dict]) -> None:
     """Assign a one-based index in the final dataset order."""
     for index, card in enumerate(cards, start=1):
         card["index"] = str(index)
+
+
+def assign_novelty(cards: list[dict]) -> None:
+    """Label original prints, re-releases, and parallel-foil prints."""
+    groups: dict[str, list[dict]] = {}
+    for card in cards:
+        groups.setdefault(card["canon_id"] or card["id"], []).append(card)
+
+    for group in groups.values():
+        canonical = group[0]
+        for card in group:
+            card_id = card["id"]
+            expansion_id = card["expansion_id"]
+            if card_id in _NON_DELUXE_RERELEASES:
+                card["novelty"] = "Rereleased"
+            elif expansion_id in _DELUXE_EXPANSIONS:
+                if card is canonical:
+                    card["novelty"] = "Original"
+                elif card["image"] == canonical["image"]:
+                    card["novelty"] = "Rereleased"
+                elif card["rarity"] == canonical["rarity"]:
+                    card["novelty"] = "Parallel Foil"
+                else:
+                    card["novelty"] = "Original"
+            else:
+                card["novelty"] = "Original"
 
 
 def scrape_extras(
@@ -163,6 +191,7 @@ def build_cards(
     sort_cards(cards)
     assign_canon_ids(cards)
     apply_canon_id_overrides(cards)
+    assign_novelty(cards)
     assign_indexes(cards)
     if only:
         cards = [c for c in cards if c["id"] == only]

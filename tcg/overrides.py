@@ -169,6 +169,7 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "A1 171": {"weakness": "Fighting"},  # Nidoking (W) (also fixes variant A1 241)
     "A1a 048": {"weakness": "Grass"},  # Stonjourner (W)
     "A1a 014": {"weakness": "Water"},  # Volcarona (W) (was keyed by variant P-A 028)
+    "A4 057": {"weakness": "Metal"},  # Delibird (W) (was keyed by variant A4 170)
     "P-A 037": {"weakness": "Darkness"},  # Cresselia ex (W)
     "P-A 038": {"weakness": "Darkness"},  # Misdreavus (W)
     "B2 023": {
@@ -176,9 +177,13 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
         "stage": "Basic",
     },  # Blacephalon ex: Incorrectly has weakness as Fire (was keyed by variant B2 181; also fixes variant B2 195)
     # rc ------------------------------------------------------------
+    "A1 040": {"rc": "2"},  # Arcanine
+    "A1 058": {"rc": "1"},  # Golduck
     "A2 029": {"rc": "0"},  # Infernape ex
+    "A2 079": {"rc": "2"},  # Cresselia
     "A2 061": {"rc": "1"},  # Pachirisu ex: other 4 prints say 1 (variant A2 183)
     "A3 098": {"rc": "1"},  # Rockruff: other 2 prints say 1 (variant B1 310)
+    "B1 068": {"rc": "1"},  # Frillish
     "B1 069": {"rc": "2"},  # Jellicent: other 2 prints say 2 (variant B3 210)
     "B1 085": {"rc": "1"},  # Mega Ampharos ex: other 4 prints say 1 (variant B3b 103)
     "B1 088": {"rc": "1"},  # Luxray: other 2 prints say 1 (variant P-B 004)
@@ -199,6 +204,7 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "B3 013": {"rc": "0"},  # Budew: other 3 prints say 0 (variant B4b 246)
     "B4 068": {"rc": "0"},  # Mime Jr.: other 2 prints say 0 (variant B4b 308)
     "B4 074": {"rc": "0"},  # Wynaut: other 3 prints say 0 (variant B4b 306)
+    "B4 141": {"rc": "2"},  # Swanna ex
     # stage ------------------------------------------------------------
     "A3a 047": {
         "stage": "Stage 1",
@@ -236,12 +242,13 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     # move1_cost ------------------------------------------------------------
     "A2b 020": {"move1_cost": "🔵🔵🔘🔘"},  # Dondozo: Ocean Cyclone
     "A2b 056": {"move1_cost": "⚪⚪🔘"},  # Revavroom: Spinning Drift
-    "A4 065": {"move1_cost": "🟡🔘🔘"},  # Lanturn ex: Flashing Signal
-    "A3a 019": {"move1_cost": "🟡"},  # Tapu Koko ex: Plasma Hurricane
+    "A3 017": {"move1_cost": "🟢🔘"},  # Shiinotic: Flickering Light
+    "A3 087": {"move1_cost": "🟣🔘🔘"},  # Lunala ex: Lunar Blast
     "A3 104": {"move1_cost": "🟤🔘"},  # Passimian ex: Seismic Toss
     "A3a 006": {"move1_cost": "🔘🔘"},  # Buzzwole ex: Punch
+    "A3a 019": {"move1_cost": "🟡"},  # Tapu Koko ex: Plasma Hurricane
     "A3b 023": {"move1_name": "Water Gun", "move1_cost": "🔵🔘"},  # Brionne
-    "A3 087": {"move1_cost": "🟣🔘🔘"},  # Lunala ex: Lunar Blast
+    "A4 065": {"move1_cost": "🟡🔘🔘"},  # Lanturn ex: Flashing Signal
     "A4 149": {"stage": "Basic", "move1_cost": "🔴🔵🟡"},  # Lugia ex: Elemental Blast
     "B2a 002": {"move1_cost": "🟢"},  # Floragato: Leaf Step
     "B3 079": {"move1_cost": "🟤"},  # Riolu: Fighting Fist
@@ -259,12 +266,21 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "A2b 006": {"move1_damage": "40"},  # Floragato: Slash
     "A2b 040": {"move1_damage": "30"},  # Hitmonlee: Kick
     "A2b 048": {"move1_damage": "60+"},  # Paldean Clodsire ex: Venoshock
-    "A3 100": {"move1_damage": "80"},  # Lycanroc: Crunch
+    "A3 100": {
+        "move1_damage": "80",
+        "move1_effect": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pokemon.",
+    },  # Lycanroc: Crunch
     "A4 045": {"move1_damage": "20+"},  # Gyarados: Wild Swing
     "B1 005": {"move1_damage": None},  # Beautifly: Skill Dive
     "B2b 054": {"move1_damage": "40"},  # Axew: Sharp Fang (was keyed by variant B4b 174)
     "B4 117": {"move1_damage": "40"},  # Dragonair: Draconic Whip (was keyed by variant B4 233)
-    # move2_effect ------------------------------------------------------------
+    # move_effect ------------------------------------------------------------
+    "B1 108": {
+        "move1_effect": "This attack does 20 more damage for each Energy attached to this Pokemon."
+    },  # Drifblim
+    "B1 175": {
+        "move1_effect": "Discard 2 Metal Energy from this Pokemon. During your opponent's next turn, this Pokemon takes -50 damage from attacks."
+    },  # Corviknight
     "B2a 037": {
         "move2_effect": "Discard all Water Energy from this Pokemon. This attack does 130 damage to 1 of your opponent's Pokemon.",
     },  # Chien-Pao ex (also fixes variant B2a 102; also fixes variant B2a 112; also fixes variant P-B 041; also fixes variant B4b 081)
@@ -323,9 +339,6 @@ CANON_OVERRIDES: dict[str, dict[str, str]] = {
     "A2 022": {
         "move1_effect": "Once during your turn, you may heal 10 damage from each of your Pokémon.",
     },  # Shaymin: blank; other prints have it (was keyed by variant A2 159)
-    "A3 100": {
-        "move1_effect": "Flip a coin. If heads, discard a random Energy from your opponent's Active Pokemon.",
-    },  # Lycanroc: blank; other prints have it
     "A3 122": {
         "move1_effect": "This Pokemon also does 10 damage to itself.",
     },  # Solgaleo ex: blank; other prints have it (was keyed by variant B1a 101)
@@ -428,18 +441,6 @@ OVERRIDES: dict[str, dict[str, str | None]] = {
     #       234 235 236 364 365 366 367 368 369 370 372 375 376 377 382 393 394 395
     #       396 398 399 400 401 402
     # NOTE: blank weakness is NOT missing data for baby Pokémon (Azurill, Bonsly, Budew, Chingling, Cleffa, Elekid, Happiny, Igglybuff, Magby, Mantyke, Mime Jr., Munchlax, Pichu, Smoochum, Tyrogue, Wynaut) or Dragon types; they have none.
-    # TODO: spot-check type against the card art. Nothing in the data confirms these (attacks cost
-    #   only Colorless, single print) and they differ from the species' usual type; likely genuine:
-    #   A1 085 086 | A2 121 | A2a 035 | A3a 027 | A4 062 063 073 | P-B 022 | B2a 010 | B3a 057
-    #   B3b 026 | B4 077
-    # TODO: prints of the same card disagree and the data can't say which is right (check the art):
-    #   rc: A1 040 / A3a 090 Arcanine (1 vs 2) | A1 058 / A4a 094 Golduck (1 vs 2)
-    #       A2 079 / A2 168 Cresselia (1 vs 2) | A3 078 / A3 167 Cutiefly (0 vs 1)
-    #       B1 068 / B3 209 Frillish (1 vs 2) | B3b 034 Fidough (0, 0, 1, 1) | B4 141 Swanna ex (1, 1, 2, 2)
-    #   weakness: A4 057 / A4 170 Delibird (Metal vs Lightning)
-    #   move1_cost: B4 054 / P-B 085 Pachirisu (🟡 vs 🟡🟡) | B2a 002 vs P-B 069 Floragato (🟢🟢 vs 🟢)
-    #   effect numbers: A1 079, B1 108, B1 157, B1 175
-    # TODO: B3b 049 Hisuian Sliggoo is Stage 1 but evolves_from is blank (Hisuian Goomy isn't in the data).
     # TODO: ~41 effect texts differ between prints only in wording or punctuation (' vs ', Pokémon vs Pokemon,
     #   trailing period). Not errors; a normalization step in the pipeline is better than overrides.
 }

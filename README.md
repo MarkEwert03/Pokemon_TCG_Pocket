@@ -83,6 +83,11 @@ attributes: stage, type, weakness, retreat cost, knockout points, ability
 details, and both moves. Any mismatches are included in the same timestamped
 validation report.
 
+Effect text is normalized before validation and output: whitespace is collapsed,
+curly apostrophes become straight apostrophes, `Pokémon` becomes `Pokemon`, and
+non-empty effects receive a trailing period when they do not already end in
+sentence punctuation.
+
 After overrides and CSV writing, the same checks run against the final card
 records. A successful run prints `Final required-field validation passed` and
 writes an empty-findings report to a timestamped file in `logs/`. If gaps remain,

@@ -38,6 +38,7 @@ ENERGY_SYMBOLS = {
     "Blank": "💭",
 }
 COLORLESS = ENERGY_SYMBOLS["Colorless"]
+EFFECT_FIELDS = ("ability_effect", "move1_effect", "move2_effect")
 
 
 def clean_str(value: str | None) -> str | None:
@@ -54,6 +55,24 @@ def clean_str(value: str | None) -> str | None:
         return None
     out = " ".join(str(value).split())
     return out or None
+
+
+def normalize_effect_text(value: str | None) -> str | None:
+    """Normalize effect text for consistent comparisons and output."""
+    value = clean_str(value)
+    if value is None:
+        return None
+    value = value.replace("’", "'").replace("‘", "'").replace("Pokémon", "Pokemon")
+    value = clean_str(value)
+    if value and value[-1] not in ".!?":
+        value += "."
+    return value
+
+
+def normalize_effect_fields(card: dict[str, str | None]) -> None:
+    """Normalize all effect-text fields on a card in place."""
+    for field in EFFECT_FIELDS:
+        card[field] = normalize_effect_text(card.get(field))
 
 
 def find_type_name(text: str | None) -> str | None:

@@ -52,6 +52,28 @@ def test_end_to_end(tmp_path, monkeypatch):
     assert rows["A1 183"]["move1_damage"] == "40"  # override beat the JSON's 70
 
 
+def test_pipeline_normalizes_effect_text(tmp_path, monkeypatch):
+    raw = {
+        **BULBASAUR,
+        "ability": "CHECK",
+        "moves": [
+            {
+                "name": "Vine Whip",
+                "damage": "40",
+                "energy_cost": "Grass",
+                "description": "  Heal from Pokémon’s Pokémon  ",
+            },
+            EMPTY_MOVE,
+        ],
+    }
+    json_path = _write_json(tmp_path, [raw])
+    monkeypatch.setattr(fetch, "get_card_html", lambda url, **kw: page(ATTACK_ONLY))
+
+    cards = pipeline.build_cards(json_path=json_path, workers=1, delay=0)
+
+    assert cards[0]["move1_effect"] == "Heal from Pokemon's Pokemon."
+
+
 def test_assign_canon_ids_uses_first_matching_signature():
     cards = [
         {"id": "A1 055", "name": "Blastoise", "hp": "150", "move1_name": "Hydro Pump"},

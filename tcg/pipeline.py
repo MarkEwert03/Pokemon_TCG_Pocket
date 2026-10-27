@@ -28,7 +28,7 @@ from tcg.config import (
 )
 from tcg.from_json import convert_all, load_raw_cards
 from tcg.overrides import apply_canon_id_overrides, apply_overrides
-from tcg.utils import get_gimmick, is_trainer_type
+from tcg.utils import get_gimmick, is_trainer_type, normalize_effect_fields
 from tcg.validation import audit_overrides, validate_csv_file, write_validation_log
 
 _CARD_ID_PATTERN = re.compile(r"^(\S+)\s+(\d+)$")
@@ -158,6 +158,8 @@ def build_cards(
     """Run stages 1-4 and return the finished card dicts (`only` = a single card id)."""
     fetch.ensure_raw_json(json_path, refresh=refresh_json, quiet=quiet)
     cards = convert_all(load_raw_cards(json_path))
+    for card in cards:
+        normalize_effect_fields(card)
     sort_cards(cards)
     assign_canon_ids(cards)
     apply_canon_id_overrides(cards)
@@ -173,6 +175,7 @@ def build_cards(
         extras, failures = scrape_extras(cards, refresh_pages, workers, delay, quiet)
         for card in cards:
             merge_extras(card, extras.get(card["id"]))
+            normalize_effect_fields(card)
 
         if write_reports and failures:
             FAILED_PAGES_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -201,6 +204,7 @@ def build_cards(
         card["gimmick"] = get_gimmick(card["name"], card["type"])
         if apply_manual_overrides:
             apply_overrides(card)
+        normalize_effect_fields(card)
     return cards
 
 
